@@ -20,11 +20,12 @@
  */
 
 import React from "react";
-import { Pause, Volume2, VolumeX } from "lucide-react";
+import { Pause, Volume2, VolumeX, RotateCcw, Home } from "lucide-react";
 import type { WeaponType } from "../game/types";
 
 interface HUDProps {
   score: number;
+  stage: number;
   hp: number;
   maxHp: number;
   lives: number;
@@ -33,10 +34,13 @@ interface HUDProps {
   isMuted: boolean;
   onPause: () => void;
   onToggleMute: () => void;
+  onRetry: () => void;
+  onQuitToTitle: () => void;
 }
 
 export const HUD: React.FC<HUDProps> = ({
   score,
+  stage,
   hp,
   maxHp,
   lives,
@@ -45,6 +49,8 @@ export const HUD: React.FC<HUDProps> = ({
   isMuted,
   onPause,
   onToggleMute,
+  onRetry,
+  onQuitToTitle,
 }) => {
   // HP を 5つのセグメントブロックに換算
   const hpSegments = 5;
@@ -59,20 +65,25 @@ export const HUD: React.FC<HUDProps> = ({
         : "text-cyber-cyan";
 
   return (
-    <div className="absolute top-0 left-0 w-full h-[50px] bg-void-panel/90 border-b border-cyber-cyan/30 flex items-center justify-between px-3 z-10 pointer-events-auto">
+    <div className="absolute top-0 left-0 w-full h-[52px] bg-void-panel/95 border-b border-cyber-cyan/40 flex items-center justify-between px-2.5 z-10 pointer-events-auto shadow-[0_2px_12px_rgba(0,0,0,0.6)]">
       {/* 
-        ① スコア表示
-        padStart(7, "0") で常に7桁のゼロ埋め（例: 0001200）にして、
-        数字が変わっても文字の横幅がガタガタ揺れないようにする。
+        ① アプリ名・現在ステージ・スコア表示
       */}
       <div className="flex flex-col">
-        <span className="text-[9px] font-mono tracking-widest text-text-dim">SCORE</span>
-        <span className="text-[16px] font-mono font-bold text-cyber-cyan">
+        <div className="flex items-center gap-1.5 leading-none mb-0.5">
+          <span className="text-[9px] font-mono font-bold tracking-widest text-cyber-cyan">
+            STAGE {String(stage).padStart(2, "0")}
+          </span>
+          <span className="text-[8px] font-mono text-text-dim/70">
+            VALKYRIE
+          </span>
+        </div>
+        <span className="text-[15px] font-mono font-bold text-white tracking-wider leading-none">
           {String(score).padStart(7, "0")}
         </span>
       </div>
 
-      {/* 残機数（自機アイコン3機並び）・武器レベル ＆ シールド（HP）セグメントバー */}
+      {/* ② 残機数・武器種別Lv ＆ シールド（HP）セグメントバー */}
       <div className="flex flex-col items-center">
         <div className="flex items-center gap-2 text-[9px] font-mono tracking-wider">
           <div className="flex items-center gap-1" title={`Remaining Ships: ${lives}`}>
@@ -98,7 +109,7 @@ export const HUD: React.FC<HUDProps> = ({
           {Array.from({ length: hpSegments }).map((_, i) => (
             <div
               key={i}
-              className={`w-4 h-2.5 rounded-[1px] transition-colors ${
+              className={`w-3.5 h-2 rounded-[1px] transition-colors ${
                 i < filledSegments
                   ? "bg-cyber-cyan shadow-[0_0_6px_rgba(0,243,255,0.6)]" // 残りHP（シアンに発光）
                   : "bg-void-border"                                      // 減ったHP（暗い枠線のみ）
@@ -108,24 +119,54 @@ export const HUD: React.FC<HUDProps> = ({
         </div>
       </div>
 
-      {/* ③ 右上コントロールボタン群（音量・ポーズ） */}
-      <div className="flex items-center gap-1.5">
+      {/* ③ 右側コントロールボタン群（スマホでもワンタップ操作可能：リトライ・タイトル・音量・ポーズ） */}
+      <div className="flex items-center gap-1">
+        {/* クイックリトライボタン */}
+        <button
+          type="button"
+          onClick={() => {
+            if (window.confirm("現在のステージをやり直しますか？")) {
+              onRetry();
+            }
+          }}
+          className="w-7 h-7 rounded border border-void-border bg-void-surface text-text-dim hover:text-amber-300 hover:border-amber-400/60 flex items-center justify-center transition-all active:scale-90"
+          title="Quick Retry [R]"
+        >
+          <RotateCcw size={13} />
+        </button>
+
+        {/* タイトルへ戻る（中断）ボタン */}
+        <button
+          type="button"
+          onClick={() => {
+            if (window.confirm("ゲームを中断してタイトルへ戻りますか？")) {
+              onQuitToTitle();
+            }
+          }}
+          className="w-7 h-7 rounded border border-void-border bg-void-surface text-text-dim hover:text-rose-300 hover:border-rose-400/60 flex items-center justify-center transition-all active:scale-90"
+          title="Quit to Title [Q]"
+        >
+          <Home size={13} />
+        </button>
+
         {/* ミュート切り替えボタン */}
         <button
+          type="button"
           onClick={onToggleMute}
-          className="w-8 h-8 rounded border border-void-border bg-void-surface text-text-dim hover:text-text-primary flex items-center justify-center transition-colors active:scale-90"
-          title="Mute Toggle"
+          className="w-7 h-7 rounded border border-void-border bg-void-surface text-text-dim hover:text-text-primary flex items-center justify-center transition-all active:scale-90"
+          title="Mute Toggle [M]"
         >
-          {isMuted ? <VolumeX size={15} /> : <Volume2 size={15} />}
+          {isMuted ? <VolumeX size={13} /> : <Volume2 size={13} />}
         </button>
 
         {/* ポーズボタン（一時停止） */}
         <button
+          type="button"
           onClick={onPause}
-          className="w-8 h-8 rounded border border-cyber-cyan/50 bg-cyber-cyan/10 text-cyber-cyan hover:bg-cyber-cyan/20 flex items-center justify-center transition-colors active:scale-90"
-          title="Pause Game (P / Esc)"
+          className="w-7 h-7 rounded border border-cyber-cyan/60 bg-cyber-cyan/15 text-cyber-cyan hover:bg-cyber-cyan/25 flex items-center justify-center transition-all active:scale-90"
+          title="Pause Game [P / Esc]"
         >
-          <Pause size={15} />
+          <Pause size={13} />
         </button>
       </div>
     </div>

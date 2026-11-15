@@ -31,7 +31,8 @@ const SHORTCUTS: Array<{ keys: string; desc: string }> = [
   { keys: "Space / Enter", desc: "ゲーム開始・出撃" },
   { keys: "P / Esc", desc: "ポーズ / 再開" },
   { keys: "R", desc: "クイックリトライ" },
-  { keys: "Q / Backspace", desc: "タイトルへ戻る" },
+  { keys: "Q / Backspace", desc: "タイトルへ戻る（戦闘中断）" },
+  { keys: "Esc × 2回", desc: "ゲーム自体を終了する" },
   { keys: "M", desc: "音声ミュート切替" },
   { keys: "H / ?", desc: "このヘルプを開閉" },
 ];

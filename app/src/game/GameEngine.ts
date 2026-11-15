@@ -499,8 +499,26 @@ export class GameEngine {
     });
 
     // --- ③ PCのキーボード操作・ショートカット ---
+    let lastEscTime = 0;
     window.addEventListener("keydown", (e) => {
       this.input.keys[e.code] = true;
+
+      // Esc 連続2回（0.5秒以内）でゲーム終了確認
+      if (e.code === "Escape") {
+        const now = performance.now();
+        if (now - lastEscTime < 500) {
+          e.preventDefault();
+          this.pauseGame();
+          if (window.confirm("ゲームを終了しますか？")) {
+            window.close();
+            // ブラウザの制約で close できない場合のフォールバック
+            this.quitToTitle();
+          }
+          lastEscTime = 0;
+          return;
+        }
+        lastEscTime = now;
+      }
 
       // P または Esc でポーズのトグル
       if (e.code === "KeyP" || e.code === "Escape") {

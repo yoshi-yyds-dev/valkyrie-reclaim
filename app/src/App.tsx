@@ -180,6 +180,19 @@ export const App: React.FC = () => {
     engineRef.current?.quitToTitle();
   };
 
+  /** ゲーム自体を終了する（ウィンドウクローズ または 終了案内ダイアログ） */
+  const handleExitGame = () => {
+    if (window.confirm("ゲームを終了しますか？")) {
+      engineRef.current?.pauseGame();
+      window.close();
+      // ブラウザセキュリティ制限で window.close() が無効化された場合の案内フォールバック
+      setTimeout(() => {
+        alert("ブラウザのタブまたはアプリウィンドウを閉じて終了してください。\nタイトル画面へ戻ります。");
+        engineRef.current?.quitToTitle();
+      }, 300);
+    }
+  };
+
   const handleLaunchDebugScene = (scene: "BRIEFING" | "EPILOGUE") => {
     engineRef.current?.startDebugScene(scene);
   };
@@ -235,6 +248,7 @@ export const App: React.FC = () => {
         {status !== "TITLE" && status !== "BRIEFING" && status !== "EPILOGUE" && status !== "GAMEOVER" && (
           <HUD
             score={score}
+            stage={stage}
             hp={hp}
             maxHp={maxHp}
             lives={lives}
@@ -243,6 +257,8 @@ export const App: React.FC = () => {
             isMuted={isMuted}
             onPause={handlePause}
             onToggleMute={handleToggleMute}
+            onRetry={handleRetry}
+            onQuitToTitle={handleQuitToTitle}
           />
         )}
 
@@ -252,6 +268,7 @@ export const App: React.FC = () => {
             difficulty={difficulty}
             onSelectDifficulty={handleSelectDifficulty}
             onStart={handleStart}
+            onExitGame={handleExitGame}
             isDevMode={isDevMode}
             onLaunchDebug={handleLaunchDebug}
             onLaunchScene={handleLaunchDebugScene}
@@ -271,8 +288,12 @@ export const App: React.FC = () => {
         {/* 【ポーズ画面オーバーレイ】ポーズ中のみ前面に表示 */}
         {status === "PAUSED" && (
           <PauseOverlay
+            stage={stage}
+            score={score}
             onResume={handleResume}
             onRetry={handleRetry}
+            onQuitToTitle={handleQuitToTitle}
+            onExitGame={handleExitGame}
             onToggleMute={handleToggleMute}
             isMuted={isMuted}
             isDevMode={isDevMode}

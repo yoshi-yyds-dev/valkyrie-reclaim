@@ -51,7 +51,8 @@
 │   ├── 04_screen-and-character-sizing.md # スマホ画面・キャラクターサイズ＆操作性設計ガイド
 │   ├── 05_cutscene-and-story-presentation.md # プロローグ・エピローグ演出（HUDブリーフィング）ガイド
 │   ├── 06_sound-and-audio-design.md   # サウンド・BGM音響設計ガイド（Web Audio SE ＆ 4Track BGM）
-│   └── 07_technical-architecture-and-flow.md # ★技術仕様書・システム構造・技術スタック・全体データフロー解説書
+│   ├── 07_technical-architecture-and-flow.md # ★技術仕様書・システム構造・技術スタック・全体データフロー解説書
+│   └── 08_deployment-platforms-comparison.md # ★デプロイ基盤の仕組み徹底解説（GitHub Pages / Cloudflare / Cloud Run）
 ├── game-design.md                     # ★企画方針書（随時更新・生きた設計図）
 ├── app/                               # 🚀【正式版開発環境】Vite + React + TS + Tailwind CSS
 │   ├── package.json                   # 依存関係（React, TS, Tailwind, Lucide）
@@ -115,6 +116,12 @@
   - **ST.03 ボスのフリーズ不具合修正 ＆ 攻撃パターン強化**: 上下うねり移動で `boss.y < boss.targetY` になった際に登場降下中と誤判定されて固まる不具合を `boss.age === 0` 条件追加で解消し、あわせて全方位リング・5列蛇行ウェーブ弾・頭部採掘レーザー自機狙い 3-way（発狂時 5-way）の 3 段階攻撃へ見直し。
   - **プロローグ・エピローグのストーリー拡充 ＆ 縦スクロール演出実装**: [BriefingOverlay.tsx](./app/src/components/BriefingOverlay.tsx)・[EpilogueOverlay.tsx](./app/src/components/EpilogueOverlay.tsx) の物語文を長編化・文字サイズ拡大（`12px` ➔ `15px`）し、[index.css](./app/src/index.css) の `story-crawl`（28秒かけて下から上へ流れるシネマティック・ロール演出）と上下フェードマスクを適用。
   - **自機撃墜専用の重厚爆発効果音を追加**: [SoundEngine.ts](./app/src/game/SoundEngine.ts) に `playPlayerExplosion()`（0.75秒ディープノイズ爆風＋サブベース衝撃波＋システムダウン下降音の3層合成）を新設し、[GameEngine.ts](./app/src/game/GameEngine.ts) の `spawnPlayerExplosion()` から再生。
+  - **デプロイ基盤の仕組み徹底解説ドキュメントの作成**: GitHub Pages（Actions による自動ビルド・配置）、Cloudflare（エッジCDN・プロキシ・Zero Trust）、Google Cloud Run（Dockerコンテナ・Scale to Zero・IAM/IAP認証）の内部動作メカニズムを比較解説した [`docs/08_deployment-platforms-comparison.md`](./docs/08_deployment-platforms-comparison.md) を新設。
+  - **アプリ名明示・常時ステージ表示・スマホ操作完全等価化・終了機能の実装**:
+    - 全画面で正式アプリタイトル **`VALKYRIE RECLAIM`** を明記（ポーズ画面上部・タイトル画面ヘッダー等）。
+    - 戦闘中 HUD およびポーズ画面の中央に **`STAGE 01`**（現在セクター・進捗）を常時ハイライト表示。
+    - スマホでもワンタップで実行できるよう、HUD 最上部に「クイックリトライ」「タイトルへ戻る（中断）」「ミュート」「ポーズ」ボタンを常設配置。
+    - タイトル画面およびポーズ画面に **「EXIT // ゲームを終了する」** ボタンを新設し、PC向けショートカットとして **`Esc × 2回`** によるゲーム終了機能も実装。
 
 ---
 
