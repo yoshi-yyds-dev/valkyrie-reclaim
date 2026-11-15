@@ -107,6 +107,7 @@
   - **プロローグ・エピローグ演出実装**: [`my_memo.md`](./my_memo.md) のバックグラウンドシナリオに基づき、[`BriefingOverlay.tsx`](./app/src/components/BriefingOverlay.tsx) の指令テキスト刷新および ST.10 撃破後の最終エピローグ画面（[`EpilogueOverlay.tsx`](./app/src/components/EpilogueOverlay.tsx)）を実装。
   - **PWA対応 ＆ GitHub Pages 公開準備完了**: `manifest.json`、`icon.svg`、`sw.js`（Service Worker）、および `vite.config.ts` の相対パス設定を組み込み、全画面・オフライン対応の PWA 化を完了。あわせて公開手順書（[`docs/HOW_TO_DEPLOY_GITHUB_PAGES.md`](./docs/HOW_TO_DEPLOY_GITHUB_PAGES.md)）を作成。
   - **中ボス強度調整 ＆ 3機残機制・再出撃演出の実装**: 中型エリート敵 `GUNSHIP` の HP を 75 ➔ 24 へ下方修正して破壊しやすく調整。自機はシールドHPに加えて **3機残機制** とし、被弾撃墜時は専用の大爆発アニメーション（48粒の火花・破片、火球コア、二重衝撃波リング、画面フラッシュ）を 0.45 秒再生した後、画面下端から次の機体がせり上がって再出撃（無敵時間付き）する演出を実装。全3機喪失時も 0.95 秒の爆発余韻を見せてからゲームオーバー画面へ移行。
+  - **プロローグ・エンディング専用 BGM の実装**: [SoundEngine.ts](./app/src/game/SoundEngine.ts) にシネマティック用の 2 楽曲（`PROLOGUE`: 宇宙の静寂と出撃前夜の緊迫感を演出する `Dm - Bb - Gm - A7sus4` アンビエント＆クリスタルアルペジオ / `EPILOGUE`: 朝日の惑星への帰還と凱旋を奏でる `Fmaj7 - G6 - Em7 - Am7` 王道進行バラード）を追加し、各シーン遷移時に自動再生。
   - **ゲームオーバー専用画面（コンティニュー不可）の実装**: 全3機を失った際に表示されるフルスクリーン画面（[`GameOverOverlay.tsx`](./app/src/components/GameOverOverlay.tsx)）を新設。コンティニューを排し「最初からやり直す（STAGE 01）」または「タイトルへ戻る」のみの緊張感ある仕様へ。
   - **初学者向け教材型コードコメントの全域適用**: プログラミング初学者や経験の浅い開発者がコードを読むだけで裏側の仕組みを体系的に学べるよう、全体のアーキテクチャ（React UI層とCanvasゲームコア層の分離）、各処理の位置づけ、つまずきやすいポイントの理由（デルタタイム・逆順ループ・三平方の定理・Web Audio合成・イベントバブリング等）をソースコード全域に詳細に追記。
 

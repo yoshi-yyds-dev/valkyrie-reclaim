@@ -235,7 +235,8 @@ export class GameEngine {
       this.status = "PLAYING";
       this.showBanner("STAGE 1 // ENGAGE", 2.0);
     } else {
-      this.sound.stopBgm();
+      // プロローグ専用BGM（出撃前夜の静寂と緊迫感）を再生開始
+      this.sound.playBgm("PROLOGUE");
       this.sound.playWarning();
       this.status = "BRIEFING";
       this.callbacks.onBannerChange(null);
@@ -343,7 +344,8 @@ export class GameEngine {
     this.warningTimer = 0;
     this.stageClearTimer = 0;
     this.input.isPointerDown = false;
-    this.sound.stopBgm();
+    // エンディング専用BGM（凱旋バラード）を再生開始
+    this.sound.playBgm("EPILOGUE");
 
     // 3. スコアが 0 の場合はランク評価表示を確認しやすいようダミースコアを補完
     if (this.score <= 0) {
@@ -898,9 +900,9 @@ export class GameEngine {
       this.stageClearTimer = Math.max(0, this.stageClearTimer - dt);
       if (this.stageClearTimer === 0) {
         if (this.stage >= 10) {
-          // ST.10 撃破後は最終エピローグ（エンディング）へ遷移
+          // ST.10 撃破後は最終エピローグ（エンディング）へ遷移し、専用BGMを再生
           this.status = "EPILOGUE";
-          this.sound.stopBgm();
+          this.sound.playBgm("EPILOGUE");
           this.input.isPointerDown = false;
           this.callbacks.onBannerChange(null);
           this.callbacks.onStatusChange(this.status);

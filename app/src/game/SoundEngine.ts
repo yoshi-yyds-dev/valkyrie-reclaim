@@ -42,7 +42,7 @@ export class SoundEngine {
   /** BGM シーケンサー管理用 */
   private bgmTimer: number | null = null;
   private bgmStep: number = 0;
-  private bgmTrack: "NORMAL" | "BOSS" | null = null;
+  private bgmTrack: "NORMAL" | "BOSS" | "PROLOGUE" | "EPILOGUE" | null = null;
   /** ドラム音（スネア・ハイハット）で再利用するノイズバッファ */
   private drumNoiseBuffer: AudioBuffer | null = null;
 
@@ -380,21 +380,27 @@ export class SoundEngine {
 
   /**
    * 【シンセサイザー BGM の再生開始】
-   * 外部 MP3 を使わず、64ステップ（4小節ループ）のコード進行に合わせて
-   * 1. ドラム（キック＋スネア＋ハイハット）
-   * 2. オクターブ奏法の16ビート・ベース
-   * 3. メロディック・リード
-   * 4. 空間を埋めるシンセパッド和音
-   * をリアルタイム合成し、迫力あるスペースSTGサウンドを奏でます。
+   * 外部 MP3 を使わず、64ステップ（4小節ループ）のコード進行に合わせてリアルタイム合成を行います。
+   * - NORMAL   : 通常戦闘用（16ビート＋ドラムの疾走サイバーサウンド）
+   * - BOSS     : ボス戦用（高速BPM・緊張感あふれる重厚バトルサウンド）
+   * - PROLOGUE : プロローグ専用（宇宙の静寂と出撃前夜の緊迫感を演出するアンビエント＆アルペジオ）
+   * - EPILOGUE : エンディング専用（戦いを終えた解放感と朝日の温かさを奏でる凱旋バラード）
    */
-  public playBgm(track: "NORMAL" | "BOSS"): void {
+  public playBgm(track: "NORMAL" | "BOSS" | "PROLOGUE" | "EPILOGUE"): void {
     if (this.bgmTrack === track && this.bgmTimer !== null) return;
     this.stopBgm();
     this.bgmTrack = track;
     this.bgmStep = 0;
 
-    // NORMAL: 114ms (BPM約131) / BOSS: 100ms (BPM150) で疾走感と緊張感を両立
-    const stepMs = track === "BOSS" ? 100 : 114;
+    // シーンの空気感に合わせて1ステップ（16分音符）の長さを調整
+    const stepMs =
+      track === "BOSS"
+        ? 100
+        : track === "NORMAL"
+          ? 114
+          : track === "PROLOGUE"
+            ? 175 // 約86 BPM：重厚で緊迫したブリーフィングテンポ
+            : 165; // 約91 BPM：穏やかで感動的なエンディングテンポ
     this.bgmTimer = window.setInterval(() => {
       this.stepBgm();
     }, stepMs);
@@ -434,6 +440,16 @@ export class SoundEngine {
     const bar = Math.floor(step64 / 16);  // 現在の小節（0 〜 3）
     const step = step64 % 16;             // 小節内の位置（0 〜 15）
     this.bgmStep += 1;
+
+    // プロローグ／エンディングは戦闘曲とは異なるシネマティック演奏ルーチンへ分岐
+    if (this.bgmTrack === "PROLOGUE") {
+      this.stepPrologueBgm(bar, step, now);
+      return;
+    }
+    if (this.bgmTrack === "EPILOGUE") {
+      this.stepEpilogueBgm(bar, step, now);
+      return;
+    }
 
     const isBoss = this.bgmTrack === "BOSS";
 
@@ -558,6 +574,156 @@ export class SoundEngine {
       leadGain.connect(this.ctx.destination);
       lead.start(now);
       lead.stop(now + 0.14);
+    }
+  }
+
+  /**
+   * 【シネマティック BGM 共通ヘルパー：柔らかなアタック＆余韻を持つ音を鳴らす】
+   * 戦闘曲の鋭い立ち上がりとは異なり、ゆっくりフェードイン（attack）して長い余韻を残すことで、
+   * 映画のサントラのような「広がり・空気感」を作ります。
+   */
+  private playSoftTone(
+    freq: number,
+    type: OscillatorType,
+    peakGain: number,
+    duration: number,
+    now: number,
+    attack: number = 0.04,
+    cutoffHz?: number
+  ): void {
+    if (!this.ctx) return;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, now);
+
+    gain.gain.setValueAtTime(0.0005, now);
+    gain.gain.linearRampToValueAtTime(peakGain, now + attack);
+    gain.gain.exponentialRampToValueAtTime(0.0005, now + duration);
+
+    if (cutoffHz) {
+      const filter = this.ctx.createBiquadFilter();
+      filter.type = "lowpass";
+      filter.frequency.setValueAtTime(cutoffHz, now);
+      osc.connect(filter);
+      filter.connect(gain);
+    } else {
+      osc.connect(gain);
+    }
+    gain.connect(this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + duration + 0.02);
+  }
+
+  /**
+   * 【プロローグ専用 BGM：出撃前夜の静寂と緊迫感（Dm - Bb - Gm - A7sus4）】
+   * 激しいドラムを排し、深い宇宙パッド・鼓動のような低音パルス・澄んだクリスタルアルペジオで
+   * 「未知の脅威に立ち向かう発進前の緊張感」を演出します。
+   */
+  private stepPrologueBgm(bar: number, step: number, now: number): void {
+    if (!this.ctx) return;
+
+    // 1. 小節頭：重厚な宇宙シンセパッド和音（2.8秒の長い余韻）
+    if (step === 0) {
+      const chords = [
+        [146.83, 174.61, 220.00, 293.66], // Dm (D3, F3, A3, D4)
+        [116.54, 174.61, 233.08, 293.66], // Bb (Bb2, F3, Bb3, D4)
+        [98.00, 146.83, 196.00, 233.08],  // Gm (G2, D3, G3, Bb3)
+        [110.00, 164.81, 220.00, 293.66], // A7sus4 (A2, E3, A3, D4)
+      ];
+      for (const freq of chords[bar]) {
+        this.playSoftTone(freq, "triangle", 0.022, 2.75, now, 0.35, 650);
+      }
+    }
+
+    // 2. 静かな鼓動パルス（小節の1拍目・3拍目）
+    if (step === 0 || step === 8) {
+      const pulse = this.ctx.createOscillator();
+      const pulseGain = this.ctx.createGain();
+      pulse.type = "sine";
+      pulse.frequency.setValueAtTime(95, now);
+      pulse.frequency.exponentialRampToValueAtTime(38, now + 0.18);
+      pulseGain.gain.setValueAtTime(0.09, now);
+      pulseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+      pulse.connect(pulseGain);
+      pulseGain.connect(this.ctx.destination);
+      pulse.start(now);
+      pulse.stop(now + 0.2);
+    }
+
+    // 3. 澄んだクリスタル・アルペジオ（8分音符刻みで緊張感のある9th響きを散りばめる）
+    if (step % 2 === 0) {
+      const arps = [
+        [293.66, 349.23, 440.00, 659.25, 440.00, 349.23, 587.33, 440.00], // Dm9
+        [233.08, 293.66, 349.23, 523.25, 349.23, 293.66, 466.16, 349.23], // Bbadd9
+        [196.00, 233.08, 293.66, 440.00, 293.66, 233.08, 392.00, 293.66], // Gm9
+        [220.00, 293.66, 329.63, 440.00, 329.63, 293.66, 440.00, 329.63], // Asus4
+      ];
+      const freq = arps[bar][step / 2];
+      this.playSoftTone(freq, "sine", 0.032, 0.45, now, 0.015);
+    }
+
+    // 4. 哀愁と決意のロングリードメロディ（4小節を通して歌う主旋律）
+    const melodyMap: Array<Record<number, { f: number; d: number }>> = [
+      { 0: { f: 587.33, d: 1.1 }, 6: { f: 659.25, d: 0.6 }, 10: { f: 698.46, d: 1.0 } },
+      { 0: { f: 587.33, d: 1.4 }, 10: { f: 523.25, d: 0.8 } },
+      { 0: { f: 466.16, d: 1.1 }, 6: { f: 523.25, d: 0.6 }, 10: { f: 587.33, d: 1.0 } },
+      { 0: { f: 440.00, d: 1.8 }, 12: { f: 523.25, d: 0.7 } },
+    ];
+    const note = melodyMap[bar][step];
+    if (note) {
+      this.playSoftTone(note.f, "triangle", 0.028, note.d, now, 0.08, 1200);
+    }
+  }
+
+  /**
+   * 【エンディング専用 BGM：戦いの終わりと凱旋の余韻（Fmaj7 - G6 - Em7 - Am7）】
+   * 王道進行の温かな和音と、オルゴール／ハープのような煌めくアルペジオ、
+   * 伸びやかな希望のメロディで「朝日を浴びて惑星へ帰還する感動」を奏でます。
+   */
+  private stepEpilogueBgm(bar: number, step: number, now: number): void {
+    // 1. 小節頭：包み込むような温かなストリングス風パッド和音（Fmaj7 - G6 - Em7 - Am7）
+    if (step === 0) {
+      const chords = [
+        [174.61, 220.00, 261.63, 329.63], // Fmaj7 (F3, A3, C4, E4)
+        [196.00, 246.94, 293.66, 329.63], // G6    (G3, B3, D4, E4)
+        [164.81, 196.00, 246.94, 293.66], // Em7   (E3, G3, B3, D4)
+        [110.00, 196.00, 261.63, 329.63], // Am7   (A2, G3, C4, E4)
+      ];
+      for (const freq of chords[bar]) {
+        this.playSoftTone(freq, "triangle", 0.024, 2.6, now, 0.3, 850);
+      }
+    }
+
+    // 2. 穏やかに支える温かなサイン波ベース（2分音符）
+    if (step === 0 || step === 8) {
+      const bassRoots = [87.31, 98.00, 82.41, 110.00]; // F2, G2, E2, A2
+      this.playSoftTone(bassRoots[bar], "sine", 0.065, 1.25, now, 0.04);
+    }
+
+    // 3. オルゴール／ハープ風の煌めくアルペジオ（8分音符）
+    if (step % 2 === 0) {
+      const arps = [
+        [349.23, 440.00, 523.25, 659.25, 523.25, 440.00, 659.25, 523.25], // Fmaj7
+        [392.00, 493.88, 587.33, 659.25, 587.33, 493.88, 659.25, 587.33], // G6
+        [329.63, 392.00, 493.88, 587.33, 493.88, 392.00, 587.33, 493.88], // Em7
+        [220.00, 329.63, 392.00, 523.25, 392.00, 329.63, 523.25, 392.00], // Am7
+      ];
+      const freq = arps[bar][step / 2];
+      this.playSoftTone(freq, "sine", 0.028, 0.55, now, 0.015);
+    }
+
+    // 4. 希望と凱旋の伸びやかな主旋律（サイン波＋1オクターブ上の柔らかい重ね音）
+    const melodyMap: Array<Record<number, { f: number; d: number }>> = [
+      { 0: { f: 659.25, d: 0.7 }, 4: { f: 698.46, d: 0.6 }, 8: { f: 783.99, d: 1.0 } },
+      { 0: { f: 880.00, d: 0.9 }, 6: { f: 783.99, d: 0.6 }, 10: { f: 659.25, d: 0.9 } },
+      { 0: { f: 587.33, d: 0.8 }, 6: { f: 659.25, d: 0.7 }, 10: { f: 783.99, d: 1.0 } },
+      { 0: { f: 523.25, d: 1.5 }, 10: { f: 587.33, d: 0.6 }, 14: { f: 659.25, d: 0.5 } },
+    ];
+    const note = melodyMap[bar][step];
+    if (note) {
+      this.playSoftTone(note.f, "sine", 0.042, note.d, now, 0.06);
+      this.playSoftTone(note.f * 2, "triangle", 0.009, note.d * 0.85, now, 0.08, 1800);
     }
   }
 }
