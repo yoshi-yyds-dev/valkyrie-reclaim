@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,300..900;1,300..900&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Space+Grotesk:wght@300..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"tertiary":"#fff7f2","on-primary-fixed":"#002022","tertiary-container":"#ffd5a6","on-error-container":"#ffdad6","surface-container-low":"#191b26","on-primary":"#00373a","on-background":"#e1e1f1","error":"#ffb4ab","tertiary-fixed":"#ffddb8","surface-container-highest":"#323440","surface-tint":"#00dce6","on-surface":"#e1e1f1","secondary-fixed-dim":"#ddb7ff","primary-container":"#00f3ff","primary-fixed-dim":"#00dce6","secondary-container":"#6f00be","on-secondary":"#490080","secondary-fixed":"#f0dbff","primary":"#e3fdff","on-tertiary-container":"#885500","surface-container-high":"#272935","on-tertiary-fixed":"#2a1700","primary-fixed":"#6ff6ff","surface-container-lowest":"#0b0e18","on-secondary-fixed-variant":"#6900b3","surface-bright":"#373944","secondary":"#ddb7ff","on-secondary-container":"#d6a9ff","outline":"#849495","inverse-primary":"#00696f","tertiary-fixed-dim":"#ffb95f","on-primary-fixed-variant":"#004f53","on-secondary-fixed":"#2c0051","inverse-on-surface":"#2e303b","on-primary-container":"#006b71","surface":"#11131d","inverse-surface":"#e1e1f1","surface-variant":"#323440","on-error":"#690005","on-tertiary":"#472a00","on-surface-variant":"#b9cacb","error-container":"#93000a","surface-dim":"#11131d","on-tertiary-fixed-variant":"#653e00","background":"#11131d","surface-container":"#1d1f2a","outline-variant":"#3a494b"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"space-xs":"0.25rem","space-md":"1rem","space-xl":"2.5rem","margin":"1rem","gutter-desktop":"1.5rem","gutter":"1rem","space-sm":"0.5rem","space-lg":"1.5rem","margin-desktop":"2.5rem"},fontFamily:{"label-lg":["JetBrains Mono"],"display-lg-mobile":["Space Grotesk"],"display-lg":["Space Grotesk"],"body-sm":["Chivo"],"headline-md":["Space Grotesk"],"headline-lg":["Space Grotesk"],"body-md":["Chivo"],"label-sm":["JetBrains Mono"],"label-md":["JetBrains Mono"],"headline-sm":["Space Grotesk"],"body-lg":["Chivo"]},fontSize:{"label-lg":["14px",{"lineHeight":"18px","letterSpacing":"0.08em","fontWeight":"600"}],"display-lg-mobile":["32px",{"lineHeight":"38px","letterSpacing":"0.04em","fontWeight":"700"}],"display-lg":["48px",{"lineHeight":"52px","letterSpacing":"0.05em","fontWeight":"700"}],"body-sm":["12px",{"lineHeight":"16px","letterSpacing":"0.01em","fontWeight":"400"}],"headline-md":["24px",{"lineHeight":"32px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"0.03em","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"20px","letterSpacing":"0.01em","fontWeight":"400"}],"label-sm":["10px",{"lineHeight":"12px","letterSpacing":"0.1em","fontWeight":"500"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.08em","fontWeight":"500"}],"headline-sm":["20px",{"lineHeight":"26px","letterSpacing":"0.02em","fontWeight":"600"}],"body-lg":["16px",{"lineHeight":"24px","letterSpacing":"0.01em","fontWeight":"400"}]}}}}</script></head><body class="bg-surface font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container min-h-screen"><header class="fixed top-0 left-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.5)]"><div class="h-20 max-w-[1440px] mx-auto px-gutter flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg"><div class="flex flex-col"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 bg-primary-container animate-pulse"></span><span class="font-label-sm text-label-sm text-primary tracking-widest uppercase">SYS_VER 4.09.2</span></div><span class="font-headline-sm text-headline-sm text-primary uppercase tracking-wider">ASTRAEA // TACTICAL ARCHIVE</span></div><div class="hidden xl:flex items-center gap-space-md pl-space-md"><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">DEFCON LINK</span><span class="font-label-md text-label-md text-primary-container">ONLINE // SECURE</span></div><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">TARGET LOCK</span><span class="font-label-md text-label-md text-error">STANDBY</span></div></div></div><nav class="hidden lg:flex items-center gap-space-xs p-space-xs bg-surface-container-low rounded-lg" data-active-classes="bg-primary-container text-on-primary-container font-label-lg text-label-lg rounded-DEFAULT shadow-[0_0_12px_rgba(0,243,255,0.35)]"><a aria-current="page" class="px-space-md py-space-sm transition-colors uppercase bg-primary-container text-on-primary-container font-label-lg text-label-lg rounded-DEFAULT shadow-[0_0_12px_rgba(0,243,255,0.35)]" data-path="機体ドック-(player-craft)" href="#">機体ドック (Player Craft)</a><a class="font-label-lg text-label-lg px-space-md py-space-sm text-on-surface-variant hover:text-on-surface transition-colors uppercase" data-path="敵軍戦力-(enemy-roster)" href="#">敵軍戦力 (Enemy Roster)</a><a class="font-label-lg text-label-lg px-space-md py-space-sm text-on-surface-variant hover:text-on-surface transition-colors uppercase" data-path="ボス艦隊-stage-1-10-(boss-fleet)" href="#">ボス艦隊 Stage 1-10 (Boss Fleet)</a></nav><div class="flex items-center gap-space-md"><div class="hidden sm:flex items-center gap-space-md px-space-md py-space-xs bg-surface-container-high rounded-DEFAULT"><div class="flex flex-col text-right"><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">CREDITS</span><span class="font-label-md text-label-md text-primary">02 // INSERT COIN</span></div><div class="flex flex-col text-right pl-space-sm"><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">HI-SCORE</span><span class="font-label-md text-label-md text-primary-container">09,842,500</span></div></div><button aria-label="Toggle Audio Telemetry" class="flex items-center justify-center w-10 h-10 bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded-DEFAULT transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">volume_up</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<!-- HUD Sub-Banner Status Strip -->
+<section class="w-full bg-surface-container-lowest px-gutter py-space-sm">
+<div class="max-w-[1440px] mx-auto flex flex-wrap items-center justify-between gap-space-sm font-label-sm text-label-sm text-on-surface-variant">
+<div class="flex items-center gap-space-md">
+<span class="inline-flex items-center gap-space-xs text-primary-container">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container animate-ping"></span>
+          HANGAR_BAY_04 // DOCKING GANTRY ACTIVE
+        </span>
+<span class="text-outline-variant">|</span>
+<span>SECURITY CLEARANCE: LV.5 OVERRIDE</span>
+<span class="text-outline-variant">|</span>
+<span class="text-secondary">PRESSURE: 101.3 KPA (NOMINAL)</span>
+</div>
+<div class="flex items-center gap-space-lg">
+<span class="hidden sm:inline">ORBITAL VELOCITY: 7.78 KM/S</span>
+<span class="text-tertiary-container bg-on-tertiary-container px-space-xs rounded-DEFAULT">WARP DRIVE CHARGED 100%</span>
+</div>
+</div>
+</section>
+<!-- Main Hangar Operations Deck -->
+<div class="max-w-[1440px] mx-auto w-full px-gutter py-space-md flex flex-col gap-space-lg">
+<!-- Top Asymmetric Briefing & Stage Telemetry Strip -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md items-stretch">
+<div class="lg:col-span-8 bg-surface-container-low p-space-md rounded-lg flex flex-col justify-between gap-space-sm shadow-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary-container text-[20px]">terminal</span>
+<span class="font-label-md text-label-md text-primary tracking-widest uppercase">TACTICAL BRIEFING // STAGE 07: ASTEROID BELT AMBUSH</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase bg-surface-container-highest px-space-xs py-0.5 rounded-DEFAULT">MISSION CODE: VALHALLA</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface">
+          敵機甲師団「クリムゾン・スウォーム」の主力空母が第4小惑星帯へ進入。高密度弾幕およびシールド防御ユニットの同時出現が予測される。選択した機体の特性に合わせた戦闘プロトコルを即時展開せよ。
+        </p>
+<div class="flex flex-wrap items-center gap-space-md pt-space-xs font-label-sm text-label-sm text-on-surface-variant">
+<span class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-error"></span> ENEMY BULLET DENSITY: CLASS-S (DENSE HELL)
+          </span>
+<span class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span> BOMB RECOVERY RATE: STANDARD (1.2X)
+          </span>
+<span class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-secondary"></span> GRAVITY WELL: 0.18G
+          </span>
+</div>
+</div>
+<div class="lg:col-span-4 bg-surface-container p-space-md rounded-lg flex flex-col justify-between shadow-md">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">PILOT ID CARD</span>
+<span class="w-2 h-2 bg-primary-container rounded-full"></span>
+</div>
+<div class="flex items-center gap-space-md py-space-xs">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[28px]">flight</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-headline-sm text-primary truncate">LT. CMDR. REN AMAMIYA</span>
+<span class="font-label-sm text-label-sm text-secondary truncate">CALLSIGN: "CYAN RAVEN" // 1ST SQUADRON</span>
+</div>
+</div>
+<div class="flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>SORTIES: 142</span>
+<span>KILL COUNT: 4,892</span>
+<span class="text-primary-container font-label-md text-label-md">RANK: SSS</span>
+</div>
+</div>
+</div>
+<!-- Craft Selector Grid (4 Slots) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-space-md" id="ship-selector-cards">
+<!-- SHIP 1: VALKYRIE -->
+<button class="ship-card text-left p-space-md rounded-lg bg-surface-container-low transition-all shadow-md group relative overflow-hidden ring-2 ring-primary-container" id="btn-valkyrie" onclick="selectShip('valkyrie')" type="button">
+<div class="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-primary-container/10 to-transparent pointer-events-none"></div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-sm text-label-sm px-space-xs py-0.5 rounded-DEFAULT bg-primary-container text-on-primary-container font-bold">TYPE-01</span>
+<span class="font-label-sm text-label-sm text-primary-container flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span> ACTIVE READY
+          </span>
+</div>
+<div class="font-headline-sm text-headline-sm text-primary tracking-wide mb-space-xs">VF-01 VALKYRIE</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">バランス型・標準突撃機 (All-Rounder Assault)</div>
+<!-- Craft Mini Blueprint SVG -->
+<div class="w-full h-32 bg-surface-container-lowest rounded-md flex items-center justify-center p-2 mb-space-sm relative">
+<svg class="w-full h-full text-primary-container fill-none stroke-current" stroke-width="1.5" viewbox="0 0 160 120">
+<!-- Thruster plume -->
+<path class="fill-primary-container/40 text-primary-container animate-pulse stroke-none" d="M74 95 L80 115 L86 95 Z"></path>
+<!-- Main Fuselage -->
+<polygon fill="rgba(0, 243, 255, 0.15)" points="80,12 88,38 94,62 88,94 72,94 66,62 72,38"></polygon>
+<line stroke-dasharray="2 2" x1="80" x2="80" y1="12" y2="94"></line>
+<!-- Forward Cannons -->
+<line stroke-width="2" x1="74" x2="74" y1="28" y2="10"></line>
+<line stroke-width="2" x1="86" x2="86" y1="28" y2="10"></line>
+<!-- Wings -->
+<polygon fill="rgba(0, 243, 255, 0.08)" points="66,60 30,76 22,86 44,84 68,76"></polygon>
+<polygon fill="rgba(0, 243, 255, 0.08)" points="94,60 130,76 138,86 116,84 92,76"></polygon>
+<!-- Wingtip Hardpoints -->
+<circle class="fill-primary-container" cx="26" cy="81" r="2.5"></circle>
+<circle class="fill-primary-container" cx="134" cy="81" r="2.5"></circle>
+<!-- Cockpit Canopy -->
+<ellipse class="fill-primary-container/50" cx="80" cy="45" rx="4" ry="12"></ellipse>
+</svg>
+<div class="absolute bottom-1 right-2 font-label-sm text-label-sm text-primary-container/60">SYS: MK-IV</div>
+</div>
+<div class="grid grid-cols-2 gap-x-space-sm gap-y-1 font-label-sm text-label-sm text-on-surface-variant">
+<span>SPEED: <span class="text-primary">NORMAL [B+]</span></span>
+<span>SHIELD: <span class="text-primary">MEDIUM [B]</span></span>
+<span class="col-span-2">MAIN: <span class="text-on-surface">VULCAN &amp; HOMING MISSILE</span></span>
+</div>
+</button>
+<!-- SHIP 2: TEMPEST -->
+<button class="ship-card text-left p-space-md rounded-lg bg-surface-container-low transition-all shadow-md group relative overflow-hidden opacity-80 hover:opacity-100" id="btn-tempest" onclick="selectShip('tempest')" type="button">
+<div class="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-secondary/10 to-transparent pointer-events-none"></div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-sm text-label-sm px-space-xs py-0.5 rounded-DEFAULT bg-secondary-container text-on-secondary-container font-bold">TYPE-02</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span> STANDBY
+          </span>
+</div>
+<div class="font-headline-sm text-headline-sm text-primary tracking-wide mb-space-xs">AX-7 TEMPEST</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">拡散・制空高機動機 (Wide Air-Superiority)</div>
+<!-- Craft Mini Blueprint SVG -->
+<div class="w-full h-32 bg-surface-container-lowest rounded-md flex items-center justify-center p-2 mb-space-sm relative">
+<svg class="w-full h-full text-secondary fill-none stroke-current" stroke-width="1.5" viewbox="0 0 160 120">
+<!-- Dual plume -->
+<path class="fill-secondary/40 text-secondary stroke-none" d="M68 96 L71 114 L75 96 Z M85 96 L89 114 L92 96 Z"></path>
+<!-- Delta Needle Body -->
+<polygon fill="rgba(221, 183, 255, 0.15)" points="80,16 87,46 98,72 90,96 70,96 62,72 73,46"></polygon>
+<!-- Extreme Swept Forward / Double Wings -->
+<path d="M62 64 L16 48 L14 58 L58 84" fill="rgba(221, 183, 255, 0.08)"></path>
+<path d="M98 64 L144 48 L146 58 L102 84" fill="rgba(221, 183, 255, 0.08)"></path>
+<line stroke-width="2" x1="20" x2="30" y1="46" y2="40"></line>
+<line stroke-width="2" x1="140" x2="130" y1="46" y2="40"></line>
+<!-- Cockpit -->
+<polygon class="fill-secondary/60" points="80,30 83,55 80,62 77,55"></polygon>
+</svg>
+<div class="absolute bottom-1 right-2 font-label-sm text-label-sm text-secondary/60">AGL: OVERCLOCKED</div>
+</div>
+<div class="grid grid-cols-2 gap-x-space-sm gap-y-1 font-label-sm text-label-sm text-on-surface-variant">
+<span>SPEED: <span class="text-secondary">EXTREME [S]</span></span>
+<span>SHIELD: <span class="text-secondary">LIGHT [C]</span></span>
+<span class="col-span-2">MAIN: <span class="text-on-surface">5-WAY SPREAD CANNON</span></span>
+</div>
+</button>
+<!-- SHIP 3: BEHEMOTH -->
+<button class="ship-card text-left p-space-md rounded-lg bg-surface-container-low transition-all shadow-md group relative overflow-hidden opacity-80 hover:opacity-100" id="btn-behemoth" onclick="selectShip('behemoth')" type="button">
+<div class="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-error/10 to-transparent pointer-events-none"></div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-sm text-label-sm px-space-xs py-0.5 rounded-DEFAULT bg-error-container text-on-error-container font-bold">TYPE-03</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span> STANDBY
+          </span>
+</div>
+<div class="font-headline-sm text-headline-sm text-primary tracking-wide mb-space-xs">TITAN-IV BEHEMOTH</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">重装甲・超火力機 (Heavy Siege Armor)</div>
+<!-- Craft Mini Blueprint SVG -->
+<div class="w-full h-32 bg-surface-container-lowest rounded-md flex items-center justify-center p-2 mb-space-sm relative">
+<svg class="w-full h-full text-error fill-none stroke-current" stroke-width="1.5" viewbox="0 0 160 120">
+<!-- Triple heavy thrusters -->
+<rect fill="rgba(255, 180, 171, 0.4)" height="15" stroke="none" width="7" x="66" y="96"></rect>
+<rect fill="rgba(255, 180, 171, 0.6)" height="18" stroke="none" width="8" x="76" y="98"></rect>
+<rect fill="rgba(255, 180, 171, 0.4)" height="15" stroke="none" width="7" x="87" y="96"></rect>
+<!-- Bulky chassis -->
+<polygon fill="rgba(255, 180, 171, 0.15)" points="80,18 96,24 104,50 114,84 100,98 60,98 46,84 56,50 64,24"></polygon>
+<!-- Heavy Barrel Gauss -->
+<rect fill="rgba(255, 180, 171, 0.3)" height="34" width="8" x="76" y="4"></rect>
+<!-- Reinforced Flanks -->
+<polygon fill="rgba(255, 180, 171, 0.1)" points="46,55 24,70 24,92 46,90"></polygon>
+<polygon fill="rgba(255, 180, 171, 0.1)" points="114,55 136,70 136,92 114,90"></polygon>
+<!-- Bridge Armor Plate -->
+<rect fill="rgba(255, 180, 171, 0.5)" height="14" rx="2" width="16" x="72" y="48"></rect>
+</svg>
+<div class="absolute bottom-1 right-2 font-label-sm text-label-sm text-error/60">ARMOR: TITANIUM-X</div>
+</div>
+<div class="grid grid-cols-2 gap-x-space-sm gap-y-1 font-label-sm text-label-sm text-on-surface-variant">
+<span>SPEED: <span class="text-error">HEAVY [D]</span></span>
+<span>SHIELD: <span class="text-error">MAXIMUM [SS]</span></span>
+<span class="col-span-2">MAIN: <span class="text-on-surface">PENETRATING GAUSS CANNON</span></span>
+</div>
+</button>
+<!-- SHIP 4: PHANTOM -->
+<button class="ship-card text-left p-space-md rounded-lg bg-surface-container-low transition-all shadow-md group relative overflow-hidden opacity-80 hover:opacity-100" id="btn-phantom" onclick="selectShip('phantom')" type="button">
+<div class="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-tertiary-fixed-dim/10 to-transparent pointer-events-none"></div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-sm text-label-sm px-space-xs py-0.5 rounded-DEFAULT bg-tertiary-container text-on-tertiary-container font-bold">TYPE-04</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span> STANDBY
+          </span>
+</div>
+<div class="font-headline-sm text-headline-sm text-primary tracking-wide mb-space-xs">MIRAGE-ZX PHANTOM</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">テクニカル・追従ビット機 (Tactical Bits / Warp)</div>
+<!-- Craft Mini Blueprint SVG -->
+<div class="w-full h-32 bg-surface-container-lowest rounded-md flex items-center justify-center p-2 mb-space-sm relative">
+<svg class="w-full h-full text-tertiary-fixed-dim fill-none stroke-current" stroke-width="1.5" viewbox="0 0 160 120">
+<!-- Quantum pulse core -->
+<circle class="stroke-dashed stroke-tertiary-fixed-dim animate-spin" cx="80" cy="62" r="14" stroke-dasharray="3 3"></circle>
+<!-- Sleek Needle Body -->
+<polygon fill="rgba(255, 185, 95, 0.15)" points="80,10 88,40 86,92 80,102 74,92 72,40"></polygon>
+<!-- Floating Autonomous Bits (Left and Right) -->
+<polygon class="animate-bounce" fill="rgba(255, 185, 95, 0.3)" points="34,44 42,52 34,64 28,52"></polygon>
+<polygon class="animate-bounce" fill="rgba(255, 185, 95, 0.3)" points="126,44 132,52 126,64 118,52"></polygon>
+<!-- Phase Tethers -->
+<line stroke-dasharray="2 3" stroke-width="1" x1="42" x2="72" y1="52" y2="58"></line>
+<line stroke-dasharray="2 3" stroke-width="1" x1="118" x2="88" y1="52" y2="58"></line>
+</svg>
+<div class="absolute bottom-1 right-2 font-label-sm text-label-sm text-tertiary-fixed-dim/60">TECH: BIT-LINKED</div>
+</div>
+<div class="grid grid-cols-2 gap-x-space-sm gap-y-1 font-label-sm text-label-sm text-on-surface-variant">
+<span>SPEED: <span class="text-tertiary-fixed-dim">FAST [A]</span></span>
+<span>SHIELD: <span class="text-tertiary-fixed-dim">PHASE [B-]</span></span>
+<span class="col-span-2">MAIN: <span class="text-on-surface">TWIN PARTICLE + 2x BITS</span></span>
+</div>
+</button>
+</div>
+<!-- Active Detailed Craft Inspector -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-stretch">
+<!-- Left Column: Large Isometric Tactical Blueprint & Hangar Stage Wireframe -->
+<div class="lg:col-span-7 bg-surface-container-low rounded-lg p-space-lg flex flex-col justify-between shadow-xl relative overflow-hidden">
+<!-- Diagnostic overlay labels -->
+<div class="flex items-center justify-between border-b border-surface-container-high pb-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary-container text-[22px]">view_in_ar</span>
+<span class="font-headline-sm text-headline-sm text-primary uppercase" id="ship-detail-name">VF-01 VALKYRIE</span>
+</div>
+<div class="flex items-center gap-space-md">
+<span class="font-label-sm text-label-sm text-primary-container bg-surface-container-highest px-space-xs py-0.5 rounded-DEFAULT" id="ship-class-tag">FIGHTER // ALL-ROUNDER</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">SERIAL: #VK-90241-AE</span>
+</div>
+</div>
+<!-- Wireframe Chamber Canvas -->
+<div class="my-space-md w-full h-80 bg-surface-container-lowest rounded-lg p-space-md relative flex items-center justify-center overflow-hidden">
+<!-- Hangar Grid Background Lines -->
+<div class="absolute inset-0 opacity-20 bg-[radial-gradient(#00f3ff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+<!-- Crosshair and Targeting Reticle Overlay -->
+<div class="absolute inset-0 pointer-events-none flex items-center justify-center">
+<div class="w-64 h-64 border border-primary-container/20 rounded-full flex items-center justify-center">
+<div class="w-48 h-48 border border-primary-container/10 rounded-full border-dashed animate-spin"></div>
+</div>
+<div class="absolute top-4 left-4 font-label-sm text-label-sm text-on-surface-variant">
+<div>CAM: GANTRY_OVERHEAD_03</div>
+<div>ZOOM: 142% FIT</div>
+</div>
+<div class="absolute bottom-4 left-4 font-label-sm text-label-sm text-primary-container flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+              CORE CATALYSIS: BALANCED
+            </div>
+</div>
+<!-- Dynamic SVG Vector of the Selected Ship (Scale / High Res) -->
+<div class="w-full h-full flex items-center justify-center transition-all duration-300" id="ship-vector-display">
+<!-- Default VF-01 Valkyrie Main SVG -->
+<svg class="w-full h-full max-h-72 drop-shadow-[0_0_18px_rgba(0,243,255,0.4)]" viewbox="0 0 320 240">
+<!-- Grid Floor perspective lines -->
+<line stroke="#1d1f2a" stroke-width="1" x1="40" x2="280" y1="210" y2="210"></line>
+<line stroke="#1d1f2a" stroke-width="1" x1="70" x2="250" y1="225" y2="225"></line>
+<!-- Engine Exhaust Plasma Jet -->
+<polygon class="animate-pulse" fill="#00f3ff" opacity="0.8" points="152,192 160,230 168,192"></polygon>
+<polygon fill="#e3fdff" opacity="0.9" points="155,192 160,215 165,192"></polygon>
+<circle cx="160" cy="192" fill="#00f3ff" r="6"></circle>
+<!-- Outer Wings & Winglets -->
+<polygon fill="#191b26" points="160,40 185,110 270,165 285,185 240,180 195,160 160,190 125,160 80,180 35,185 50,165 135,110" stroke="#00f3ff" stroke-width="2"></polygon>
+<!-- Wing Internal Plating Accents -->
+<polygon fill="#272935" points="160,50 178,105 240,150 215,160 170,140" stroke="#00dce6" stroke-width="1"></polygon>
+<polygon fill="#272935" points="160,50 142,105 80,150 105,160 150,140" stroke="#00dce6" stroke-width="1"></polygon>
+<!-- Forward Twin Heavy Autocannons -->
+<line stroke="#00f3ff" stroke-width="3" x1="148" x2="148" y1="65" y2="24"></line>
+<line stroke="#00f3ff" stroke-width="3" x1="172" x2="172" y1="65" y2="24"></line>
+<!-- Center Cockpit Canopy -->
+<polygon fill="#00f3ff" opacity="0.75" points="160,58 167,95 160,115 153,95" stroke="#e3fdff" stroke-width="1"></polygon>
+<!-- Micro Missile Launch Pods -->
+<rect fill="#323440" height="8" rx="2" stroke="#00dce6" stroke-width="1" width="16" x="110" y="145"></rect>
+<rect fill="#323440" height="8" rx="2" stroke="#00dce6" stroke-width="1" width="16" x="194" y="145"></rect>
+<!-- Decal Lines -->
+<line stroke="#00f3ff" stroke-dasharray="4 4" stroke-width="1.5" x1="160" x2="160" y1="120" y2="185"></line>
+</svg>
+</div>
+<div class="absolute bottom-2 right-4 flex items-center gap-space-xs font-label-sm text-label-sm text-on-surface-variant">
+<span>ROTATION: 0.00°</span>
+<span>VECTOR: LOCK</span>
+</div>
+</div>
+<!-- Pilot Voice & Radio Comms Feed -->
+<div class="p-space-sm bg-surface-container rounded-md flex items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[20px]">graphic_eq</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">ATC COMMS // HANGAR CH-2</span>
+<span class="font-body-sm text-body-sm text-primary" id="ship-pilot-dialogue">「VF-01、全推進器チェック完了。弾幕突破ルートの計算も終了した。いつでも出撃可能だ。」</span>
+</div>
+</div>
+<div class="font-label-sm text-label-sm text-outline px-space-xs py-0.5 rounded-DEFAULT bg-surface-container-low">AUDIO ACTIVE</div>
+</div>
+</div>
+<!-- Right Column: Weapon Loadout & Segmented Performance Hex/Bar Gauges -->
+<div class="lg:col-span-5 flex flex-col gap-space-md">
+<!-- Performance Matrix Card -->
+<div class="bg-surface-container-low rounded-lg p-space-md shadow-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between pb-space-xs border-b border-surface-container-high">
+<span class="font-label-md text-label-md text-primary uppercase">PERFORMANCE TELEMETRY</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">UNIT BENCHMARK</span>
+</div>
+<!-- Gauges with 10-Segment LED Bars -->
+<div class="flex flex-col gap-space-sm pt-space-xs" id="specs-gauges-container">
+<!-- SPEED -->
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-on-surface-variant">MAX FLIGHT SPEED (SPD)</span>
+<span class="text-primary font-bold" id="val-speed-text">MACH 4.8 // 70%</span>
+</div>
+<div class="grid grid-cols-10 gap-1 h-2" id="gauge-speed">
+<span class="bg-primary-container rounded-xs"></span>
+<span class="bg-primary-container rounded-xs"></span>
+<span class="bg-primary-container rounded-xs"></span>
+<span class="bg-primary-container rounded-xs"></span>
+<span class="bg-primary-container rounded-xs"></span>
+<span class="bg-primary-container rounded-xs"></span>
+<span class="bg-primary-container rounded-xs"></span>
+<span class="bg-surface-container-highest rounded-xs"></span>
+<span class="bg-surface-container-highest rounded-xs"></span>
+<span class="bg-surface-container-highest rounded-xs"></span>
+</div>
+</div>
+<!-- FIREPOWER -->
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-on-surface-variant">MAIN FIREPOWER (ATK)</span>
+<span class="text-primary font-bold" id="val-firepower-text">750 MW // 70%</span>
+</div>
+<div class="grid grid-cols-10 gap-1 h-2" id="gauge-firepower">
+<span class="bg-primary-container rounded-xs"></span>
+<span class="bg-primary-container rounded-xs"></span>
+<span class="bg-primary-container rounded-xs"></span>
+<span class="bg-primary-container rounded-xs"></span>
+<span class="bg-primary-container rounded-xs"></span>
+<span class="bg-primary-container rounded-xs"></span>
+<span class="bg-primary-container rounded-xs"></span>
+<span class="bg-surface-container-highest rounded-xs"></span>
+<span class="bg-surface-container-highest rounded-xs"></span>
+<span class="bg-surface-container-highest rounded-xs"></span>
+</div>
+</div>
+<!-- SHIELD DENSITY -->
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-on-surface-variant">DEFLECTOR SHIELD (DEF)</span>
+<span class="text-primary font-bold" id="val-shield-text">3,200 TJ // 60%</span>
+</div>
+<div class="grid grid-cols-10 gap-1 h-2" id="gauge-shield">
+<span class="bg-primary-container rounded-xs"></span>
+<span class="bg-primary-container rounded-xs"></span>
+<span class="bg-primary-container rounded-xs"></span>
+<span class="bg-primary-container rounded-xs"></span>
+<span class="bg-primary-container rounded-xs"></span>
+<span class="bg-primary-container rounded-xs"></span>
+<span class="bg-surface-container-highest rounded-xs"></span>
+<span class="bg-surface-container-highest rounded-xs"></span>
+<span class="bg-surface-container-highest rounded-xs"></span>
+<span class="bg-surface-container-highest rounded-xs"></span>
+</div>
+</div>
+<!-- SPECIAL GAUGE -->
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-on-surface-variant">BOMB / HYPER CAPACITY (SP)</span>
+<span class="text-primary font-bold" id="val-special-text">CAPACITY: 3 // 60%</span>
+</div>
+<div class="grid grid-cols-10 gap-1 h-2" id="gauge-special">
+<span class="bg-primary-container rounded-xs"></span>
+<span class="bg-primary-container rounded-xs"></span>
+<span class="bg-primary-container rounded-xs"></span>
+<span class="bg-primary-container rounded-xs"></span>
+<span class="bg-primary-container rounded-xs"></span>
+<span class="bg-primary-container rounded-xs"></span>
+<span class="bg-surface-container-highest rounded-xs"></span>
+<span class="bg-surface-container-highest rounded-xs"></span>
+<span class="bg-surface-container-highest rounded-xs"></span>
+<span class="bg-surface-container-highest rounded-xs"></span>
+</div>
+</div>
+<!-- SHOT SPREAD -->
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-on-surface-variant">SHOT CONVERGENCE / SPREAD</span>
+<span class="text-primary font-bold" id="val-spread-text">FOCUSED (25°) // 40%</span>
+</div>
+<div class="grid grid-cols-10 gap-1 h-2" id="gauge-spread">
+<span class="bg-primary-container rounded-xs"></span>
+<span class="bg-primary-container rounded-xs"></span>
+<span class="bg-primary-container rounded-xs"></span>
+<span class="bg-primary-container rounded-xs"></span>
+<span class="bg-surface-container-highest rounded-xs"></span>
+<span class="bg-surface-container-highest rounded-xs"></span>
+<span class="bg-surface-container-highest rounded-xs"></span>
+<span class="bg-surface-container-highest rounded-xs"></span>
+<span class="bg-surface-container-highest rounded-xs"></span>
+<span class="bg-surface-container-highest rounded-xs"></span>
+</div>
+</div>
+</div>
+</div>
+<!-- Weapon System Breakdown Card -->
+<div class="bg-surface-container-low rounded-lg p-space-md shadow-md flex flex-col gap-space-sm flex-1">
+<div class="flex items-center justify-between pb-space-xs border-b border-surface-container-high">
+<span class="font-label-md text-label-md text-primary uppercase">WEAPON SPECIFICATIONS</span>
+<span class="font-label-sm text-label-sm text-secondary">LOADOUT VERIFIED</span>
+</div>
+<!-- 3 Weapon Slots -->
+<div class="flex flex-col gap-space-xs">
+<!-- Primary Weapon -->
+<div class="p-space-xs rounded-md bg-surface-container flex items-start gap-space-sm">
+<div class="w-8 h-8 rounded-DEFAULT bg-primary-container/20 text-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">file_download_done</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">PRIMARY (SHOT)</span>
+<span class="font-label-sm text-label-sm text-primary-container font-semibold" id="wpn-primary-name">TWIN CONVERGENT LASER</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-1" id="wpn-primary-desc">
+                  高速直進型の集中パルスビーム。前方の硬目標および大型艦に絶大な貫通破壊力を発揮。
+                </p>
+</div>
+</div>
+<!-- Sub Weapon -->
+<div class="p-space-xs rounded-md bg-surface-container flex items-start gap-space-sm">
+<div class="w-8 h-8 rounded-DEFAULT bg-secondary-container/30 text-secondary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">rocket</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">SUB-WEAPON (AUTO)</span>
+<span class="font-label-sm text-label-sm text-secondary font-semibold" id="wpn-sub-name">HOMING MICRO-MISSILE CLUSTER</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-1" id="wpn-sub-desc">
+                  左右ポッドから自動射出される4連装追尾ミサイル。旋回して画面外周の小型雑魚編隊を掃討。
+                </p>
+</div>
+</div>
+<!-- Hyper / Bomb Weapon -->
+<div class="p-space-xs rounded-md bg-surface-container flex items-start gap-space-sm">
+<div class="w-8 h-8 rounded-DEFAULT bg-error-container/40 text-error flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">emergency_heat</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">HYPER BOMB (TRIGGER)</span>
+<span class="font-label-sm text-label-sm text-error font-semibold" id="wpn-bomb-name">OMEGA BURST CANNON</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-1" id="wpn-bomb-desc">
+                  全画面の敵弾を消滅させるメガクラスター爆縮砲。発動中3.5秒間の完全無敵フレームを展開。
+                </p>
+</div>
+</div>
+</div>
+<!-- Launch Action Control Center -->
+<div class="pt-space-sm mt-auto">
+<button class="w-full py-space-md px-space-lg rounded-DEFAULT bg-primary-container text-on-primary-container font-label-lg text-label-lg font-bold tracking-widest uppercase flex items-center justify-center gap-space-sm hover:brightness-110 active:scale-[0.99] transition-all shadow-[0_0_20px_rgba(0,243,255,0.4)]" id="deploy-button" onclick="triggerDeploySequence()" type="button">
+<span class="material-symbols-outlined text-[24px]">rocket_launch</span>
+<span id="deploy-btn-text">DEPLOY TO COMBAT AREA // 出撃開始</span>
+</button>
+<div class="flex items-center justify-between pt-space-xs font-label-sm text-label-sm text-on-surface-variant">
+<span>FUEL: 100% LOADED</span>
+<span class="text-primary-container">COCKPIT INTERLINK: STABLE</span>
+<span>EMERGENCY EJECT: ARMED</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Arcade Sound Effects & Soundboard Bar (Cabinet Interactivity) -->
+<div class="bg-surface-container p-space-md rounded-lg flex flex-col md:flex-row items-center justify-between gap-space-md shadow-md">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary-container text-[20px]">music_note</span>
+<span class="font-label-md text-label-md text-primary uppercase">SOUND TEST &amp; AVIONICS SFX:</span>
+</div>
+<div class="flex flex-wrap items-center gap-space-xs">
+<button class="px-space-sm py-1 bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-sm text-label-sm rounded-DEFAULT transition-colors" onclick="playSfx('laser')" type="button">
+          [SFX: LASER]
+        </button>
+<button class="px-space-sm py-1 bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-sm text-label-sm rounded-DEFAULT transition-colors" onclick="playSfx('lock')" type="button">
+          [SFX: LOCK-ON]
+        </button>
+<button class="px-space-sm py-1 bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-sm text-label-sm rounded-DEFAULT transition-colors" onclick="playSfx('bomb')" type="button">
+          [SFX: BOMB EXP]
+        </button>
+<button class="px-space-sm py-1 bg-surface-container-high hover:bg-surface-container-highest text-error font-label-sm text-label-sm rounded-DEFAULT transition-colors" onclick="playSfx('warning')" type="button">
+          [SFX: RED ALERT]
+        </button>
+<button class="px-space-sm py-1 bg-surface-container-high hover:bg-surface-container-highest text-primary-container font-label-sm text-label-sm rounded-DEFAULT transition-colors" onclick="playSfx('warp')" type="button">
+          [SFX: WARP DASH]
+        </button>
+</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-space-xs">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+        YM2612 SYNTH SIMULATOR READY
+      </div>
+</div>
+</div>
+<!-- Launch Audio Synthesizer & Dynamic Craft Data Script -->
+<script>
+    const shipData = {
+      valkyrie: {
+        name: "VF-01 VALKYRIE",
+        typeTag: "FIGHTER // ALL-ROUNDER",
+        dialogue: "「VF-01、全推進器チェック完了。弾幕突破ルートの計算も終了した。いつでも出撃可能だ。」",
+        speedText: "MACH 4.8 // 70%",
+        firepowerText: "750 MW // 70%",
+        shieldText: "3,200 TJ // 60%",
+        specialText: "CAPACITY: 3 // 60%",
+        spreadText: "FOCUSED (25°) // 40%",
+        bars: { speed: 7, fire: 7, shield: 6, special: 6, spread: 4 },
+        themeColor: "primary-container",
+        wpnPrimary: {
+          title: "TWIN CONVERGENT LASER",
+          desc: "高速直進型の集中パルスビーム。前方の硬目標および大型艦に絶大な貫通破壊力を発揮。"
+        },
+        wpnSub: {
+          title: "HOMING MICRO-MISSILE CLUSTER",
+          desc: "左右ポッドから自動射出される4連装追尾ミサイル。旋回して画面外周の小型雑魚編隊を掃討。"
+        },
+        wpnBomb: {
+          title: "OMEGA BURST CANNON",
+          desc: "全画面の敵弾を消滅させるメガクラスター爆縮砲。発動中3.5秒間の完全無敵フレームを展開。"
+        },
+        svg: `<svg viewBox="0 0 320 240" class="w-full h-full max-h-72 drop-shadow-[0_0_18px_rgba(0,243,255,0.4)]">
+          <line x1="40" y1="210" x2="280" y2="210" stroke="#1d1f2a" stroke-width="1"/>
+          <line x1="70" y1="225" x2="250" y2="225" stroke="#1d1f2a" stroke-width="1"/>
+          <polygon points="152,192 160,230 168,192" fill="#00f3ff" opacity="0.8" class="animate-pulse"/>
+          <polygon points="155,192 160,215 165,192" fill="#e3fdff" opacity="0.9"/>
+          <circle cx="160" cy="192" r="6" fill="#00f3ff"/>
+          <polygon points="160,40 185,110 270,165 285,185 240,180 195,160 160,190 125,160 80,180 35,185 50,165 135,110" fill="#191b26" stroke="#00f3ff" stroke-width="2"/>
+          <polygon points="160,50 178,105 240,150 215,160 170,140" fill="#272935" stroke="#00dce6" stroke-width="1"/>
+          <polygon points="160,50 142,105 80,150 105,160 150,140" fill="#272935" stroke="#00dce6" stroke-width="1"/>
+          <line x1="148" y1="65" x2="148" y2="24" stroke="#00f3ff" stroke-width="3"/>
+          <line x1="172" y1="65" x2="172" y2="24" stroke="#00f3ff" stroke-width="3"/>
+          <polygon points="160,58 167,95 160,115 153,95" fill="#00f3ff" opacity="0.75" stroke="#e3fdff" stroke-width="1"/>
+          <rect x="110" y="145" width="16" height="8" rx="2" fill="#323440" stroke="#00dce6" stroke-width="1"/>
+          <rect x="194" y="145" width="16" height="8" rx="2" fill="#323440" stroke="#00dce6" stroke-width="1"/>
+          <line x1="160" y1="120" x2="160" y2="185" stroke="#00f3ff" stroke-dasharray="4 4" stroke-width="1.5"/>
+        </svg>`
+      },
+      tempest: {
+        name: "AX-7 TEMPEST",
+        typeTag: "INTERCEPTOR // HIGH AGILITY",
+        dialogue: "「AX-7テンペスト、バーニア同調率100%。この旋回性なら敵の弾幕など止まって見えるな。」",
+        speedText: "MACH 7.2 // 100%",
+        firepowerText: "620 MW // 60%",
+        shieldText: "2,100 TJ // 40%",
+        specialText: "CAPACITY: 4 // 80%",
+        spreadText: "WIDE ARC (85°) // 90%",
+        bars: { speed: 10, fire: 6, shield: 4, special: 8, spread: 9 },
+        themeColor: "secondary",
+        wpnPrimary: {
+          title: "5-WAY PLASMA SPREAD CANNON",
+          desc: "広角扇状に5列発射される高周波プラズマ弾。画面全域の敵編隊を瞬時に制圧。"
+        },
+        wpnSub: {
+          title: "CHRONO-WARP SIDESTEP BOOST",
+          desc: "急速移動入力時にミリ秒単位の残像スリップストリームを発生させ、弾幕の隙間をすり抜ける。"
+        },
+        wpnBomb: {
+          title: "EMP SHOCKWAVE DETONATOR",
+          desc: "機体を中心とする巨大電磁パルス球を放出。接触した敵弾をスコアアイテムへと変換する。"
+        },
+        svg: `<svg viewBox="0 0 320 240" class="w-full h-full max-h-72 drop-shadow-[0_0_18px_rgba(221,183,255,0.4)]">
+          <line x1="40" y1="210" x2="280" y2="210" stroke="#1d1f2a" stroke-width="1"/>
+          <polygon points="144,196 150,230 156,196" fill="#ddb7ff" opacity="0.8" class="animate-pulse"/>
+          <polygon points="164,196 170,230 176,196" fill="#ddb7ff" opacity="0.8" class="animate-pulse"/>
+          <!-- Swept needle wings -->
+          <polygon points="160,25 174,70 196,120 295,95 300,120 205,175 160,195 115,175 20,120 25,95 124,120 146,70" fill="#191b26" stroke="#ddb7ff" stroke-width="2"/>
+          <!-- Wing vents -->
+          <line x1="210" y1="135" x2="270" y2="115" stroke="#f0dbff" stroke-width="2"/>
+          <line x1="110" y1="135" x2="50" y2="115" stroke="#f0dbff" stroke-width="2"/>
+          <!-- 5-Way Muzzle Nodes -->
+          <circle cx="160" cy="22" r="3" fill="#ddb7ff"/>
+          <circle cx="215" cy="115" r="3" fill="#ddb7ff"/>
+          <circle cx="105" cy="115" r="3" fill="#ddb7ff"/>
+          <circle cx="295" cy="100" r="3" fill="#ddb7ff"/>
+          <circle cx="25" cy="100" r="3" fill="#ddb7ff"/>
+          <!-- Canopy -->
+          <polygon points="160,50 166,95 160,110 154,95" fill="#6f00be" stroke="#ddb7ff" stroke-width="1.5"/>
+        </svg>`
+      },
+      behemoth: {
+        name: "TITAN-IV BEHEMOTH",
+        typeTag: "DREADNOUGHT // HEAVY SIEGE",
+        dialogue: "「主砲ガウス・チャンバー加圧完了。装甲圧700mm、直撃を恐れず最短距離で敵旗艦を圧殺する。」",
+        speedText: "MACH 3.2 // 30%",
+        firepowerText: "1,200 MW // 100%",
+        shieldText: "5,800 TJ // 100%",
+        specialText: "CAPACITY: 2 // 40%",
+        spreadText: "HYPER LINEAR (5°) // 20%",
+        bars: { speed: 3, fire: 10, shield: 10, special: 4, spread: 2 },
+        themeColor: "error",
+        wpnPrimary: {
+          title: "HEAVY PENETRATING GAUSS CANNON",
+          desc: "極超音速で発射される超電磁徹甲弾。大型戦艦の装甲を貫通し背後の護衛機まで粉砕する。"
+        },
+        wpnSub: {
+          title: "FLAK BARRIER AUTOCANNON",
+          desc: "近接する敵の誘導弾や小型ビットを自動迎撃する近距離対空防空キャニスター砲。"
+        },
+        wpnBomb: {
+          title: "GRAVITY SINGULARITY COLLAPSE",
+          desc: "超重力特異点を前方に投射。広域の敵艦と弾幕を中心へ吸い込み、壊滅的重力崩壊を引き起こす。"
+        },
+        svg: `<svg viewBox="0 0 320 240" class="w-full h-full max-h-72 drop-shadow-[0_0_18px_rgba(255,180,171,0.4)]">
+          <line x1="40" y1="210" x2="280" y2="210" stroke="#1d1f2a" stroke-width="1"/>
+          <!-- Massive thruster fire -->
+          <rect x="135" y="196" width="14" height="28" fill="#ffb4ab" opacity="0.8"/>
+          <rect x="153" y="196" width="14" height="34" fill="#ffdad6" opacity="0.9"/>
+          <rect x="171" y="196" width="14" height="28" fill="#ffb4ab" opacity="0.8"/>
+          <!-- Heavy hull -->
+          <polygon points="160,35 190,45 205,85 240,105 240,165 210,195 110,195 80,165 80,105 115,85 130,45" fill="#191b26" stroke="#ffb4ab" stroke-width="2.5"/>
+          <!-- Center twin massive barrels -->
+          <rect x="148" y="10" width="10" height="70" fill="#272935" stroke="#ffb4ab" stroke-width="1.5"/>
+          <rect x="162" y="10" width="10" height="70" fill="#272935" stroke="#ffb4ab" stroke-width="1.5"/>
+          <!-- Armor slabs -->
+          <polygon points="90,115 115,95 115,170 90,155" fill="#323440" stroke="#93000a" stroke-width="1"/>
+          <polygon points="230,115 205,95 205,170 230,155" fill="#323440" stroke="#93000a" stroke-width="1"/>
+          <rect x="144" y="90" width="32" height="24" rx="3" fill="#ffb4ab" opacity="0.3" stroke="#ffb4ab" stroke-width="1.5"/>
+        </svg>`
+      },
+      phantom: {
+        name: "MIRAGE-ZX PHANTOM",
+        typeTag: "SPEC-OPS // QUANTUM BITS",
+        dialogue: "「量子ビットユニット同期完了。敵の思考パターンの先読みに入ります。虚数空間へダイブ準備よし。」",
+        speedText: "MACH 5.6 // 80%",
+        firepowerText: "820 MW // 80%",
+        shieldText: "2,800 TJ // 50%",
+        specialText: "CAPACITY: 5 // 100%",
+        spreadText: "HOMING / FREE (60°) // 70%",
+        bars: { speed: 8, fire: 8, shield: 5, special: 10, spread: 7 },
+        themeColor: "tertiary-fixed-dim",
+        wpnPrimary: {
+          title: "TWIN TACHYON PARTICLE BEAM",
+          desc: "位相シフトされたタキオン粒子砲。敵のシールド障壁を無視して直接内部機関に損傷を与える。"
+        },
+        wpnSub: {
+          title: "DUAL AUTONOMOUS BITS (追従ビット)",
+          desc: "自機左右を旋回追従する2基の遠隔端末。自機の攻撃に連動し独立した射角から援護射撃を実施。"
+        },
+        wpnBomb: {
+          title: "QUANTUM OVERLOAD (PHASE SHIFT)",
+          desc: "機体を5秒間完全非実体化（虚数化）。敵弾をすり抜けながら接触した全標的に分解ダメージを与える。"
+        },
+        svg: `<svg viewBox="0 0 320 240" class="w-full h-full max-h-72 drop-shadow-[0_0_18px_rgba(255,185,95,0.4)]">
+          <line x1="40" y1="210" x2="280" y2="210" stroke="#1d1f2a" stroke-width="1"/>
+          <!-- Tachyon ring center -->
+          <circle cx="160" cy="120" r="32" stroke="#ffb95f" stroke-width="1.5" stroke-dasharray="4 4" class="animate-spin"/>
+          <circle cx="160" cy="120" r="12" fill="#ffd5a6" opacity="0.5"/>
+          <!-- Ship Hull (Aerodynamic forward spear) -->
+          <polygon points="160,20 175,80 180,180 160,205 140,180 145,80" fill="#191b26" stroke="#ffb95f" stroke-width="2"/>
+          <line x1="160" y1="20" x2="160" y2="180" stroke="#fff7f2" stroke-width="1.5"/>
+          <!-- Detached Floating Bits (Hovering on Sides) -->
+          <g class="animate-bounce">
+            <polygon points="65,95 85,115 65,135 50,115" fill="#323440" stroke="#ffb95f" stroke-width="2"/>
+            <circle cx="65" cy="115" r="4" fill="#ffb95f"/>
+            <line x1="85" y1="115" x2="145" y2="115" stroke="#ffb95f" stroke-width="1" stroke-dasharray="2 3" opacity="0.7"/>
+          </g>
+          <g class="animate-bounce">
+            <polygon points="255,95 270,115 255,135 235,115" fill="#323440" stroke="#ffb95f" stroke-width="2"/>
+            <circle cx="255" cy="115" r="4" fill="#ffb95f"/>
+            <line x1="235" y1="115" x2="175" y2="115" stroke="#ffb95f" stroke-width="1" stroke-dasharray="2 3" opacity="0.7"/>
+          </g>
+        </svg>`
+      }
+    };
+
+    function updateGauge(containerId, count, themeColor) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      const children = container.querySelectorAll("span");
+      children.forEach((span, idx) => {
+        span.className = "rounded-xs";
+        if (idx < count) {
+          if (themeColor === "secondary") span.classList.add("bg-secondary");
+          else if (themeColor === "error") span.classList.add("bg-error");
+          else if (themeColor === "tertiary-fixed-dim") span.classList.add("bg-tertiary-fixed-dim");
+          else span.classList.add("bg-primary-container");
+        } else {
+          span.classList.add("bg-surface-container-highest");
+        }
+      });
+    }
+
+    function selectShip(shipKey) {
+      const data = shipData[shipKey];
+      if (!data) return;
+
+      // Update Selection Visual on Cards
+      const buttons = document.querySelectorAll(".ship-card");
+      buttons.forEach(btn => {
+        btn.classList.remove("ring-2", "ring-primary-container", "ring-secondary", "ring-error", "ring-tertiary-fixed-dim");
+        btn.classList.add("opacity-80");
+      });
+
+      const currentBtn = document.getElementById(`btn-${shipKey}`);
+      if (currentBtn) {
+        currentBtn.classList.remove("opacity-80");
+        if (data.themeColor === "secondary") currentBtn.classList.add("ring-2", "ring-secondary");
+        else if (data.themeColor === "error") currentBtn.classList.add("ring-2", "ring-error");
+        else if (data.themeColor === "tertiary-fixed-dim") currentBtn.classList.add("ring-2", "ring-tertiary-fixed-dim");
+        else currentBtn.classList.add("ring-2", "ring-primary-container");
+      }
+
+      // Update Inspector Panel
+      document.getElementById("ship-detail-name").textContent = data.name;
+      document.getElementById("ship-class-tag").textContent = data.typeTag;
+      document.getElementById("ship-pilot-dialogue").textContent = data.dialogue;
+      document.getElementById("ship-vector-display").innerHTML = data.svg;
+
+      // Update Spec Readout Texts
+      document.getElementById("val-speed-text").textContent = data.speedText;
+      document.getElementById("val-firepower-text").textContent = data.firepowerText;
+      document.getElementById("val-shield-text").textContent = data.shieldText;
+      document.getElementById("val-special-text").textContent = data.specialText;
+      document.getElementById("val-spread-text").textContent = data.spreadText;
+
+      // Update Segment Gauges
+      updateGauge("gauge-speed", data.bars.speed, data.themeColor);
+      updateGauge("gauge-firepower", data.bars.fire, data.themeColor);
+      updateGauge("gauge-shield", data.bars.shield, data.themeColor);
+      updateGauge("gauge-special", data.bars.special, data.themeColor);
+      updateGauge("gauge-spread", data.bars.spread, data.themeColor);
+
+      // Update Weapon Texts
+      document.getElementById("wpn-primary-name").textContent = data.wpnPrimary.title;
+      document.getElementById("wpn-primary-desc").textContent = data.wpnPrimary.desc;
+      document.getElementById("wpn-sub-name").textContent = data.wpnSub.title;
+      document.getElementById("wpn-sub-desc").textContent = data.wpnSub.desc;
+      document.getElementById("wpn-bomb-name").textContent = data.wpnBomb.title;
+      document.getElementById("wpn-bomb-desc").textContent = data.wpnBomb.desc;
+
+      playSfx("lock");
+    }
+
+    // Web Audio Synthesizer for Arcade Retro SFX
+    let audioCtx = null;
+    function getAudioContext() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      return audioCtx;
+    }
+
+    function playSfx(type) {
+      try {
+        const ctx = getAudioContext();
+        if (ctx.state === 'suspended') {
+          ctx.resume();
+        }
+        const now = ctx.currentTime;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        if (type === 'laser') {
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(880, now);
+          osc.frequency.exponentialRampToValueAtTime(110, now + 0.18);
+          gain.gain.setValueAtTime(0.3, now);
+          gain.gain.linearRampToValueAtTime(0.01, now + 0.18);
+          osc.start(now);
+          osc.stop(now + 0.18);
+        } else if (type === 'lock') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(1200, now);
+          osc.frequency.setValueAtTime(1600, now + 0.05);
+          gain.gain.setValueAtTime(0.2, now);
+          gain.gain.linearRampToValueAtTime(0.01, now + 0.12);
+          osc.start(now);
+          osc.stop(now + 0.12);
+        } else if (type === 'bomb') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(140, now);
+          osc.frequency.exponentialRampToValueAtTime(30, now + 0.5);
+          gain.gain.setValueAtTime(0.5, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+          osc.start(now);
+          osc.stop(now + 0.5);
+        } else if (type === 'warning') {
+          osc.type = 'square';
+          osc.frequency.setValueAtTime(740, now);
+          osc.frequency.setValueAtTime(580, now + 0.1);
+          gain.gain.setValueAtTime(0.25, now);
+          gain.gain.linearRampToValueAtTime(0.01, now + 0.22);
+          osc.start(now);
+          osc.stop(now + 0.22);
+        } else if (type === 'warp') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(300, now);
+          osc.frequency.exponentialRampToValueAtTime(2400, now + 0.35);
+          gain.gain.setValueAtTime(0.3, now);
+          gain.gain.linearRampToValueAtTime(0.01, now + 0.35);
+          osc.start(now);
+          osc.stop(now + 0.35);
+        }
+      } catch (e) {
+        // Audio fallback
+      }
+    }
+
+    function triggerDeploySequence() {
+      playSfx('warp');
+      const btn = document.getElementById("deploy-button");
+      const btnText = document.getElementById("deploy-btn-text");
+      
+      btn.classList.add("bg-error-container", "text-on-error-container", "animate-pulse");
+      btnText.textContent = "LAUNCH CLEARED // CATAPULT ENGAGING...";
+      
+      setTimeout(() => {
+        playSfx('laser');
+        btnText.textContent = "SORTIE IN PROGRESS // GOOD HUNTING!";
+      }, 1200);
+
+      setTimeout(() => {
+        btn.classList.remove("bg-error-container", "text-on-error-container", "animate-pulse");
+        btnText.textContent = "DEPLOY TO COMBAT AREA // 出撃開始";
+      }, 3200);
+    }
+  </script>
+</div></main><footer class="w-full bg-surface-container-lowest py-space-lg"><div class="max-w-[1440px] mx-auto px-gutter flex flex-col md:flex-row items-center justify-between gap-space-md"><div class="flex items-center gap-space-md"><div class="w-2 h-2 rounded-full bg-primary-container"></div><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">PROJECT ASTRAEA COMBAT TELEMETRY // ORBITAL SECTOR 07-E</span></div><div class="font-label-sm text-label-sm text-on-surface-variant text-center uppercase tracking-widest">© 2024 UNITED EARTH DEFENSE FLEET. ALL ARCHIVAL RIGHTS RESERVED.</div><div class="flex items-center gap-space-lg"><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">FREQ: 142.85 MHZ</span><span class="font-label-sm text-label-sm text-primary uppercase">CORE READY</span></div></div></footer></body></html>

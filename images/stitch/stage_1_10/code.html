@@ -1,0 +1,1104 @@
+<!DOCTYPE html><html class="dark" lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_standard" name="shell-type"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,300..900;1,300..900&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Space+Grotesk:wght@300..700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"tertiary":"#fff7f2","on-primary-fixed":"#002022","tertiary-container":"#ffd5a6","on-error-container":"#ffdad6","surface-container-low":"#191b26","on-primary":"#00373a","on-background":"#e1e1f1","error":"#ffb4ab","tertiary-fixed":"#ffddb8","surface-container-highest":"#323440","surface-tint":"#00dce6","on-surface":"#e1e1f1","secondary-fixed-dim":"#ddb7ff","primary-container":"#00f3ff","primary-fixed-dim":"#00dce6","secondary-container":"#6f00be","on-secondary":"#490080","secondary-fixed":"#f0dbff","primary":"#e3fdff","on-tertiary-container":"#885500","surface-container-high":"#272935","on-tertiary-fixed":"#2a1700","primary-fixed":"#6ff6ff","surface-container-lowest":"#0b0e18","on-secondary-fixed-variant":"#6900b3","surface-bright":"#373944","secondary":"#ddb7ff","on-secondary-container":"#d6a9ff","outline":"#849495","inverse-primary":"#00696f","tertiary-fixed-dim":"#ffb95f","on-primary-fixed-variant":"#004f53","on-secondary-fixed":"#2c0051","inverse-on-surface":"#2e303b","on-primary-container":"#006b71","surface":"#11131d","inverse-surface":"#e1e1f1","surface-variant":"#323440","on-error":"#690005","on-tertiary":"#472a00","on-surface-variant":"#b9cacb","error-container":"#93000a","surface-dim":"#11131d","on-tertiary-fixed-variant":"#653e00","background":"#11131d","surface-container":"#1d1f2a","outline-variant":"#3a494b"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"space-xs":"0.25rem","space-md":"1rem","space-xl":"2.5rem","margin":"1rem","gutter-desktop":"1.5rem","gutter":"1rem","space-sm":"0.5rem","space-lg":"1.5rem","margin-desktop":"2.5rem"},fontFamily:{"label-lg":["JetBrains Mono"],"display-lg-mobile":["Space Grotesk"],"display-lg":["Space Grotesk"],"body-sm":["Chivo"],"headline-md":["Space Grotesk"],"headline-lg":["Space Grotesk"],"body-md":["Chivo"],"label-sm":["JetBrains Mono"],"label-md":["JetBrains Mono"],"headline-sm":["Space Grotesk"],"body-lg":["Chivo"]},fontSize:{"label-lg":["14px",{"lineHeight":"18px","letterSpacing":"0.08em","fontWeight":"600"}],"display-lg-mobile":["32px",{"lineHeight":"38px","letterSpacing":"0.04em","fontWeight":"700"}],"display-lg":["48px",{"lineHeight":"52px","letterSpacing":"0.05em","fontWeight":"700"}],"body-sm":["12px",{"lineHeight":"16px","letterSpacing":"0.01em","fontWeight":"400"}],"headline-md":["24px",{"lineHeight":"32px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"0.03em","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"20px","letterSpacing":"0.01em","fontWeight":"400"}],"label-sm":["10px",{"lineHeight":"12px","letterSpacing":"0.1em","fontWeight":"500"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.08em","fontWeight":"500"}],"headline-sm":["20px",{"lineHeight":"26px","letterSpacing":"0.02em","fontWeight":"600"}],"body-lg":["16px",{"lineHeight":"24px","letterSpacing":"0.01em","fontWeight":"400"}]}}}}</script></head><body class="bg-surface font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container min-h-screen"><header class="fixed top-0 left-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.5)]"><div class="h-20 max-w-[1440px] mx-auto px-gutter flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg"><div class="flex flex-col"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 bg-primary-container animate-pulse"></span><span class="font-label-sm text-label-sm text-primary tracking-widest uppercase">SYS_VER 4.09.2</span></div><span class="font-headline-sm text-headline-sm text-primary uppercase tracking-wider">ASTRAEA // TACTICAL ARCHIVE</span></div><div class="hidden xl:flex items-center gap-space-md pl-space-md"><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">DEFCON LINK</span><span class="font-label-md text-label-md text-primary-container">ONLINE // SECURE</span></div><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">TARGET LOCK</span><span class="font-label-md text-label-md text-error">STANDBY</span></div></div></div><nav class="hidden lg:flex items-center gap-space-xs p-space-xs bg-surface-container-low rounded-lg" data-active-classes="bg-primary-container text-on-primary-container font-label-lg text-label-lg rounded-DEFAULT shadow-[0_0_12px_rgba(0,243,255,0.35)]"><a class="font-label-lg text-label-lg px-space-md py-space-sm text-on-surface-variant hover:text-on-surface transition-colors uppercase" data-path="機体ドック-(player-craft)" href="#">機体ドック (Player Craft)</a><a class="font-label-lg text-label-lg px-space-md py-space-sm text-on-surface-variant hover:text-on-surface transition-colors uppercase" data-path="敵軍戦力-(enemy-roster)" href="#">敵軍戦力 (Enemy Roster)</a><a aria-current="page" class="px-space-md py-space-sm transition-colors uppercase bg-primary-container text-on-primary-container font-label-lg text-label-lg rounded-DEFAULT shadow-[0_0_12px_rgba(0,243,255,0.35)]" data-path="ボス艦隊-stage-1-10-(boss-fleet)" href="#">ボス艦隊 Stage 1-10 (Boss Fleet)</a></nav><div class="flex items-center gap-space-md"><div class="hidden sm:flex items-center gap-space-md px-space-md py-space-xs bg-surface-container-high rounded-DEFAULT"><div class="flex flex-col text-right"><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">CREDITS</span><span class="font-label-md text-label-md text-primary">02 // INSERT COIN</span></div><div class="flex flex-col text-right pl-space-sm"><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">HI-SCORE</span><span class="font-label-md text-label-md text-primary-container">09,842,500</span></div></div><button aria-label="Toggle Audio Telemetry" class="flex items-center justify-center w-10 h-10 bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded-DEFAULT transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">volume_up</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<!-- AMBIENT SCANLINE & RADIAL BACKDROP -->
+<div class="relative w-full overflow-hidden bg-surface">
+<div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(0,243,255,0.12),rgba(17,19,29,0))] pointer-events-none"></div>
+<div class="absolute top-1/4 right-0 w-96 h-96 bg-secondary-container/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute bottom-10 left-10 w-80 h-80 bg-error-container/15 rounded-full blur-3xl pointer-events-none"></div>
+<div class="relative max-w-[1440px] mx-auto px-gutter py-space-lg flex flex-col gap-space-lg">
+<!-- HEADER CONTEXT TELEMETRY BAR -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-space-md pb-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="inline-flex items-center justify-center w-2.5 h-2.5 bg-error animate-ping"></span>
+<span class="font-label-sm text-label-sm text-error uppercase tracking-widest">THREAT ESCALATION ARCHIVE // CLEARANCE LV.10</span>
+<span class="text-on-surface-variant font-label-sm text-label-sm">| REF: FLEET-OMEGA</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-primary uppercase tracking-tight">ボス艦隊 全10戦域 討伐作戦台帳</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">
+            地球防衛連合艦隊・最終決戦兵装解析。第1戦域低軌道警戒要塞から、時空歪曲兵器、及び第10階層「神性機動超越生命体」に至る全敵旗艦の弾幕構造・弱点コア・位相変化プロファイルを完全網羅。
+          </p>
+</div>
+<div class="flex items-center gap-space-sm self-start md:self-auto bg-surface-container-low px-space-md py-space-sm rounded-lg shadow-sm">
+<span class="material-symbols-outlined text-primary-container text-[20px]">radar</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">DEFEAT RATIO</span>
+<span class="font-label-lg text-label-lg text-primary">0.038% CLASSIFIED</span>
+</div>
+<div class="h-6 w-px bg-surface-container-highest mx-space-xs"></div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">ACTIVE TARGET</span>
+<span class="font-label-lg text-label-lg text-error" id="header-stage-tag">STAGE 10 / APOCALYPSE</span>
+</div>
+</div>
+</section>
+<!-- TIMELINE / STAGE SELECTOR (1 -> 10) -->
+<section class="w-full bg-surface-container-low p-space-sm rounded-xl shadow-lg">
+<div class="flex items-center justify-between pb-space-xs px-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">WARP SECTOR VECTOR [01 ➔ 10]</span>
+<span class="font-label-sm text-label-sm text-primary-container uppercase">SELECT STAGE FOR INSTANT TELEMETRY</span>
+</div>
+<!-- STAGE SELECT BUTTONS -->
+<div class="grid grid-cols-5 md:grid-cols-10 gap-space-xs">
+<!-- 1 -->
+<button class="stage-nav-btn group flex flex-col items-center justify-center py-space-sm px-space-xs rounded-DEFAULT bg-surface-container transition-all hover:bg-surface-container-high focus:outline-none" id="stage-tab-1" onclick="selectBoss(1)" type="button">
+<span class="font-label-sm text-label-sm text-on-surface-variant group-hover:text-primary">ST.01</span>
+<span class="w-full h-1 mt-space-xs bg-primary-fixed-dim/40 rounded-full"></span>
+<span class="font-label-sm text-[9px] text-primary-container mt-1">GOLIATH</span>
+</button>
+<!-- 2 -->
+<button class="stage-nav-btn group flex flex-col items-center justify-center py-space-sm px-space-xs rounded-DEFAULT bg-surface-container transition-all hover:bg-surface-container-high focus:outline-none" id="stage-tab-2" onclick="selectBoss(2)" type="button">
+<span class="font-label-sm text-label-sm text-on-surface-variant group-hover:text-primary">ST.02</span>
+<span class="w-full h-1 mt-space-xs bg-primary-fixed-dim/70 rounded-full"></span>
+<span class="font-label-sm text-[9px] text-primary-container mt-1">MANTA</span>
+</button>
+<!-- 3 -->
+<button class="stage-nav-btn group flex flex-col items-center justify-center py-space-sm px-space-xs rounded-DEFAULT bg-surface-container transition-all hover:bg-surface-container-high focus:outline-none" id="stage-tab-3" onclick="selectBoss(3)" type="button">
+<span class="font-label-sm text-label-sm text-on-surface-variant group-hover:text-primary">ST.03</span>
+<span class="w-full h-1 mt-space-xs bg-tertiary-fixed-dim/70 rounded-full"></span>
+<span class="font-label-sm text-[9px] text-tertiary-fixed mt-1">CENTIPEDE</span>
+</button>
+<!-- 4 -->
+<button class="stage-nav-btn group flex flex-col items-center justify-center py-space-sm px-space-xs rounded-DEFAULT bg-surface-container transition-all hover:bg-surface-container-high focus:outline-none" id="stage-tab-4" onclick="selectBoss(4)" type="button">
+<span class="font-label-sm text-label-sm text-on-surface-variant group-hover:text-primary">ST.04</span>
+<span class="w-full h-1 mt-space-xs bg-tertiary-fixed-dim rounded-full"></span>
+<span class="font-label-sm text-[9px] text-tertiary-fixed mt-1">AEGIS</span>
+</button>
+<!-- 5 -->
+<button class="stage-nav-btn group flex flex-col items-center justify-center py-space-sm px-space-xs rounded-DEFAULT bg-surface-container transition-all hover:bg-surface-container-high focus:outline-none" id="stage-tab-5" onclick="selectBoss(5)" type="button">
+<span class="font-label-sm text-label-sm text-on-surface-variant group-hover:text-primary">ST.05</span>
+<span class="w-full h-1 mt-space-xs bg-tertiary-container rounded-full"></span>
+<span class="font-label-sm text-[9px] text-tertiary-container mt-1">HELIOS</span>
+</button>
+<!-- 6 -->
+<button class="stage-nav-btn group flex flex-col items-center justify-center py-space-sm px-space-xs rounded-DEFAULT bg-surface-container transition-all hover:bg-surface-container-high focus:outline-none" id="stage-tab-6" onclick="selectBoss(6)" type="button">
+<span class="font-label-sm text-label-sm text-on-surface-variant group-hover:text-primary">ST.06</span>
+<span class="w-full h-1 mt-space-xs bg-error/70 rounded-full"></span>
+<span class="font-label-sm text-[9px] text-error mt-1">ABYSS</span>
+</button>
+<!-- 7 -->
+<button class="stage-nav-btn group flex flex-col items-center justify-center py-space-sm px-space-xs rounded-DEFAULT bg-surface-container transition-all hover:bg-surface-container-high focus:outline-none" id="stage-tab-7" onclick="selectBoss(7)" type="button">
+<span class="font-label-sm text-label-sm text-on-surface-variant group-hover:text-primary">ST.07</span>
+<span class="w-full h-1 mt-space-xs bg-error rounded-full"></span>
+<span class="font-label-sm text-[9px] text-error mt-1">OUROBOROS</span>
+</button>
+<!-- 8 -->
+<button class="stage-nav-btn group flex flex-col items-center justify-center py-space-sm px-space-xs rounded-DEFAULT bg-surface-container transition-all hover:bg-surface-container-high focus:outline-none" id="stage-tab-8" onclick="selectBoss(8)" type="button">
+<span class="font-label-sm text-label-sm text-on-surface-variant group-hover:text-primary">ST.08</span>
+<span class="w-full h-1 mt-space-xs bg-secondary-fixed-dim rounded-full"></span>
+<span class="font-label-sm text-[9px] text-secondary mt-1">CRUCIBLE</span>
+</button>
+<!-- 9 -->
+<button class="stage-nav-btn group flex flex-col items-center justify-center py-space-sm px-space-xs rounded-DEFAULT bg-surface-container transition-all hover:bg-surface-container-high focus:outline-none" id="stage-tab-9" onclick="selectBoss(9)" type="button">
+<span class="font-label-sm text-label-sm text-on-surface-variant group-hover:text-primary">ST.09</span>
+<span class="w-full h-1 mt-space-xs bg-secondary rounded-full"></span>
+<span class="font-label-sm text-[9px] text-secondary mt-1">ZERO</span>
+</button>
+<!-- 10 -->
+<button class="stage-nav-btn group flex flex-col items-center justify-center py-space-sm px-space-xs rounded-DEFAULT bg-surface-container-highest transition-all hover:bg-surface-container-high focus:outline-none" id="stage-tab-10" onclick="selectBoss(10)" type="button">
+<span class="font-label-sm text-label-sm text-secondary font-bold">ST.10</span>
+<span class="w-full h-1 mt-space-xs bg-secondary-fixed rounded-full shadow-[0_0_8px_rgba(221,183,255,0.8)]"></span>
+<span class="font-label-sm text-[9px] text-secondary-fixed font-bold mt-1">DEUS EX</span>
+</button>
+</div>
+</section>
+<!-- ACTIVE BOSS SHOWCASE HERO/TACTICAL PANEL -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<!-- VISUAL DIAGNOSTIC CHOPPER (LEFT: 7 COLS) -->
+<div class="lg:col-span-7 flex flex-col gap-space-md">
+<div class="relative bg-surface-container rounded-xl p-space-md overflow-hidden shadow-xl min-h-[460px] flex flex-col justify-between">
+<!-- Background Artwork Render of Active Boss -->
+<div class="absolute inset-0 bg-cover bg-center transition-all duration-700 opacity-60 mix-blend-screen scale-105" data-alt="A gigantic transcendent cosmic final boss entity named Deus Ex Cosmos Apocalypse Eye, surrounded by sacred golden rings, fractal hyper-dimensional wings, glowing purple void cores, and radiating dense curtains of neon cyan and violet bullet-hell orbs in deep void space." id="boss-bg-image" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBUpcir9JgEZf37M9x1hqcp4yRXuqm_OjxqEnhMIJPYKfVmYfwqhZYdFpdss56QmSRVoeKUJ4mjO0ewAd9K8NCyh-Yaw52kmUcs-us6WkArWSHVV49LUVfc5T9IZ6vsQkrHR9IjCsUDGehbuV0D_AM4IDDJKa1qRBiIIb07IUK35wtdcvLQj00656eBauw8A1QP20CzVQ7boiaLxigSMJeyKW5tG8Oz-aRl61HLjb-u')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container via-surface-container/60 to-transparent"></div>
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(17,19,29,0.8)_100%)]"></div>
+<!-- Top Overlay Indicators -->
+<div class="relative z-10 flex items-start justify-between">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="px-space-xs py-0.5 rounded-DEFAULT bg-error text-on-error font-label-sm text-label-sm uppercase tracking-wider font-bold" id="boss-threat-badge">THREAT: SSS GOD-CLASS</span>
+<span class="px-space-xs py-0.5 rounded-DEFAULT bg-surface-container-highest text-primary font-label-sm text-label-sm" id="boss-stage-badge">STAGE 10 ENCOUNTER</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-primary mt-space-xs font-bold tracking-wide" id="boss-name-jp">神性機動超越生命体</h2>
+<span class="font-label-md text-label-md text-primary-container tracking-widest uppercase" id="boss-name-en">DEUS EX COSMOS: APOCALYPSE EYE</span>
+</div>
+<!-- Radar / Vector Reticle SVG -->
+<div class="relative w-20 h-20 rounded-full bg-surface-container-lowest/80 flex items-center justify-center p-1 shadow-inner">
+<svg class="w-full h-full text-primary-container animate-[spin_12s_linear_infinite]" fill="none" viewBox="0 0 100 100">
+<circle cx="50" cy="50" opacity="0.4" r="46" stroke="currentColor" stroke-dasharray="4 4" stroke-width="1.5"></circle>
+<circle cx="50" cy="50" opacity="0.7" r="32" stroke="currentColor" stroke-width="1"></circle>
+<path d="M50 0 L50 100 M0 50 L100 50" stroke="currentColor" stroke-dasharray="2 6" stroke-width="1"></path>
+<polygon fill="#ffb4ab" points="50,15 53,25 47,25"></polygon>
+<circle cx="50" cy="50" fill="#00f3ff" r="4"></circle>
+</svg>
+<span class="absolute font-label-sm text-[8px] text-error font-bold">LOCKED</span>
+</div>
+</div>
+<!-- Interactive Component Breakdown Hotspots on Target Silhouette -->
+<div class="relative z-10 my-auto py-space-lg flex items-center justify-center">
+<div class="relative w-72 h-60 max-w-full flex items-center justify-center">
+<!-- SVG Wireframe Projection -->
+<svg class="w-full h-full drop-shadow-[0_0_15px_rgba(0,243,255,0.4)]" fill="none" id="boss-wireframe-svg" viewBox="0 0 300 240">
+<!-- Dynamic SVG shapes updated via JS for boss morphology -->
+<circle cx="150" cy="120" r="65" stroke="#ddb7ff" stroke-dasharray="6 3" stroke-width="2"></circle>
+<polygon fill="rgba(0,243,255,0.05)" points="150,30 250,90 280,180 200,210 100,210 20,180 50,90" stroke="#00f3ff" stroke-width="1.5"></polygon>
+<circle cx="150" cy="120" fill="#6f00be" r="24" stroke="#ffb4ab" stroke-width="2"></circle>
+<line stroke="#ffb4ab" stroke-dasharray="2 2" stroke-width="1.5" x1="60" x2="240" y1="100" y2="100"></line>
+<circle class="animate-pulse" cx="150" cy="120" fill="#ffb4ab" r="8"></circle>
+</svg>
+<!-- Hotspot Pins -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 group cursor-pointer">
+<div class="w-5 h-5 rounded-full bg-error/30 animate-ping absolute -inset-0"></div>
+<div class="w-5 h-5 rounded-full bg-error flex items-center justify-center text-on-error font-label-sm text-[10px] font-bold shadow-lg">C</div>
+<div class="absolute bottom-6 left-1/2 -translate-x-1/2 hidden group-hover:flex flex-col bg-surface-container-highest px-space-xs py-1 rounded text-center whitespace-nowrap shadow-xl z-20">
+<span class="font-label-sm text-[10px] text-error font-bold">PRIMARY NUCLEUS</span>
+<span class="font-body-sm text-[10px] text-on-surface">Vulnerable during Beam discharge</span>
+</div>
+</div>
+<div class="absolute top-1/4 left-1/4 group cursor-pointer">
+<div class="w-4 h-4 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-label-sm text-[9px] font-bold">L1</div>
+<div class="absolute bottom-5 left-1/2 -translate-x-1/2 hidden group-hover:flex flex-col bg-surface-container-highest px-space-xs py-1 rounded text-center whitespace-nowrap shadow-xl z-20">
+<span class="font-label-sm text-[10px] text-primary font-bold">LEFT HARMONIC PRISM</span>
+<span class="font-body-sm text-[10px] text-on-surface">Shield generator node</span>
+</div>
+</div>
+<div class="absolute top-1/4 right-1/4 group cursor-pointer">
+<div class="w-4 h-4 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-label-sm text-[9px] font-bold">R1</div>
+<div class="absolute bottom-5 left-1/2 -translate-x-1/2 hidden group-hover:flex flex-col bg-surface-container-highest px-space-xs py-1 rounded text-center whitespace-nowrap shadow-xl z-20">
+<span class="font-label-sm text-[10px] text-primary font-bold">RIGHT HARMONIC PRISM</span>
+<span class="font-body-sm text-[10px] text-on-surface">Shield generator node</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Live Telemetry Gauge on Active Boss -->
+<div class="relative z-10 bg-surface-container-lowest/80 backdrop-blur-md p-space-sm rounded-lg flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-error">monitor_heart</span> HULL INTEGRITY (HP ESTIMATE)
+                </span>
+<span class="font-label-md text-label-md text-primary font-bold" id="boss-hp-value">48,500,000 / 48,500,000 M-JOULES</span>
+</div>
+<!-- Segmented HP Bar (15 blocks) -->
+<div class="grid grid-cols-15 gap-1 h-3.5 w-full bg-surface-container-highest p-0.5 rounded-DEFAULT" id="hp-segment-bar">
+<div class="bg-error rounded-xs h-full"></div>
+<div class="bg-error rounded-xs h-full"></div>
+<div class="bg-error rounded-xs h-full"></div>
+<div class="bg-error rounded-xs h-full"></div>
+<div class="bg-error rounded-xs h-full"></div>
+<div class="bg-error rounded-xs h-full"></div>
+<div class="bg-error rounded-xs h-full"></div>
+<div class="bg-error rounded-xs h-full"></div>
+<div class="bg-error rounded-xs h-full"></div>
+<div class="bg-error rounded-xs h-full"></div>
+<div class="bg-error rounded-xs h-full"></div>
+<div class="bg-error rounded-xs h-full"></div>
+<div class="bg-error rounded-xs h-full"></div>
+<div class="bg-error rounded-xs h-full"></div>
+<div class="bg-error rounded-xs h-full"></div>
+</div>
+</div>
+</div>
+<!-- ATTACK PHASES TACTICAL CARDS (Phase 1, Phase 2, Berserk) -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm">
+<div class="bg-surface-container-low p-space-sm rounded-lg flex flex-col gap-space-xs hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-primary-container font-bold">PHASE 01</span>
+<span class="font-label-sm text-[11px] text-on-surface-variant" id="phase-1-pct">100% - 65% HP</span>
+</div>
+<h4 class="font-headline-sm text-[15px] text-primary font-semibold" id="phase-1-title">金環調和形態 (Golden Halo)</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant" id="phase-1-desc">
+                幾何学的レーザー網と金環外周からの360度収束弾。プレイヤー周囲の安全領域が螺旋状に狭小化。
+              </p>
+</div>
+<div class="bg-surface-container-low p-space-sm rounded-lg flex flex-col gap-space-xs hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-tertiary-fixed font-bold">PHASE 02</span>
+<span class="font-label-sm text-[11px] text-on-surface-variant" id="phase-2-pct">65% - 25% HP</span>
+</div>
+<h4 class="font-headline-sm text-[15px] text-primary font-semibold" id="phase-2-title">外殻崩壊形態 (Broken Core)</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant" id="phase-2-desc">
+                装甲が四方に散開し衛星ビットとして個別射撃。本体中央の露出アイから巨大グラビティビーム投射。
+              </p>
+</div>
+<div class="bg-surface-container-low p-space-sm rounded-lg flex flex-col gap-space-xs hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-error font-bold">PHASE 03 // BERSERK</span>
+<span class="font-label-sm text-[11px] text-error font-bold" id="phase-3-pct">&lt; 25% HP</span>
+</div>
+<h4 class="font-headline-sm text-[15px] text-error font-semibold" id="phase-3-title">暴走星雲態 (Nebula Void)</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant" id="phase-3-desc">
+                全画面を覆い尽くす超濃密極彩色弾幕カーテン。時空の歪みにより自機の移動速度が段階的に低下。
+              </p>
+</div>
+</div>
+</div>
+<!-- RIGHT DETAIL: LORE, WEAK POINTS, BULLET PREVIEW (5 COLS) -->
+<div class="lg:col-span-5 flex flex-col gap-space-md">
+<!-- BULLET PATTERN SIMULATOR / PREVIEW -->
+<div class="bg-surface-container rounded-xl p-space-md flex flex-col gap-space-sm shadow-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary-container text-[20px]">lens_blur</span>
+<span class="font-headline-sm text-[16px] text-primary uppercase">弾幕プロトコル・シミュレーション</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary bg-surface-container-highest px-space-xs py-0.5 rounded-DEFAULT" id="pattern-type-tag">HYPER DENSE CURTAIN</span>
+</div>
+<!-- Bullet Canvas SVG preview -->
+<div class="relative w-full h-44 bg-surface-container-lowest rounded-lg overflow-hidden flex items-center justify-center p-2">
+<div class="absolute inset-0 opacity-20 bg-[linear-gradient(to_right,#1d1f2a_1px,transparent_1px),linear-gradient(to_bottom,#1d1f2a_1px,transparent_1px)] bg-[size:14px_14px]"></div>
+<!-- Dynamic Bullet Hell SVG illustration -->
+<svg class="w-full h-full" id="bullet-pattern-svg" viewBox="0 0 340 160">
+<!-- Outer rings -->
+<circle cx="170" cy="80" opacity="0.3" r="70" stroke="#00f3ff" stroke-dasharray="3 7" stroke-width="1"></circle>
+<circle cx="170" cy="80" opacity="0.4" r="50" stroke="#ddb7ff" stroke-dasharray="4 4" stroke-width="1"></circle>
+<!-- Center Core Emitter -->
+<circle class="animate-pulse" cx="170" cy="80" fill="#ffb4ab" r="8"></circle>
+<!-- Swirling Bullet Clusters -->
+<g class="animate-[spin_20s_linear_infinite]" style="transform-origin: 170px 80px;">
+<circle cx="170" cy="25" fill="#00f3ff" r="3.5"></circle>
+<circle cx="195" cy="35" fill="#00f3ff" r="3"></circle>
+<circle cx="215" cy="55" fill="#00f3ff" r="3.5"></circle>
+<circle cx="225" cy="80" fill="#00f3ff" r="3"></circle>
+<circle cx="215" cy="105" fill="#00f3ff" r="3.5"></circle>
+<circle cx="195" cy="125" fill="#00f3ff" r="3"></circle>
+<circle cx="170" cy="135" fill="#00f3ff" r="3.5"></circle>
+<circle cx="145" cy="125" fill="#00f3ff" r="3"></circle>
+<circle cx="125" cy="105" fill="#00f3ff" r="3.5"></circle>
+<circle cx="115" cy="80" fill="#00f3ff" r="3"></circle>
+<circle cx="125" cy="55" fill="#00f3ff" r="3.5"></circle>
+<circle cx="145" cy="35" fill="#00f3ff" r="3"></circle>
+</g>
+<g class="animate-[spin_10s_linear_infinite_reverse]" style="transform-origin: 170px 80px;">
+<circle cx="170" cy="45" fill="#ddb7ff" r="2.5"></circle>
+<circle cx="205" cy="80" fill="#ddb7ff" r="2.5"></circle>
+<circle cx="170" cy="115" fill="#ddb7ff" r="2.5"></circle>
+<circle cx="135" cy="80" fill="#ddb7ff" r="2.5"></circle>
+<!-- Secondary petals -->
+<circle cx="190" cy="60" fill="#ffb4ab" r="2"></circle>
+<circle cx="190" cy="100" fill="#ffb4ab" r="2"></circle>
+<circle cx="150" cy="100" fill="#ffb4ab" r="2"></circle>
+<circle cx="150" cy="60" fill="#ffb4ab" r="2"></circle>
+</g>
+<!-- Aimed High-Velocity Needles -->
+<line stroke="#ffb4ab" stroke-linecap="round" stroke-width="2" x1="170" x2="280" y1="80" y2="150"></line>
+<line stroke="#ffb4ab" stroke-linecap="round" stroke-width="2" x1="170" x2="60" y1="80" y2="150"></line>
+<line stroke="#00f3ff" stroke-linecap="round" stroke-width="2.5" x1="170" x2="170" y1="80" y2="155"></line>
+</svg>
+<!-- Safe Spot Guide Hint -->
+<div class="absolute bottom-2 right-2 flex items-center gap-1 bg-surface-container/90 px-space-xs py-0.5 rounded text-[10px] font-label-sm text-primary-container">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+<span>POCKET: LOWER RIGHT 22°</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant font-body-sm text-[12px]">
+<span id="bullet-speed-tag">Bullet Velocity: 480 px/s</span>
+<span id="bullet-density-tag">Density: 142 projectiles/sec</span>
+</div>
+</div>
+<!-- STRATEGY & WEAKNESS INTEL -->
+<div class="bg-surface-container rounded-xl p-space-md flex flex-col gap-space-md shadow-md flex-1">
+<div class="flex items-center gap-space-xs text-primary">
+<span class="material-symbols-outlined text-[20px] text-tertiary-fixed">shield_lock</span>
+<h3 class="font-headline-sm text-headline-sm">戦術撃破マニュアル &amp; 弱点解析</h3>
+</div>
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-on-surface-variant">
+<span class="w-1.5 h-1.5 bg-tertiary-fixed rounded-full"></span>
+<span>RECOMMENDED LOADOUT</span>
+</div>
+<p class="font-body-md text-body-md text-primary bg-surface-container-low p-space-xs rounded-DEFAULT" id="boss-recommended-weapon">
+                TYPE-3 レーザー収束型 + 量子ディフュージョンボム (無敵フレームでのコア直撃推奨)
+              </p>
+</div>
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-on-surface-variant">
+<span class="w-1.5 h-1.5 bg-error rounded-full"></span>
+<span>CRITICAL DANGER ALERT</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface bg-surface-container-low p-space-xs rounded-DEFAULT" id="boss-danger-notes">
+                第3フェーズ移行時の全方位重力波は画面全体を歪曲させます。ボムを即座に投下し、中央の露出した赤い核にサブウェポンの全弾を叩き込んでください。
+              </p>
+</div>
+<div class="flex items-center justify-between pt-space-xs border-t-0 mt-auto">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">DESTRUCTION REWARD</span>
+<span class="font-label-lg text-label-lg text-primary-container" id="boss-reward-pts">50,000,000 PTS + ALL CLEAR</span>
+</div>
+<button class="px-space-md py-space-xs bg-primary-container text-on-primary-container font-label-lg text-label-lg rounded-DEFAULT uppercase shadow-md hover:bg-primary transition-all" type="button">
+                PLAY REPLAY SIM
+              </button>
+</div>
+</div>
+</div>
+</section>
+<!-- BOSS ROSTER GALLERY: ALL 10 STAGES (10 BESPOKE CARDS) -->
+<section class="flex flex-col gap-space-md mt-space-lg">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-xs">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">// ARCHIVE ROSTER // STAGES 01 - 10</span>
+<h2 class="font-headline-lg text-headline-lg text-primary uppercase">全10艦 脅威変遷カタログ</h2>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">
+            軌道哨戒機から宇宙創成級エンティティまでの形態学的進化
+          </span>
+</div>
+<!-- 10 CARDS GRID (Bento-style mosaic / clean layout) -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-space-md">
+<!-- BOSS 1 -->
+<div class="group cursor-pointer bg-surface-container rounded-xl p-space-md flex flex-col justify-between transition-all duration-300 hover:bg-surface-container-high shadow-md relative overflow-hidden" onclick="selectBoss(1)">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-sm text-label-sm text-primary-fixed-dim font-bold">STAGE 01</span>
+<span class="font-label-sm text-[10px] px-1.5 py-0.5 rounded bg-surface-container-highest text-primary">RANK C</span>
+</div>
+<!-- Boss Thumbnail Art -->
+<div class="w-full h-32 rounded-lg bg-surface-container-lowest overflow-hidden mb-space-sm relative">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500 opacity-80" data-alt="Mechanical dual-wing heavy orbital fortress boss with rotating vulcan gatling pods and glowing cyan central engine block in low earth orbit." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA9Ou3U28GSeARQA39kHElJbFtLzBhBNjwGUF84NkgTgBePH2Q30UJS1pOJI3bgD-8iWRHnPoxZzR21vP_AD-Ya-4RPmDnDD2p5cpcV_OvJdFt9_dN0EoqYS6ziHowpaUH51BoK967m-ZZhyhQvmbW1Z4lokiyXEaWhWiuijxTaDjRZm_VSXtqv3dlV4RDoMqXWTkbkxje52VfdLmtcjyiKmFy_hq4hILVvfY72sRsj')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent"></div>
+</div>
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-sm text-[11px] text-on-surface-variant">衛星軌道警備要塞</span>
+<h3 class="font-headline-sm text-[16px] text-primary group-hover:text-primary-container transition-colors font-bold">A-01 GOLIATH</h3>
+<p class="font-body-sm text-[12px] text-on-surface-variant line-clamp-2">
+                重装甲主翼と旋回式連装ガトリング。基本となる正面交差弾を射出する入門迎撃要塞。
+              </p>
+</div>
+<div class="flex items-center justify-between mt-space-md pt-space-xs text-on-surface-variant font-label-sm text-[10px]">
+<span>HP: 120,000</span>
+<span class="text-primary-container">1 PHASE</span>
+</div>
+</div>
+<!-- BOSS 2 -->
+<div class="group cursor-pointer bg-surface-container rounded-xl p-space-md flex flex-col justify-between transition-all duration-300 hover:bg-surface-container-high shadow-md relative overflow-hidden" onclick="selectBoss(2)">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-sm text-label-sm text-primary-fixed-dim font-bold">STAGE 02</span>
+<span class="font-label-sm text-[10px] px-1.5 py-0.5 rounded bg-surface-container-highest text-primary">RANK C+</span>
+</div>
+<div class="w-full h-32 rounded-lg bg-surface-container-lowest overflow-hidden mb-space-sm relative">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500 opacity-80" data-alt="Wide biological mechanical stealth manta ray bomber boss craft cruising high in crimson clouds with glowing engine vents and carpet bomb launchers." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBtRTWi_2L19P_ZuSUJHMP8THGSsaFufn2gzUP7f7xPJvFMpijFppDiPNMwpK0_-QTgtGPh5d9Vw-DSEs1ylOrklXLuYuZS8BeWQBlY2h7Shvf_OUuaZVM__7ZsG3sw2ugyEpmi8lfmf-vl5cCNyeawekqhSeCQ_cJyRALXq2gKNHQuht_crt3eajGCDbN_BSrpQySv4h8SOPlu-iGXTzEsaoY-huAZWPGBBJqFMEfk')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent"></div>
+</div>
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-sm text-[11px] text-on-surface-variant">成層圏爆撃母機</span>
+<h3 class="font-headline-sm text-[16px] text-primary group-hover:text-primary-container transition-colors font-bold">CRIMSON MANTA X-2</h3>
+<p class="font-body-sm text-[12px] text-on-surface-variant line-clamp-2">
+                エイ型ワイドフォルム。大気圏上層を滑空しながら投下される無数のクラスター子爆弾。
+              </p>
+</div>
+<div class="flex items-center justify-between mt-space-md pt-space-xs text-on-surface-variant font-label-sm text-[10px]">
+<span>HP: 280,000</span>
+<span class="text-primary-container">2 PHASES</span>
+</div>
+</div>
+<!-- BOSS 3 -->
+<div class="group cursor-pointer bg-surface-container rounded-xl p-space-md flex flex-col justify-between transition-all duration-300 hover:bg-surface-container-high shadow-md relative overflow-hidden" onclick="selectBoss(3)">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-sm text-label-sm text-tertiary-fixed font-bold">STAGE 03</span>
+<span class="font-label-sm text-[10px] px-1.5 py-0.5 rounded bg-surface-container-highest text-tertiary-fixed">RANK B</span>
+</div>
+<div class="w-full h-32 rounded-lg bg-surface-container-lowest overflow-hidden mb-space-sm relative">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500 opacity-80" data-alt="Giant multi-segmented mechanical armored centipede serpent battleship undulating through an asteroid field, armored yellow-orange hazard stripes, mining laser mandibles." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBMf_FaMCOAFBB-FKS1v7AqTKKQE20FvMvkxCim4IyPdyjygjUx-E-_nHSmyC6xxg0IWKlAGQZdFmU1GloVaO6yl_0_cYalio441WH-Fxb3wc12ua5weP-gvjAJYgKxklt3Zi8UMn9sPkKgVBKHe4HeMq0B8ZdVX5KvExV6qDOWkyBQiwbe_WS5VxTItXRSaDhwQUYvqMCXuKkmn51lLYURGfa-WojZfnXEkSJeX_CK')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent"></div>
+</div>
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-sm text-[11px] text-on-surface-variant">小惑星帯百足型戦艦</span>
+<h3 class="font-headline-sm text-[16px] text-primary group-hover:text-tertiary-fixed transition-colors font-bold">SUB-SPACE CENTIPEDE</h3>
+<p class="font-body-sm text-[12px] text-on-surface-variant line-clamp-2">
+                全16節の連結装甲蛇腹ボディ。尾部から順次部位破壊することで移動速度が凶悪化。
+              </p>
+</div>
+<div class="flex items-center justify-between mt-space-md pt-space-xs text-on-surface-variant font-label-sm text-[10px]">
+<span>HP: 650,000</span>
+<span class="text-tertiary-fixed">2 PHASES</span>
+</div>
+</div>
+<!-- BOSS 4 -->
+<div class="group cursor-pointer bg-surface-container rounded-xl p-space-md flex flex-col justify-between transition-all duration-300 hover:bg-surface-container-high shadow-md relative overflow-hidden" onclick="selectBoss(4)">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-sm text-label-sm text-tertiary-fixed font-bold">STAGE 04</span>
+<span class="font-label-sm text-[10px] px-1.5 py-0.5 rounded bg-surface-container-highest text-tertiary-fixed">RANK B+</span>
+</div>
+<div class="w-full h-32 rounded-lg bg-surface-container-lowest overflow-hidden mb-space-sm relative">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500 opacity-80" data-alt="Heavily armored cyber titan fortress with orbiting floating energy shield plates and sweeping emerald laser grids protecting a deep red glowing core." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDizpMWzivuZdr36ifBaEEqd2eeTeHR-9Ji_BsGpPy5-gyEZ9_OA8eQOZ8RlcVi6aA-giWGruIXTtDskmR24mmOIbqcLvehzlEtX3MXa3M9UIhofS-vkFdaj0CzJzms6Wk2lh7I-InsuzNW_9FaDfsM1Jc_wFwU3w93gQjImu76sqcNeaG3oTZQ0zLmFXJSgSAu0jNdKzCrOBw1KBZ3m3rSQjKJVRlU7nBgSFFV2piC')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent"></div>
+</div>
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-sm text-[11px] text-on-surface-variant">要塞防衛機動要塞</span>
+<h3 class="font-headline-sm text-[16px] text-primary group-hover:text-tertiary-fixed transition-colors font-bold">IRON AEGIS</h3>
+<p class="font-body-sm text-[12px] text-on-surface-variant line-clamp-2">
+                回転する無敵シールドユニットと薙ぎ払いレーザー格子。開閉周期の隙間を狙う精密射撃戦。
+              </p>
+</div>
+<div class="flex items-center justify-between mt-space-md pt-space-xs text-on-surface-variant font-label-sm text-[10px]">
+<span>HP: 1,400,000</span>
+<span class="text-tertiary-fixed">2 PHASES</span>
+</div>
+</div>
+<!-- BOSS 5 -->
+<div class="group cursor-pointer bg-surface-container rounded-xl p-space-md flex flex-col justify-between transition-all duration-300 hover:bg-surface-container-high shadow-md relative overflow-hidden" onclick="selectBoss(5)">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-sm text-label-sm text-tertiary-container font-bold">STAGE 05</span>
+<span class="font-label-sm text-[10px] px-1.5 py-0.5 rounded bg-surface-container-highest text-tertiary-container">RANK A</span>
+</div>
+<div class="w-full h-32 rounded-lg bg-surface-container-lowest overflow-hidden mb-space-sm relative">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500 opacity-80" data-alt="Solar observation dreadnought near a roaring blazing star, glowing bright orange heat radiator fins, sun flare plasma arcs, circular solar bullet rings." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAT-8f8HD0tzyy7ujdT_1WYAx_OtJxwHyhDsOSG4U4W3BxoZFkaX4YCcttTf9Sp0-wnDlxmSxINj15iKt0silxSTdLZCLwOAKoo2YY4ZpD2XmiFtnGowSMzmm2vUtgMM3bQYC-jUXal7Ax8me8HvrZDovxP33V6yE_xhX0AI0NnTQ0j81ZCiPEkm-uf3GyGEbWOGHhUNuPOT92dsiy9sYNRyBci1pbd7Ah2SAIj40TP')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent"></div>
+</div>
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-sm text-[11px] text-on-surface-variant">恒星観測炉心戦艦</span>
+<h3 class="font-headline-sm text-[16px] text-primary group-hover:text-tertiary-container transition-colors font-bold">SOLAR FLARE: HELIOS</h3>
+<p class="font-body-sm text-[12px] text-on-surface-variant line-clamp-2">
+                プラズマ渦と熱波ゾーン制約。放射状スパイラル弾膜が視界を灼熱のオレンジに染め上げる。
+              </p>
+</div>
+<div class="flex items-center justify-between mt-space-md pt-space-xs text-on-surface-variant font-label-sm text-[10px]">
+<span>HP: 3,200,000</span>
+<span class="text-tertiary-container">3 PHASES</span>
+</div>
+</div>
+<!-- BOSS 6 -->
+<div class="group cursor-pointer bg-surface-container rounded-xl p-space-md flex flex-col justify-between transition-all duration-300 hover:bg-surface-container-high shadow-md relative overflow-hidden" onclick="selectBoss(6)">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-sm text-label-sm text-error font-bold">STAGE 06</span>
+<span class="font-label-sm text-[10px] px-1.5 py-0.5 rounded bg-surface-container-highest text-error">RANK A+</span>
+</div>
+<div class="w-full h-32 rounded-lg bg-surface-container-lowest overflow-hidden mb-space-sm relative">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500 opacity-80" data-alt="Bio-mechanical cosmic space leviathan creature lurking inside a dark nebula, biomechanical tentacles with laser nodes, bioluminescent red carapace, organic spore bullet clouds." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAiUhVp4e9Y1sgtLC7i7TcaZhFH99X0T_eamYAIK5pQeWdic24yXor5zAKOZZzFBYhLG9CV1mvHGSC_-uYQnMnTxUfkOKh9zUwnQZ-xiGdfNuVQTssST2Kric9ngzKR_Q0JqEhuMHi7q9vFVwWC02u6uXMqNAwpafFlxujX27LGrPsvfxakUjRDUjL-cptHQ8bpaefOl45qz5qCR4EveyJPVA0NzARAZgSK1fw7vnfA')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent"></div>
+</div>
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-sm text-[11px] text-on-surface-variant">暗黒星雲深宇宙生体兵器</span>
+<h3 class="font-headline-sm text-[16px] text-primary group-hover:text-error transition-colors font-bold">VOID LEVIATHAN: ABYSS</h3>
+<p class="font-body-sm text-[12px] text-on-surface-variant line-clamp-2">
+                有機触手レーザーポッドと不定形弾の飛散。有機装甲の自己再生能力を持つ深宇宙の怪物。
+              </p>
+</div>
+<div class="flex items-center justify-between mt-space-md pt-space-xs text-on-surface-variant font-label-sm text-[10px]">
+<span>HP: 6,800,000</span>
+<span class="text-error">3 PHASES</span>
+</div>
+</div>
+<!-- BOSS 7 -->
+<div class="group cursor-pointer bg-surface-container rounded-xl p-space-md flex flex-col justify-between transition-all duration-300 hover:bg-surface-container-high shadow-md relative overflow-hidden" onclick="selectBoss(7)">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-sm text-label-sm text-error font-bold">STAGE 07</span>
+<span class="font-label-sm text-[10px] px-1.5 py-0.5 rounded bg-surface-container-highest text-error">RANK S</span>
+</div>
+<div class="w-full h-32 rounded-lg bg-surface-container-lowest overflow-hidden mb-space-sm relative">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500 opacity-80" data-alt="Chrono phantom battleship warping through time spacetime rifts with ghostly afterimage clones, chromatic aberration holographic mirages, glitching purple distortion fields." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCUt3ndknk7Kjoi6cFg6DTYDNGtx_70uJADYq4yGye-oDzMLMeWToxynAA3tvDJFmJc9NT-M0XbXaYCmypIp4b9xytHnLa3A9QWXZVpi_wVYaBekzMsfAeV5wk21H1RSK_7gumkeQ5VUWARiDVyWNq8NML99IiQ82HuR9oEKBGu9BnPTykNubFHfGwSOeM_9nS9yraUOrjkYd-yKTwmAvFhvnC5LUDLdCtdzPsAsKbB')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent"></div>
+</div>
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-sm text-[11px] text-on-surface-variant">時空歪曲実験艦</span>
+<h3 class="font-headline-sm text-[16px] text-primary group-hover:text-error transition-colors font-bold">OUROBOROS</h3>
+<p class="font-body-sm text-[12px] text-on-surface-variant line-clamp-2">
+                残像分身、瞬間ワープ奇襲、弾丸遅延トラップ。時間軸をずらした二重弾幕を張る幻影艦。
+              </p>
+</div>
+<div class="flex items-center justify-between mt-space-md pt-space-xs text-on-surface-variant font-label-sm text-[10px]">
+<span>HP: 11,500,000</span>
+<span class="text-error">3 PHASES</span>
+</div>
+</div>
+<!-- BOSS 8 -->
+<div class="group cursor-pointer bg-surface-container rounded-xl p-space-md flex flex-col justify-between transition-all duration-300 hover:bg-surface-container-high shadow-md relative overflow-hidden" onclick="selectBoss(8)">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-sm text-label-sm text-secondary font-bold">STAGE 08</span>
+<span class="font-label-sm text-[10px] px-1.5 py-0.5 rounded bg-surface-container-highest text-secondary">RANK S+</span>
+</div>
+<div class="w-full h-32 rounded-lg bg-surface-container-lowest overflow-hidden mb-space-sm relative">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500 opacity-80" data-alt="Colossal screen-filling planetary dreadnought warship Fortress Crucible with heavy tiered armor plates, massive glowing wave motion cannon barrel charging apocalyptic red energy." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBT5lW-7yca_zqcOtkxCtqpwwEai5jSuqohSh_6oVB8HeyZC6G4xcUo2EFjRbtZRbXQaEnVTcMRXaYWZ_RFb25SVxNV4kI5Jy8FUOl5gL1yB6F_GZVhuxaSkUSpIG2pbOFIY1JMe2S2V1AnpLCjNwlNDIP86OKC6da91JwAxnCp80bhIpabYq65sHfYHuAdKXg5Oij8QQB1uUEWPp39waah4xk-xrqLYFER-4WT0-S-')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent"></div>
+</div>
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-sm text-[11px] text-on-surface-variant">惑星破砕超弩級主砲艦</span>
+<h3 class="font-headline-sm text-[16px] text-primary group-hover:text-secondary transition-colors font-bold">CRUCIBLE OMEGA</h3>
+<p class="font-body-sm text-[12px] text-on-surface-variant line-clamp-2">
+                画面の80%を覆う威圧的要塞艦。惑星破壊砲チャージによる画面揺れ警報と多層破壊部位。
+              </p>
+</div>
+<div class="flex items-center justify-between mt-space-md pt-space-xs text-on-surface-variant font-label-sm text-[10px]">
+<span>HP: 22,000,000</span>
+<span class="text-secondary">3 PHASES</span>
+</div>
+</div>
+<!-- BOSS 9 -->
+<div class="group cursor-pointer bg-surface-container rounded-xl p-space-md flex flex-col justify-between transition-all duration-300 hover:bg-surface-container-high shadow-md relative overflow-hidden" onclick="selectBoss(9)">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-sm text-label-sm text-secondary font-bold">STAGE 09</span>
+<span class="font-label-sm text-[10px] px-1.5 py-0.5 rounded bg-surface-container-highest text-secondary">RANK SS</span>
+</div>
+<div class="w-full h-32 rounded-lg bg-surface-container-lowest overflow-hidden mb-space-sm relative">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500 opacity-80" data-alt="Artificial singularity core zero black hole superweapon surrounded by dark magnetic accretion rings, gravitational light warping, sucking debris and luminous plasma into center." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAhverlEvQVRupPZAbxKzhEws8RryIygsv6IgjpReAIttfg6ETPUZb_VTEgHoWk3waus6M4sbLNXiEh9BkCrzUaTtqnxBf0NVOllCPH5K2L42vbbCQC_u6CiJNGvYCKoB4yIUGRIzSMiV01Y7r7KiOI4hFcVNqtFzaUKiHlbvSixNJnjHrB9h5q9pdh83E27HJulI6AXsXjsCNk9PD7UDJLb5r875xeUDQ8SSCp0kjv')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent"></div>
+</div>
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-sm text-[11px] text-on-surface-variant">人工重力特異点兵器</span>
+<h3 class="font-headline-sm text-[16px] text-primary group-hover:text-secondary transition-colors font-bold">SINGULARITY ZERO</h3>
+<p class="font-body-sm text-[12px] text-on-surface-variant line-clamp-2">
+                自機と弾をブラックホール核へ吸い寄せる重力場展開。磁気収縮リングが外縁から圧殺。
+              </p>
+</div>
+<div class="flex items-center justify-between mt-space-md pt-space-xs text-on-surface-variant font-label-sm text-[10px]">
+<span>HP: 34,000,000</span>
+<span class="text-secondary">3 PHASES</span>
+</div>
+</div>
+<!-- BOSS 10 (FINAL) -->
+<div class="group cursor-pointer bg-surface-container rounded-xl p-space-md flex flex-col justify-between transition-all duration-300 hover:bg-surface-container-highest shadow-xl relative overflow-hidden ring-1 ring-secondary/50" onclick="selectBoss(10)">
+<div class="absolute top-0 right-0 w-24 h-24 bg-secondary/10 rounded-full blur-xl pointer-events-none"></div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-sm text-label-sm text-secondary-fixed font-bold">FINAL STAGE 10</span>
+<span class="font-label-sm text-[10px] px-1.5 py-0.5 rounded bg-error text-on-error font-bold">SSS OMEGA</span>
+</div>
+<div class="w-full h-32 rounded-lg bg-surface-container-lowest overflow-hidden mb-space-sm relative">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500 opacity-90" data-alt="Deus Ex Cosmos divine cosmic final boss in deep cosmic abyss with glowing ethereal golden halo and multi-dimensional prismatic wings, intense bullet curtain halo." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBrBnjiJZRHUPpPhYtWR3AGSYlMyPKb9KBK0EsTwkgX2rb2JekQgcCeSMeL_Qt1SxiLQsa1PVerooi9pa_-5CrxV1Gzw43BgYPVvnb8cN8A509Jp6X9txgF8KgdYTp-5grPlwRV2WWtN5k8GaGKPGEe1B7UgX2vm97Ksyk2AeM13QiySTbTefqT8-zfIb6_kQ_TQX3iQtgRLKGKraKKAIpJy8IKMOM7Jp92ZOksADbm')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent"></div>
+</div>
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-sm text-[11px] text-secondary">神性機動超越生命体</span>
+<h3 class="font-headline-sm text-[16px] text-primary group-hover:text-secondary-fixed transition-colors font-bold">DEUS EX COSMOS</h3>
+<p class="font-body-sm text-[12px] text-on-surface-variant line-clamp-2">
+                金環、外殻崩壊、暴走星雲への3段階メタモルフォーゼ。弾幕シューティングの極限点。
+              </p>
+</div>
+<div class="flex items-center justify-between mt-space-md pt-space-xs text-on-surface-variant font-label-sm text-[10px]">
+<span class="text-error font-bold">HP: 48,500,000</span>
+<span class="text-secondary-fixed font-bold">3 METAMORPHOSES</span>
+</div>
+</div>
+</div>
+</section>
+<!-- COMPARATIVE ESCALATION MATRIX (DATA TABLE) -->
+<section class="bg-surface-container rounded-xl p-space-md flex flex-col gap-space-md shadow-lg my-space-lg">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary-container text-[22px]">bar_chart_4_bars</span>
+<h3 class="font-headline-sm text-headline-sm text-primary uppercase">戦力比較・位相エスカレーション・マトリクス</h3>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">FLEET TELEMETRY V4.0</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left font-body-sm text-body-sm border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm uppercase">
+<th class="py-space-sm px-space-md">STAGE</th>
+<th class="py-space-sm px-space-md">CODENAME</th>
+<th class="py-space-sm px-space-md">CLASS / TYPE</th>
+<th class="py-space-sm px-space-md">ARMOR HP</th>
+<th class="py-space-sm px-space-md">BULLET PROFILE</th>
+<th class="py-space-sm px-space-md">PRIMARY HAZARD</th>
+<th class="py-space-sm px-space-md text-right">KILL BONUS</th>
+</tr>
+</thead>
+<tbody class="divide-y-0 text-on-surface font-body-sm">
+<tr class="hover:bg-surface-container-high transition-colors">
+<td class="py-space-sm px-space-md font-label-md text-primary">01</td>
+<td class="py-space-sm px-space-md font-bold text-primary">GOLIATH</td>
+<td class="py-space-sm px-space-md text-on-surface-variant">Orbital Sentinel Fortress</td>
+<td class="py-space-sm px-space-md font-label-sm">120,000</td>
+<td class="py-space-sm px-space-md">Concentric Gatling Rings</td>
+<td class="py-space-sm px-space-md text-primary-container">Dual Vulcan Pods</td>
+<td class="py-space-sm px-space-md text-right font-label-md text-primary">150,000 PTS</td>
+</tr>
+<tr class="hover:bg-surface-container-high transition-colors">
+<td class="py-space-sm px-space-md font-label-md text-primary">02</td>
+<td class="py-space-sm px-space-md font-bold text-primary">CRIMSON MANTA</td>
+<td class="py-space-sm px-space-md text-on-surface-variant">Stratosphere Heavy Bomber</td>
+<td class="py-space-sm px-space-md font-label-sm">280,000</td>
+<td class="py-space-sm px-space-md">Carpet Cluster Spread</td>
+<td class="py-space-sm px-space-md text-primary-container">Wing Turrets Detonation</td>
+<td class="py-space-sm px-space-md text-right font-label-md text-primary">350,000 PTS</td>
+</tr>
+<tr class="hover:bg-surface-container-high transition-colors">
+<td class="py-space-sm px-space-md font-label-md text-tertiary-fixed">03</td>
+<td class="py-space-sm px-space-md font-bold text-tertiary-fixed">SUB-SPACE CENTIPEDE</td>
+<td class="py-space-sm px-space-md text-on-surface-variant">Segmented Serpent Dreadnought</td>
+<td class="py-space-sm px-space-md font-label-sm">650,000</td>
+<td class="py-space-sm px-space-md">Segment Ring Pulses</td>
+<td class="py-space-sm px-space-md text-tertiary-fixed">Dynamic Body Collision</td>
+<td class="py-space-sm px-space-md text-right font-label-md text-tertiary-fixed">800,000 PTS</td>
+</tr>
+<tr class="hover:bg-surface-container-high transition-colors">
+<td class="py-space-sm px-space-md font-label-md text-tertiary-fixed">04</td>
+<td class="py-space-sm px-space-md font-bold text-tertiary-fixed">IRON AEGIS</td>
+<td class="py-space-sm px-space-md text-on-surface-variant">Mobile Defense Stronghold</td>
+<td class="py-space-sm px-space-md font-label-sm">1,400,000</td>
+<td class="py-space-sm px-space-md">Cross-Screen Laser Grid</td>
+<td class="py-space-sm px-space-md text-tertiary-fixed">Shield Orbit Phase Reflection</td>
+<td class="py-space-sm px-space-md text-right font-label-md text-tertiary-fixed">1,500,000 PTS</td>
+</tr>
+<tr class="hover:bg-surface-container-high transition-colors">
+<td class="py-space-sm px-space-md font-label-md text-tertiary-container">05</td>
+<td class="py-space-sm px-space-md font-bold text-tertiary-container">SOLAR HELIOS</td>
+<td class="py-space-sm px-space-md text-on-surface-variant">Stellar Observatory Core</td>
+<td class="py-space-sm px-space-md font-label-sm">3,200,000</td>
+<td class="py-space-sm px-space-md">Solar Flare Plasma Arcs</td>
+<td class="py-space-sm px-space-md text-tertiary-container">Heat Wave Field Restriction</td>
+<td class="py-space-sm px-space-md text-right font-label-md text-tertiary-container">3,000,000 PTS</td>
+</tr>
+<tr class="hover:bg-surface-container-high transition-colors">
+<td class="py-space-sm px-space-md font-label-md text-error">06</td>
+<td class="py-space-sm px-space-md font-bold text-error">VOID LEVIATHAN</td>
+<td class="py-space-sm px-space-md text-on-surface-variant">Cosmic Bio-Mechanical Beast</td>
+<td class="py-space-sm px-space-md font-label-sm">6,800,000</td>
+<td class="py-space-sm px-space-md">Bio-Spore Swarms</td>
+<td class="py-space-sm px-space-md text-error">Regenerative Tentacle Beams</td>
+<td class="py-space-sm px-space-md text-right font-label-md text-error">6,500,000 PTS</td>
+</tr>
+<tr class="hover:bg-surface-container-high transition-colors">
+<td class="py-space-sm px-space-md font-label-md text-error">07</td>
+<td class="py-space-sm px-space-md font-bold text-error">OUROBOROS</td>
+<td class="py-space-sm px-space-md text-on-surface-variant">Spacetime Distortion Prototype</td>
+<td class="py-space-sm px-space-md font-label-sm">11,500,000</td>
+<td class="py-space-sm px-space-md">Delayed Mirage Streams</td>
+<td class="py-space-sm px-space-md text-error">Bullet Time Stasis Traps</td>
+<td class="py-space-sm px-space-md text-right font-label-md text-error">12,000,000 PTS</td>
+</tr>
+<tr class="hover:bg-surface-container-high transition-colors">
+<td class="py-space-sm px-space-md font-label-md text-secondary">08</td>
+<td class="py-space-sm px-space-md font-bold text-secondary">CRUCIBLE OMEGA</td>
+<td class="py-space-sm px-space-md text-on-surface-variant">Planet-Cracking Dreadnought</td>
+<td class="py-space-sm px-space-md font-label-sm">22,000,000</td>
+<td class="py-space-sm px-space-md">Hyper Velocity Beam Cascades</td>
+<td class="py-space-sm px-space-md text-secondary">Wave Cannon Screen Quake</td>
+<td class="py-space-sm px-space-md text-right font-label-md text-secondary">20,000,000 PTS</td>
+</tr>
+<tr class="hover:bg-surface-container-high transition-colors">
+<td class="py-space-sm px-space-md font-label-md text-secondary">09</td>
+<td class="py-space-sm px-space-md font-bold text-secondary">SINGULARITY ZERO</td>
+<td class="py-space-sm px-space-md text-on-surface-variant">Artificial Gravity Weapon</td>
+<td class="py-space-sm px-space-md font-label-sm">34,000,000</td>
+<td class="py-space-sm px-space-md">Inward Gravitational Spiral</td>
+<td class="py-space-sm px-space-md text-secondary">Crushing Magnetic Vortex</td>
+<td class="py-space-sm px-space-md text-right font-label-md text-secondary">32,000,000 PTS</td>
+</tr>
+<tr class="bg-secondary-container/20 hover:bg-secondary-container/30 transition-colors">
+<td class="py-space-sm px-space-md font-label-md text-secondary-fixed font-bold">10</td>
+<td class="py-space-sm px-space-md font-bold text-secondary-fixed">DEUS EX COSMOS</td>
+<td class="py-space-sm px-space-md text-primary font-bold">Transcendent Cosmic Entity</td>
+<td class="py-space-sm px-space-md font-label-sm text-error font-bold">48,500,000</td>
+<td class="py-space-sm px-space-md text-secondary-fixed">Omnidirectional Nebula Curtains</td>
+<td class="py-space-sm px-space-md text-error font-bold">Dimensional Collapse</td>
+<td class="py-space-sm px-space-md text-right font-label-md text-secondary-fixed font-bold">50,000,000 PTS</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+</div>
+</div>
+<script>
+  const bossData = {
+    1: {
+      tag: "STAGE 01 / ORBITAL",
+      threat: "THREAT: C STANDARD",
+      stageBadge: "STAGE 01 ENCOUNTER",
+      nameJp: "衛星軌道警備要塞",
+      nameEn: "ORBITAL SENTINEL: A-01 GOLIATH",
+      hp: "120,000 / 120,000 M-JOULES",
+      segments: 4,
+      p1Title: "連装ガトリング弾幕 (Vulcan Sweep)",
+      p1Desc: "左右の主翼からV字型に広がる高初速弾。正面直下に安全ポケットが存在。",
+      p1Pct: "100% - 40% HP",
+      p2Title: "主砲チャージモード (Core Beam)",
+      p2Desc: "中央コアが赤熱化し、中央直線に高速レーザーを発射。左右へ退避。",
+      p2Pct: "40% - 0% HP",
+      p3Title: "OVERHEAT EMERGENCY",
+      p3Desc: "弾速が20%上昇するが装甲耐久値が激減。集中射撃で即座に撃破可能。",
+      p3Pct: "< 15% HP",
+      patternType: "V-CONCENTRIC SPRAY",
+      speed: "Bullet Velocity: 210 px/s",
+      density: "Density: 18 projectiles/sec",
+      weapon: "TYPE-1 パルススプレッド (広角主翼部位の早期破壊を推奨)",
+      notes: "最初のボス。旋回ガトリングの旋回軸を見極めればボム不使用で撃破可能。",
+      reward: "150,000 PTS + LEVEL-UP CAPSULE",
+      imgAlt: "Mechanical dual-wing heavy orbital fortress boss with rotating vulcan gatling pods and glowing cyan central engine block in low earth orbit.",
+      svgPattern: `<circle cx="170" cy="80" r="40" stroke="#00f3ff" stroke-width="1.5" stroke-dasharray="2 4"/>
+        <line x1="170" y1="80" x2="120" y2="150" stroke="#00f3ff" stroke-width="2"/>
+        <line x1="170" y1="80" x2="220" y2="150" stroke="#00f3ff" stroke-width="2"/>
+        <circle cx="170" cy="80" r="10" fill="#00f3ff"/>`,
+      wireframe: `<rect x="70" y="80" width="160" height="40" rx="4" fill="#00f3ff" fill-opacity="0.1" stroke="#00f3ff" stroke-width="2"/>
+        <polygon points="50,100 20,130 90,130" stroke="#00f3ff" stroke-width="1.5"/>
+        <polygon points="250,100 280,130 210,130" stroke="#00f3ff" stroke-width="1.5"/>
+        <circle cx="150" cy="100" r="15" fill="#ffb4ab"/>`
+    },
+    2: {
+      tag: "STAGE 02 / STRATOSPHERE",
+      threat: "THREAT: C+ ELEVATED",
+      stageBadge: "STAGE 02 ENCOUNTER",
+      nameJp: "成層圏爆撃母機",
+      nameEn: "CRIMSON MANTA: X-2",
+      hp: "280,000 / 280,000 M-JOULES",
+      segments: 5,
+      p1Title: "絨毯クラスター爆撃 (Cluster Carpet)",
+      p1Desc: "下部ベイから散布される低速浮遊爆弾。爆風の残留判定に注意。",
+      p1Pct: "100% - 50% HP",
+      p2Title: "成層圏急降下爆撃 (Sonic Dive)",
+      p2Desc: "画面上部から急加速で降下しつつ、左右スラスターより扇状弾を散布。",
+      p2Pct: "50% - 0% HP",
+      p3Title: "THRUSTER OVERDRIVE",
+      p3Desc: "左右スラスター残骸からの不規則な破片散布。中央維持が危険。",
+      p3Pct: "< 20% HP",
+      patternType: "CLUSTER SPREAD HAZARD",
+      speed: "Bullet Velocity: 240 px/s",
+      density: "Density: 28 projectiles/sec",
+      weapon: "TYPE-2 ホーミングミサイル (左右のスラスター砲塔を個別追尾)",
+      notes: "エイ型の巨体は当たり判定が広いため、左右翼端を早めに削ると回避スペースが拡大。",
+      reward: "350,000 PTS + SPEED BOOSTER",
+      imgAlt: "Wide biological mechanical stealth manta ray bomber boss craft cruising high in crimson clouds with glowing engine vents and carpet bomb launchers.",
+      svgPattern: `<circle cx="170" cy="80" r="50" stroke="#00f3ff" stroke-width="1" stroke-dasharray="4 2"/>
+        <circle cx="130" cy="110" r="4" fill="#ffb4ab"/><circle cx="210" cy="110" r="4" fill="#ffb4ab"/>
+        <circle cx="170" cy="130" r="5" fill="#ffb4ab"/>`,
+      wireframe: `<polygon points="150,40 270,140 230,170 150,130 70,170 30,140" fill="#00dce6" fill-opacity="0.1" stroke="#00dce6" stroke-width="2"/>
+        <circle cx="150" cy="110" r="12" fill="#ffb4ab"/>`
+    },
+    3: {
+      tag: "STAGE 03 / ASTEROID",
+      threat: "THREAT: B DANGEROUS",
+      stageBadge: "STAGE 03 ENCOUNTER",
+      nameJp: "小惑星帯百足型戦艦",
+      nameEn: "SUB-SPACE CENTIPEDE",
+      hp: "650,000 / 650,000 M-JOULES",
+      segments: 6,
+      p1Title: "蛇行体当たり & 節砲撃 (Serpent Coil)",
+      p1Desc: "8の字を描きながら自機を囲い込み、胴体各節から同時放射弾。",
+      p1Pct: "100% - 50% HP",
+      p2Title: "尾部切り離し突撃 (Segment Detach)",
+      p2Desc: "切り離された尾節が自律型機雷として画面を跳弾。",
+      p2Pct: "50% - 0% HP",
+      p3Title: "FRENZY COIL",
+      p3Desc: "残存頭部が超高速で突進を繰り返す。画面隅へ誘導せよ。",
+      p3Pct: "< 25% HP",
+      patternType: "PERIMETER RING PULSES",
+      speed: "Bullet Velocity: 290 px/s",
+      density: "Density: 42 projectiles/sec",
+      weapon: "貫通型荷電粒子ビーム (連結された胴体節を一網打尽に貫通)",
+      notes: "尾部を破壊するごとにボスの全長が短縮され、旋回半径が小さくなり突進頻度が増加。",
+      reward: "800,000 PTS + EXTEND 1UP",
+      imgAlt: "Giant multi-segmented mechanical armored centipede serpent battleship undulating through an asteroid field, armored yellow-orange hazard stripes, mining laser mandibles.",
+      svgPattern: `<path d="M70,120 Q120,40 170,100 T270,60" fill="none" stroke="#ffb95f" stroke-width="3" stroke-dasharray="4 6"/>
+        <circle cx="170" cy="100" r="8" fill="#ffb4ab"/>`,
+      wireframe: `<circle cx="150" cy="50" r="18" stroke="#ffb95f" stroke-width="2"/>
+        <circle cx="140" cy="85" r="15" stroke="#ffb95f" stroke-width="1.5"/>
+        <circle cx="160" cy="120" r="14" stroke="#ffb95f" stroke-width="1.5"/>
+        <circle cx="145" cy="155" r="13" stroke="#ffb95f" stroke-width="1.5"/>
+        <circle cx="155" cy="190" r="11" stroke="#ffb95f" stroke-width="1.5"/>`
+    },
+    4: {
+      tag: "STAGE 04 / FORTRESS",
+      threat: "THREAT: B+ DEFENSIVE",
+      stageBadge: "STAGE 04 ENCOUNTER",
+      nameJp: "要塞防衛機動要塞",
+      nameEn: "CYBER TITAN: IRON AEGIS",
+      hp: "1,400,000 / 1,400,000 M-JOULES",
+      segments: 7,
+      p1Title: "旋回シールド防壁 (Orbiting Aegis)",
+      p1Desc: "周囲を回転する4枚の無敵防壁。シールドの間隙を縫って中央コアへ弾を流し込む。",
+      p1Pct: "100% - 60% HP",
+      p2Title: "クロスレーザーグリッド (Laser Matrix)",
+      p2Desc: "画面を格子状に区切る緑色レーザー。安地が微小な四角形に制限される。",
+      p2Pct: "60% - 0% HP",
+      p3Title: "CORE EXPOSURE DESPERATION",
+      p3Desc: "防壁をパージし、全方位へ高速自機狙い針弾を連射。",
+      p3Pct: "< 20% HP",
+      patternType: "GEOMETRIC LASER GRID",
+      speed: "Bullet Velocity: 340 px/s",
+      density: "Density: 55 projectiles/sec",
+      weapon: "爆風残留型プラズマランチャー (防壁裏側へ爆風を巻き込ませる)",
+      notes: "シールドは破壊不能。レーザー予兆線の発生時に中央軸から斜めへ退避が安定。",
+      reward: "1,500,000 PTS + DEFENSE DRONE",
+      imgAlt: "Heavily armored cyber titan fortress with orbiting floating energy shield plates and sweeping emerald laser grids protecting a deep red glowing core.",
+      svgPattern: `<line x1="50" y1="40" x2="290" y2="40" stroke="#00f3ff" stroke-width="2"/>
+        <line x1="50" y1="120" x2="290" y2="120" stroke="#00f3ff" stroke-width="2"/>
+        <line x1="120" y1="10" x2="120" y2="150" stroke="#00f3ff" stroke-width="2"/>
+        <line x1="220" y1="10" x2="220" y2="150" stroke="#00f3ff" stroke-width="2"/>`,
+      wireframe: `<rect x="110" y="70" width="80" height="80" rx="8" fill="#191b26" stroke="#00dce6" stroke-width="2"/>
+        <circle cx="150" cy="110" r="18" fill="#ffb4ab"/>
+        <line x1="70" y1="110" x2="90" y2="110" stroke="#00f3ff" stroke-width="6"/>
+        <line x1="210" y1="110" x2="230" y2="110" stroke="#00f3ff" stroke-width="6"/>`
+    },
+    5: {
+      tag: "STAGE 05 / CORONA",
+      threat: "THREAT: A HIGH",
+      stageBadge: "STAGE 05 ENCOUNTER",
+      nameJp: "恒星観測炉心戦艦",
+      nameEn: "SOLAR FLARE: HELIOS",
+      hp: "3,200,000 / 3,200,000 M-JOULES",
+      segments: 8,
+      p1Title: "プロミネンススパイラル (Prominence Arc)",
+      p1Desc: "巨大な火炎プラズマの弧が時計回りに旋回。自機も外周を同調移動する必要あり。",
+      p1Pct: "100% - 60% HP",
+      p2Title: "熱波ソーラーフレア (Corona Flash)",
+      p2Desc: "画面上部全体が灼熱化。下部境界ギリギリでの精密な針くぐり。",
+      p2Pct: "60% - 25% HP",
+      p3Title: "SUPERNOVA COLLAPSE",
+      p3Desc: "炉心臨界。超大玉の熱球が分裂を繰り返し画面を埋め尽くす。",
+      p3Pct: "< 25% HP",
+      patternType: "SOLAR SPIRAL ARCS",
+      speed: "Bullet Velocity: 370 px/s",
+      density: "Density: 74 projectiles/sec",
+      weapon: "極低温冷凍レーザー (熱シールドを急速冷却しダメージ倍率付与)",
+      notes: "背景の恒星フレアに紛れて弾幕が見えにくいため、弾丸ハイライト表示を意識すること。",
+      reward: "3,000,000 PTS + SUPER BOMB x2",
+      imgAlt: "Solar observation dreadnought near a roaring blazing star, glowing bright orange heat radiator fins, sun flare plasma arcs, circular solar bullet rings.",
+      svgPattern: `<circle cx="170" cy="80" r="60" stroke="#ffb95f" stroke-width="1.5" stroke-dasharray="8 4"/>
+        <circle cx="170" cy="80" r="30" stroke="#ffd5a6" stroke-width="2"/>
+        <circle cx="170" cy="80" r="12" fill="#93000a"/>`,
+      wireframe: `<circle cx="150" cy="110" r="45" fill="#ffd5a6" fill-opacity="0.1" stroke="#ffb95f" stroke-width="2"/>
+        <polygon points="150,20 165,65 135,65" fill="#ffb95f"/>
+        <polygon points="150,200 165,155 135,155" fill="#ffb95f"/>
+        <polygon points="60,110 105,95 105,125" fill="#ffb95f"/>
+        <polygon points="240,110 195,95 195,125" fill="#ffb95f"/>`
+    },
+    6: {
+      tag: "STAGE 06 / DARK NEBULA",
+      threat: "THREAT: A+ EXTREME",
+      stageBadge: "STAGE 06 ENCOUNTER",
+      nameJp: "暗黒星雲深宇宙巨大生物兵器",
+      nameEn: "VOID LEVIATHAN: ABYSS",
+      hp: "6,800,000 / 6,800,000 M-JOULES",
+      segments: 9,
+      p1Title: "生体触手ビーム砲列 (Tentacle Beam Pods)",
+      p1Desc: "6本の生体触手がそれぞれ独立して自機をロックオンし追尾レーザーを発射。",
+      p1Pct: "100% - 65% HP",
+      p2Title: "胞子弾膜拡散 (Bio-Spore Fog)",
+      p2Desc: "ゆっくり漂う紫色の胞子弾。一定時間後に自機方向へ急加速分裂。",
+      p2Pct: "65% - 30% HP",
+      p3Title: "ABYSSAL REGENERATION",
+      p3Desc: "本体肉壁が脈動し回復を試みる。回復上回るDPSでコアを粉砕せよ。",
+      p3Pct: "< 30% HP",
+      patternType: "ORGANIC SPORE CLUSTERS",
+      speed: "Bullet Velocity: 390 px/s",
+      density: "Density: 88 projectiles/sec",
+      weapon: "ナパーム徹甲弾 (生体組織の再生を阻害する炎上継続効果)",
+      notes: "触手ポッドを放置すると回避ルートが完全封鎖される。1本ずつ確実に切断せよ。",
+      reward: "6,500,000 PTS + OPTION UNIT",
+      imgAlt: "Bio-mechanical cosmic space leviathan creature lurking inside a dark nebula, biomechanical tentacles with laser nodes, bioluminescent red carapace, organic spore bullet clouds.",
+      svgPattern: `<path d="M90,130 Q170,30 250,130" stroke="#ffb4ab" stroke-width="2" fill="none"/>
+        <circle cx="170" cy="70" r="14" fill="#690005"/><circle cx="140" cy="90" r="4" fill="#ffb4ab"/>
+        <circle cx="200" cy="90" r="4" fill="#ffb4ab"/>`,
+      wireframe: `<path d="M100,150 Q150,50 200,150 Q150,180 100,150" fill="#93000a" fill-opacity="0.1" stroke="#ffb4ab" stroke-width="2"/>
+        <circle cx="150" cy="120" r="22" fill="#ffb4ab"/>`
+    },
+    7: {
+      tag: "STAGE 07 / CHRONO RIFT",
+      threat: "THREAT: S APEX",
+      stageBadge: "STAGE 07 ENCOUNTER",
+      nameJp: "時空歪曲実験艦",
+      nameEn: "CHRONO PHANTOM: OUROBOROS",
+      hp: "11,500,000 / 11,500,000 M-JOULES",
+      segments: 10,
+      p1Title: "時空ミラージュ分身 (Temporal Afterimage)",
+      p1Desc: "3体の幻影に分裂。実体のみが微かに紫色の光子を放熱している。",
+      p1Pct: "100% - 60% HP",
+      p2Title: "時間停止フィールド (Chrono Trap)",
+      p2Desc: "画面内に青いタイムストップゾーンが展開。進入すると自機のみ数秒間減速。",
+      p2Pct: "60% - 25% HP",
+      p3Title: "OUROBOROS TIME LOOP",
+      p3Desc: "数秒前の弾幕が逆再生され再収束する極限の時間軸トリック弾幕。",
+      p3Pct: "< 25% HP",
+      patternType: "DELAYED MIRAGE WAVES",
+      speed: "Bullet Velocity: 420 px/s (Variable)",
+      density: "Density: 105 projectiles/sec",
+      weapon: "タキオンレーザー (時空歪曲シールドを無視して実体へ直撃)",
+      notes: "偽物を攻撃してもノーダメージ。排熱エフェクトが出ている1機を見極めて集中射撃。",
+      reward: "12,000,000 PTS + EXTEND 1UP",
+      imgAlt: "Chrono phantom battleship warping through time spacetime rifts with ghostly afterimage clones, chromatic aberration holographic mirages, glitching purple distortion fields.",
+      svgPattern: `<rect x="130" y="40" width="80" height="80" stroke="#ddb7ff" stroke-width="1.5" stroke-dasharray="3 3"/>
+        <rect x="120" y="50" width="80" height="80" stroke="#00f3ff" stroke-width="1" stroke-dasharray="3 3"/>
+        <circle cx="170" cy="80" r="8" fill="#ddb7ff"/>`,
+      wireframe: `<polygon points="150,40 210,100 180,180 120,180 90,100" fill="#6f00be" fill-opacity="0.15" stroke="#ddb7ff" stroke-width="2"/>
+        <line x1="150" y1="40" x2="150" y2="180" stroke="#ddb7ff" stroke-width="1" stroke-dasharray="2 4"/>`
+    },
+    8: {
+      tag: "STAGE 08 / DEEP WARPING",
+      threat: "THREAT: S+ JUGGERNAUT",
+      stageBadge: "STAGE 08 ENCOUNTER",
+      nameJp: "惑星破砕超弩級主砲艦",
+      nameEn: "DREADNOUGHT OMEGA: FORTRESS CRUCIBLE",
+      hp: "22,000,000 / 22,000,000 M-JOULES",
+      segments: 12,
+      p1Title: "多層砲塔飽和斉射 (Tiered Turret Barrage)",
+      p1Desc: "艦首・舷側・甲板の計24基の副砲から同時斉射される無数の赤色徹甲弾。",
+      p1Pct: "100% - 65% HP",
+      p2Title: "惑星破砕波動砲 (Crucible Wave Cannon)",
+      p2Desc: "画面全体が激しく揺動し警報が鳴動。横幅の80%を消滅させる超極太ビーム。",
+      p2Pct: "65% - 20% HP",
+      p3Title: "FINAL STAND ARMORED SIEGE",
+      p3Desc: "艦橋を露出し、残存全ミサイルサイロから無誘導弾を天井知らずに乱射。",
+      p3Pct: "< 20% HP",
+      patternType: "HIGH-DENSITY BEAM CASCADE",
+      speed: "Bullet Velocity: 440 px/s",
+      density: "Density: 120 projectiles/sec",
+      weapon: "超重ギガクラッシュボム (主砲チャージ中に直撃させて中断誘発)",
+      notes: "波動砲のチャージ中は画面左端または右端のわずか数ミリ幅のみが安全地帯。",
+      reward: "20,000,000 PTS + SPECIAL CORE",
+      imgAlt: "Colossal screen-filling planetary dreadnought warship Fortress Crucible with heavy tiered armor plates, massive glowing wave motion cannon barrel charging apocalyptic red energy.",
+      svgPattern: `<rect x="50" y="60" width="240" height="40" fill="#93000a" opacity="0.4"/>
+        <line x1="50" y1="80" x2="290" y2="80" stroke="#ffb4ab" stroke-width="4"/>`,
+      wireframe: `<rect x="40" y="60" width="220" height="90" fill="#272935" stroke="#ddb7ff" stroke-width="2"/>
+        <rect x="80" y="90" width="140" height="30" fill="#93000a"/>
+        <line x1="150" y1="90" x2="150" y2="170" stroke="#ffb4ab" stroke-width="3"/>`
+    },
+    9: {
+      tag: "STAGE 09 / SINGULARITY",
+      threat: "THREAT: SS VOID",
+      stageBadge: "STAGE 09 ENCOUNTER",
+      nameJp: "人工重力特異点兵器",
+      nameEn: "SINGULARITY CORE: ZERO",
+      hp: "34,000,000 / 34,000,000 M-JOULES",
+      segments: 13,
+      p1Title: "重力吸引ボルテックス (Gravity Well)",
+      p1Desc: "自機および射出弾が中央のブラックホールへ強烈に引力を受ける物理変調。",
+      p1Pct: "100% - 60% HP",
+      p2Title: "磁気収縮リング (Magnetic Guillotine)",
+      p2Desc: "外周から中央へ向かって収縮する高圧磁気リング。中心へのダイブと脱出の反復。",
+      p2Pct: "60% - 20% HP",
+      p3Title: "EVENT HORIZON ERUPTION",
+      p3Desc: "事象の地平面からホーキング放射される超高速白色弾の放射シャワー。",
+      p3Pct: "< 20% HP",
+      patternType: "INWARD GRAVITATIONAL SPIRAL",
+      speed: "Bullet Velocity: 460 px/s (Distorted)",
+      density: "Density: 135 projectiles/sec",
+      weapon: "反物質重力中和弾 (引力加速度を一定時間相殺する特殊弾頭)",
+      notes: "引力に抗してスティックを常時外側へ倒す必要がある。自機の操作慣性に注意。",
+      reward: "32,000,000 PTS + EX GAUGE FULL",
+      imgAlt: "Artificial singularity core zero black hole superweapon surrounded by dark magnetic accretion rings, gravitational light warping, sucking debris and luminous plasma into center.",
+      svgPattern: `<circle cx="170" cy="80" r="40" stroke="#ddb7ff" stroke-width="2"/>
+        <path d="M170,80 Q140,50 110,80 T170,120 T230,80" fill="none" stroke="#00f3ff" stroke-width="1.5"/>
+        <circle cx="170" cy="80" r="16" fill="#0b0e18" stroke="#ffb4ab" stroke-width="2"/>`,
+      wireframe: `<circle cx="150" cy="110" r="30" fill="#0b0e18" stroke="#ddb7ff" stroke-width="3"/>
+        <ellipse cx="150" cy="110" rx="80" ry="25" stroke="#00f3ff" stroke-width="1.5" stroke-dasharray="4 2"/>
+        <circle cx="150" cy="110" r="10" fill="#ffb4ab"/>`
+    },
+    10: {
+      tag: "STAGE 10 / APOCALYPSE",
+      threat: "THREAT: SSS GOD-CLASS",
+      stageBadge: "STAGE 10 ENCOUNTER",
+      nameJp: "神性機動超越生命体",
+      nameEn: "DEUS EX COSMOS: APOCALYPSE EYE",
+      hp: "48,500,000 / 48,500,000 M-JOULES",
+      segments: 15,
+      p1Title: "金環調和形態 (Golden Halo)",
+      p1Desc: "幾何学的レーザー網と金環外周からの360度収束弾。プレイヤー周囲の安全領域が螺旋状に狭小化。",
+      p1Pct: "100% - 65% HP",
+      p2Title: "外殻崩壊形態 (Broken Core)",
+      p2Desc: "装甲が四方に散開し衛星ビットとして個別射撃。本体中央の露出アイから巨大グラビティビーム投射。",
+      p2Pct: "65% - 25% HP",
+      p3Title: "暴走星雲態 (Nebula Void)",
+      p3Desc: "全画面を覆い尽くす超濃密極彩色弾幕カーテン。時空の歪みにより自機の移動速度が段階的に低下。",
+      p3Pct: "< 25% HP",
+      patternType: "HYPER DENSE CURTAIN",
+      speed: "Bullet Velocity: 480 px/s",
+      density: "Density: 142 projectiles/sec",
+      weapon: "TYPE-3 レーザー収束型 + 量子ディフュージョンボム (無敵フレームでのコア直撃推奨)",
+      notes: "第3フェーズ移行時の全方位重力波は画面全体を歪曲させます。ボムを即座に投下し、中央の露出した赤い核にサブウェポンの全弾を叩き込んでください。",
+      reward: "50,000,000 PTS + ALL CLEAR",
+      imgAlt: "A gigantic transcendent cosmic final boss entity named Deus Ex Cosmos Apocalypse Eye, surrounded by sacred golden rings, fractal hyper-dimensional wings, glowing purple void cores, and radiating dense curtains of neon cyan and violet bullet-hell orbs in deep void space.",
+      svgPattern: `<circle cx="170" cy="80" r="70" stroke="#00f3ff" stroke-width="1" stroke-dasharray="3 7" opacity="0.3"/>
+        <circle cx="170" cy="80" r="50" stroke="#ddb7ff" stroke-width="1" stroke-dasharray="4 4" opacity="0.4"/>
+        <circle cx="170" cy="80" r="8" fill="#ffb4ab" class="animate-pulse"/>
+        <g class="animate-[spin_10s_linear_infinite]" style="transform-origin: 170px 80px;">
+          <circle cx="170" cy="25" r="3.5" fill="#00f3ff"/><circle cx="215" cy="55" r="3.5" fill="#00f3ff"/>
+          <circle cx="215" cy="105" r="3.5" fill="#00f3ff"/><circle cx="170" cy="135" r="3.5" fill="#00f3ff"/>
+          <circle cx="125" cy="105" r="3.5" fill="#00f3ff"/><circle cx="125" cy="55" r="3.5" fill="#00f3ff"/>
+        </g>`,
+      wireframe: `<circle cx="150" cy="120" r="65" stroke="#ddb7ff" stroke-width="2" stroke-dasharray="6 3"/>
+        <polygon points="150,30 250,90 280,180 200,210 100,210 20,180 50,90" stroke="#00f3ff" stroke-width="1.5" fill="rgba(0,243,255,0.05)"/>
+        <circle cx="150" cy="120" r="24" fill="#6f00be" stroke="#ffb4ab" stroke-width="2"/>
+        <circle cx="150" cy="120" r="8" fill="#ffb4ab" class="animate-pulse"/>`
+    }
+  };
+
+  function selectBoss(stage) {
+    const data = bossData[stage];
+    if (!data) return;
+
+    // Update Header active indicator
+    const headerTag = document.getElementById("header-stage-tag");
+    if (headerTag) {
+      headerTag.textContent = data.tag;
+      headerTag.className = stage >= 8 ? "font-label-lg text-label-lg text-secondary" : (stage >= 5 ? "font-label-lg text-label-lg text-error" : "font-label-lg text-label-lg text-primary-container");
+    }
+
+    // Update Tab Highlights
+    document.querySelectorAll(".stage-nav-btn").forEach((btn, idx) => {
+      const curStage = idx + 1;
+      if (curStage === stage) {
+        btn.classList.add("bg-surface-container-highest", "ring-1", "ring-primary-container");
+        btn.classList.remove("bg-surface-container");
+      } else {
+        btn.classList.remove("bg-surface-container-highest", "ring-1", "ring-primary-container");
+        btn.classList.add("bg-surface-container");
+      }
+    });
+
+    // Update Showcase Meta
+    const threatBadge = document.getElementById("boss-threat-badge");
+    if (threatBadge) threatBadge.textContent = data.threat;
+    
+    const stageBadge = document.getElementById("boss-stage-badge");
+    if (stageBadge) stageBadge.textContent = data.stageBadge;
+
+    const nameJp = document.getElementById("boss-name-jp");
+    if (nameJp) nameJp.textContent = data.nameJp;
+
+    const nameEn = document.getElementById("boss-name-en");
+    if (nameEn) nameEn.textContent = data.nameEn;
+
+    const hpVal = document.getElementById("boss-hp-value");
+    if (hpVal) hpVal.textContent = data.hp;
+
+    // Update HP Segments
+    const hpContainer = document.getElementById("hp-segment-bar");
+    if (hpContainer) {
+      let segmentsHtml = "";
+      for (let i = 0; i < 15; i++) {
+        const colorClass = i < data.segments ? (stage >= 8 ? "bg-secondary" : (stage >= 5 ? "bg-error" : "bg-primary-container")) : "bg-surface-container-highest opacity-40";
+        segmentsHtml += `<div class="${colorClass} rounded-xs h-full transition-all"></div>`;
+      }
+      hpContainer.innerHTML = segmentsHtml;
+    }
+
+    // Update Phases
+    document.getElementById("phase-1-title").textContent = data.p1Title;
+    document.getElementById("phase-1-desc").textContent = data.p1Desc;
+    document.getElementById("phase-1-pct").textContent = data.p1Pct;
+
+    document.getElementById("phase-2-title").textContent = data.p2Title;
+    document.getElementById("phase-2-desc").textContent = data.p2Desc;
+    document.getElementById("phase-2-pct").textContent = data.p2Pct;
+
+    document.getElementById("phase-3-title").textContent = data.p3Title;
+    document.getElementById("phase-3-desc").textContent = data.p3Desc;
+    document.getElementById("phase-3-pct").textContent = data.p3Pct;
+
+    // Update Bullet Pattern
+    document.getElementById("pattern-type-tag").textContent = data.patternType;
+    document.getElementById("bullet-speed-tag").textContent = data.speed;
+    document.getElementById("bullet-density-tag").textContent = data.density;
+
+    const bulletSvg = document.getElementById("bullet-pattern-svg");
+    if (bulletSvg) bulletSvg.innerHTML = data.svgPattern;
+
+    const wireframeSvg = document.getElementById("boss-wireframe-svg");
+    if (wireframeSvg) wireframeSvg.innerHTML = data.wireframe;
+
+    // Update Strategy Info
+    document.getElementById("boss-recommended-weapon").textContent = data.weapon;
+    document.getElementById("boss-danger-notes").textContent = data.notes;
+    document.getElementById("boss-reward-pts").textContent = data.reward;
+
+    // Update Background Artwork image prompt
+    const bossBg = document.getElementById("boss-bg-image");
+    if (bossBg) {
+      bossBg.setAttribute("data-alt", data.imgAlt);
+    }
+  }
+
+  // Initialize with Stage 10 selected by default as per requirement
+  window.addEventListener("DOMContentLoaded", () => {
+    selectBoss(10);
+  });
+</script></main><footer class="w-full bg-surface-container-lowest py-space-lg"><div class="max-w-[1440px] mx-auto px-gutter flex flex-col md:flex-row items-center justify-between gap-space-md"><div class="flex items-center gap-space-md"><div class="w-2 h-2 rounded-full bg-primary-container"></div><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">PROJECT ASTRAEA COMBAT TELEMETRY // ORBITAL SECTOR 07-E</span></div><div class="font-label-sm text-label-sm text-on-surface-variant text-center uppercase tracking-widest">© 2024 UNITED EARTH DEFENSE FLEET. ALL ARCHIVAL RIGHTS RESERVED.</div><div class="flex items-center gap-space-lg"><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">FREQ: 142.85 MHZ</span><span class="font-label-sm text-label-sm text-primary uppercase">CORE READY</span></div></div></footer></body></html>

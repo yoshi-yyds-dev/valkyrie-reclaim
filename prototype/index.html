@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>VOID VANGUARD - Prototype Phase 1</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="game-wrapper">
+    <!-- ゲーム描画用キャンバス（仮想解像度 360x640） -->
+    <canvas id="game-canvas" width="360" height="640"></canvas>
+
+    <!-- タイトル / 出撃前オーバーレイ（AudioContext アンロック兼用） -->
+    <div id="title-overlay" class="overlay active">
+      <div class="hud-panel">
+        <div class="sys-tag">SYS_VER 4.09.2 // PROTOTYPE PHASE 1</div>
+        <h1 class="game-title">VOID VANGUARD</h1>
+        <p class="subtitle">VF-01 VALKYRIE // TACTICAL INTERCEPT</p>
+        <div class="controls-hint">
+          <p>📱 スマホ：指でスワイプ移動（オートショット）</p>
+          <p>💻 PC：マウス移動 / 矢印・WASDキー / P:ポーズ</p>
+        </div>
+        <button id="start-btn" class="cyber-btn">TOUCH TO SORTIE // 出撃開始</button>
+      </div>
+    </div>
+
+    <!-- ポーズメニューオーバーレイ -->
+    <div id="pause-overlay" class="overlay">
+      <div class="hud-panel">
+        <div class="sys-tag">SYSTEM PAUSED</div>
+        <h2 class="pause-title">MISSION PAUSED</h2>
+        <div class="menu-buttons">
+          <button id="resume-btn" class="cyber-btn">RESUME // 再開</button>
+          <button id="retry-btn" class="cyber-btn secondary">RETRY // 最初から</button>
+          <button id="mute-btn" class="cyber-btn secondary">AUDIO: ON</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

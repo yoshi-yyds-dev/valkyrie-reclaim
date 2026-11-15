@@ -1,0 +1,182 @@
+/* ==========================================================================
+   VOID VANGUARD - Prototype Style (Stitch Design System 準拠)
+   ========================================================================== */
+:root {
+  --bg-void: #070913;
+  --panel-bg: rgba(13, 18, 36, 0.9);
+  --cyan: #00f3ff;
+  --violet: #a855f7;
+  --crimson: #ff0055;
+  --text-main: #e2f1ff;
+  --text-dim: #5d729a;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background-color: #030408;
+  color: var(--text-main);
+  font-family: 'Segoe UI', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+  overflow: hidden;
+  /* スマホでのスワイプ時に画面リロードやスクロールが暴発するのを防止 */
+  touch-action: none;
+  overscroll-behavior: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#game-wrapper {
+  position: relative;
+  /* 9:16 の比率を保ちつつ、どんな画面サイズにもフィットさせる */
+  width: 100%;
+  height: 100%;
+  max-width: calc(100vh * 9 / 16);
+  max-height: calc(100vw * 16 / 9);
+  background-color: var(--bg-void);
+  box-shadow: 0 0 30px rgba(0, 243, 255, 0.15);
+  overflow: hidden;
+}
+
+#game-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+
+/* オーバーレイ（タイトル・ポーズ画面） */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(7, 9, 19, 0.82);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 10;
+}
+
+.overlay.active {
+  display: flex;
+}
+
+/* Stitch 準拠：45度面取りサイバーパネル */
+.hud-panel {
+  width: 100%;
+  max-width: 310px;
+  background: var(--panel-bg);
+  border: 1.5px solid var(--cyan);
+  padding: 24px 20px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 243, 255, 0.25), inset 0 0 12px rgba(0, 243, 255, 0.1);
+  clip-path: polygon(
+    0 0,
+    calc(100% - 14px) 0,
+    100% 14px,
+    100% 100%,
+    14px 100%,
+    0 calc(100% - 14px)
+  );
+}
+
+.sys-tag {
+  font-family: monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--cyan);
+  margin-bottom: 10px;
+}
+
+.game-title {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  text-shadow: 0 0 12px var(--cyan);
+  margin-bottom: 6px;
+}
+
+.pause-title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.subtitle {
+  font-family: monospace;
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 0.08em;
+  margin-bottom: 18px;
+}
+
+.controls-hint {
+  background: rgba(0, 243, 255, 0.06);
+  border: 1px solid rgba(0, 243, 255, 0.2);
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--text-main);
+  text-align: left;
+}
+
+.menu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* プライマリ・アーケードボタン */
+.cyber-btn {
+  width: 100%;
+  padding: 14px 16px;
+  font-family: monospace;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--bg-void);
+  background: var(--cyan);
+  border: 1.5px solid var(--cyan);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 0 14px rgba(0, 243, 255, 0.5);
+  clip-path: polygon(
+    0 0,
+    calc(100% - 8px) 0,
+    100% 8px,
+    100% 100%,
+    8px 100%,
+    0 calc(100% - 8px)
+  );
+}
+
+.cyber-btn:active {
+  transform: scale(0.97);
+}
+
+.cyber-btn.secondary {
+  background: rgba(13, 18, 36, 0.9);
+  color: var(--text-main);
+  border-color: var(--text-dim);
+  box-shadow: none;
+}
+
+.cyber-btn.secondary:hover {
+  border-color: var(--violet);
+  color: var(--violet);
+}

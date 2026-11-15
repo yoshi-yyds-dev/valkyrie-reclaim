@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,300..900;1,300..900&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;family=Space+Grotesk:wght@300..700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"tertiary":"#fff7f2","on-primary-fixed":"#002022","tertiary-container":"#ffd5a6","on-error-container":"#ffdad6","surface-container-low":"#191b26","on-primary":"#00373a","on-background":"#e1e1f1","error":"#ffb4ab","tertiary-fixed":"#ffddb8","surface-container-highest":"#323440","surface-tint":"#00dce6","on-surface":"#e1e1f1","secondary-fixed-dim":"#ddb7ff","primary-container":"#00f3ff","primary-fixed-dim":"#00dce6","secondary-container":"#6f00be","on-secondary":"#490080","secondary-fixed":"#f0dbff","primary":"#e3fdff","on-tertiary-container":"#885500","surface-container-high":"#272935","on-tertiary-fixed":"#2a1700","primary-fixed":"#6ff6ff","surface-container-lowest":"#0b0e18","on-secondary-fixed-variant":"#6900b3","surface-bright":"#373944","secondary":"#ddb7ff","on-secondary-container":"#d6a9ff","outline":"#849495","inverse-primary":"#00696f","tertiary-fixed-dim":"#ffb95f","on-primary-fixed-variant":"#004f53","on-secondary-fixed":"#2c0051","inverse-on-surface":"#2e303b","on-primary-container":"#006b71","surface":"#11131d","inverse-surface":"#e1e1f1","surface-variant":"#323440","on-error":"#690005","on-tertiary":"#472a00","on-surface-variant":"#b9cacb","error-container":"#93000a","surface-dim":"#11131d","on-tertiary-fixed-variant":"#653e00","background":"#11131d","surface-container":"#1d1f2a","outline-variant":"#3a494b"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"space-xs":"0.25rem","space-md":"1rem","space-xl":"2.5rem","margin":"1rem","gutter-desktop":"1.5rem","gutter":"1rem","space-sm":"0.5rem","space-lg":"1.5rem","margin-desktop":"2.5rem"},fontFamily:{"label-lg":["JetBrains Mono"],"display-lg-mobile":["Space Grotesk"],"display-lg":["Space Grotesk"],"body-sm":["Chivo"],"headline-md":["Space Grotesk"],"headline-lg":["Space Grotesk"],"body-md":["Chivo"],"label-sm":["JetBrains Mono"],"label-md":["JetBrains Mono"],"headline-sm":["Space Grotesk"],"body-lg":["Chivo"]},fontSize:{"label-lg":["14px",{"lineHeight":"18px","letterSpacing":"0.08em","fontWeight":"600"}],"display-lg-mobile":["32px",{"lineHeight":"38px","letterSpacing":"0.04em","fontWeight":"700"}],"display-lg":["48px",{"lineHeight":"52px","letterSpacing":"0.05em","fontWeight":"700"}],"body-sm":["12px",{"lineHeight":"16px","letterSpacing":"0.01em","fontWeight":"400"}],"headline-md":["24px",{"lineHeight":"32px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"0.03em","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"20px","letterSpacing":"0.01em","fontWeight":"400"}],"label-sm":["10px",{"lineHeight":"12px","letterSpacing":"0.1em","fontWeight":"500"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.08em","fontWeight":"500"}],"headline-sm":["20px",{"lineHeight":"26px","letterSpacing":"0.02em","fontWeight":"600"}],"body-lg":["16px",{"lineHeight":"24px","letterSpacing":"0.01em","fontWeight":"400"}]}}}}</script></head><body class="bg-surface font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container min-h-screen"><header class="fixed top-0 left-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.5)]"><div class="h-20 max-w-[1440px] mx-auto px-gutter flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg"><div class="flex flex-col"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 bg-primary-container animate-pulse"></span><span class="font-label-sm text-label-sm text-primary tracking-widest uppercase">SYS_VER 4.09.2</span></div><span class="font-headline-sm text-headline-sm text-primary uppercase tracking-wider">ASTRAEA // TACTICAL ARCHIVE</span></div><div class="hidden xl:flex items-center gap-space-md pl-space-md"><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">DEFCON LINK</span><span class="font-label-md text-label-md text-primary-container">ONLINE // SECURE</span></div><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">TARGET LOCK</span><span class="font-label-md text-label-md text-error">STANDBY</span></div></div></div><nav class="hidden lg:flex items-center gap-space-xs p-space-xs bg-surface-container-low rounded-lg" data-active-classes="bg-primary-container text-on-primary-container font-label-lg text-label-lg rounded-DEFAULT shadow-[0_0_12px_rgba(0,243,255,0.35)]"><a class="font-label-lg text-label-lg px-space-md py-space-sm text-on-surface-variant hover:text-on-surface transition-colors uppercase" data-path="機体ドック-(player-craft)" href="#">機体ドック (Player Craft)</a><a aria-current="page" class="px-space-md py-space-sm transition-colors uppercase bg-primary-container text-on-primary-container font-label-lg text-label-lg rounded-DEFAULT shadow-[0_0_12px_rgba(0,243,255,0.35)]" data-path="敵軍戦力-(enemy-roster)" href="#">敵軍戦力 (Enemy Roster)</a><a class="font-label-lg text-label-lg px-space-md py-space-sm text-on-surface-variant hover:text-on-surface transition-colors uppercase" data-path="ボス艦隊-stage-1-10-(boss-fleet)" href="#">ボス艦隊 Stage 1-10 (Boss Fleet)</a></nav><div class="flex items-center gap-space-md"><div class="hidden sm:flex items-center gap-space-md px-space-md py-space-xs bg-surface-container-high rounded-DEFAULT"><div class="flex flex-col text-right"><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">CREDITS</span><span class="font-label-md text-label-md text-primary">02 // INSERT COIN</span></div><div class="flex flex-col text-right pl-space-sm"><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">HI-SCORE</span><span class="font-label-md text-label-md text-primary-container">09,842,500</span></div></div><button aria-label="Toggle Audio Telemetry" class="flex items-center justify-center w-10 h-10 bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded-DEFAULT transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">volume_up</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<div class="w-full bg-surface-container-lowest relative overflow-hidden py-space-xl px-gutter">
+<div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary-container/10 via-surface-container-lowest/80 to-surface-container-lowest pointer-events-none"></div>
+<div class="absolute -right-20 -top-20 w-96 h-96 bg-secondary-container/20 rounded-full blur-3xl pointer-events-none"></div>
+<div class="max-w-[1440px] mx-auto relative z-10 flex flex-col gap-space-lg">
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="px-space-sm py-0.5 bg-surface-container-high rounded-DEFAULT text-primary-container font-label-sm text-label-sm uppercase tracking-widest">TACTICAL INTEL // ROSTER 08-ALPHA</span>
+<span class="w-2 h-2 rounded-full bg-error animate-ping"></span>
+<span class="font-label-sm text-label-sm text-error uppercase">HOSTILE ENGAGEMENT ACTIVE</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-primary uppercase tracking-tight flex items-center gap-space-md">
+<span>敵軍戦力図鑑</span>
+<span class="text-surface-container-highest font-label-md text-label-md select-none tracking-widest hidden sm:inline">// THREAT_REGISTRY</span>
+</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">
+            Orbital Sector 07-E hostile flight profiles recorded by Astraea tactical sensor arrays. Review weak points, projectile vectors, and kinetic countermeasures before sortie initiation.
+          </p>
+</div>
+<div class="flex items-center gap-space-md bg-surface-container-low p-space-xs rounded-lg self-start lg:self-auto shadow-md">
+<div class="flex flex-col px-space-md py-space-xs bg-surface-container rounded-DEFAULT">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">TARGET COUNT</span>
+<span class="font-headline-sm text-headline-sm text-primary-container font-bold" id="target-count">08 UNITS</span>
+</div>
+<div class="flex flex-col px-space-md py-space-xs bg-surface-container rounded-DEFAULT">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">THREAT INDEX</span>
+<span class="font-headline-sm text-headline-sm text-error font-bold">SEV-4 MAX</span>
+</div>
+</div>
+</div>
+<div class="flex flex-wrap items-center justify-between gap-space-md pt-space-sm">
+<div class="flex flex-wrap gap-space-xs" id="roster-filters">
+<button class="filter-btn px-space-md py-space-xs font-label-md text-label-md rounded-DEFAULT bg-primary-container text-on-primary-container uppercase transition-all shadow-sm" data-filter="all" type="button">ALL HOSTILES (8)</button>
+<button class="filter-btn px-space-md py-space-xs font-label-md text-label-md rounded-DEFAULT bg-surface-container hover:bg-surface-container-high text-on-surface-variant uppercase transition-all shadow-sm" data-filter="scout" type="button">SCOUT / DIVE (2)</button>
+<button class="filter-btn px-space-md py-space-xs font-label-md text-label-md rounded-DEFAULT bg-surface-container hover:bg-surface-container-high text-on-surface-variant uppercase transition-all shadow-sm" data-filter="cruiser" type="button">CRUISER / GUNSHIP (2)</button>
+<button class="filter-btn px-space-md py-space-xs font-label-md text-label-md rounded-DEFAULT bg-surface-container hover:bg-surface-container-high text-on-surface-variant uppercase transition-all shadow-sm" data-filter="specialist" type="button">SPECIALIST TACTICAL (4)</button>
+</div>
+<div class="flex items-center gap-space-sm text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px] text-primary-container">radar</span>
+<span>LIVE CORRIDOR TELEMETRY: 9:16 OPTIMIZED</span>
+</div>
+</div>
+</div>
+</div>
+<div class="max-w-[1440px] mx-auto w-full px-gutter py-space-lg flex flex-col gap-space-xl">
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-space-md" id="hostiles-grid">
+<!-- ENEMY 1: Scout Drone -->
+<article class="hostile-card flex flex-col justify-between bg-surface-container-low rounded-lg p-space-md hover:bg-surface-container transition-all group relative overflow-hidden shadow-md" data-category="scout">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm px-space-xs py-0.5 bg-surface-container-high text-primary-container rounded-DEFAULT">#01 // TIER-1 MINOR</span>
+<div class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+<span class="font-label-sm text-label-sm text-primary-container uppercase">LOW HP</span>
+</div>
+</div>
+<div class="w-full h-44 rounded-DEFAULT bg-surface-container-lowest relative flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 bg-[radial-gradient(#00f3ff_1px,transparent_1px)] [background-size:16px_16px] opacity-15"></div>
+<svg class="w-28 h-28 text-primary-container group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_12px_rgba(0,243,255,0.4)]" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 100 100">
+<polygon fill="currentColor" fill-opacity="0.2" points="50,15 65,40 58,75 50,65 42,75 35,40"></polygon>
+<line stroke-width="2.5" x1="50" x2="50" y1="20" y2="60"></line>
+<path d="M35,40 L15,50 L20,70 L38,62" fill="currentColor" fill-opacity="0.1"></path>
+<path d="M65,40 L85,50 L80,70 L62,62" fill="currentColor" fill-opacity="0.1"></path>
+<circle cx="50" cy="38" fill="#ffb4ab" r="4"></circle>
+</svg>
+<div class="absolute bottom-2 left-2 flex items-center gap-1 font-label-sm text-label-sm text-on-surface-variant bg-surface-container-high/90 px-1.5 py-0.5 rounded-DEFAULT">
+<span class="material-symbols-outlined text-[12px] text-primary-container">alt_route</span>
+<span>V-SWARM DIVE</span>
+</div>
+</div>
+<div class="flex flex-col gap-0.5">
+<h2 class="font-headline-sm text-headline-sm text-primary">偵察小型ドローン (蜂型)</h2>
+<span class="font-label-md text-label-md text-on-surface-variant">Scout Drone // Bee-Class</span>
+</div>
+<div class="grid grid-cols-2 gap-space-xs pt-space-xs font-label-sm text-label-sm">
+<div class="flex flex-col bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="text-on-surface-variant uppercase">MOVE PATTERN</span>
+<span class="text-on-surface font-semibold">V-Formation Dive</span>
+</div>
+<div class="flex flex-col bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="text-on-surface-variant uppercase">ATTACK TYPE</span>
+<span class="text-on-surface font-semibold">Single Needle Aim</span>
+</div>
+<div class="flex flex-col bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="text-on-surface-variant uppercase">ARMOR RATING</span>
+<span class="text-primary-container font-semibold">E-Class (180 HP)</span>
+</div>
+<div class="flex flex-col bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="text-on-surface-variant uppercase">BOUNTY VAL</span>
+<span class="text-tertiary-fixed font-semibold">1,200 PTS</span>
+</div>
+</div>
+<div class="flex flex-col gap-1 bg-surface-container-high p-space-xs rounded-DEFAULT mt-space-xs">
+<div class="flex items-center gap-1 text-primary-container font-label-sm text-label-sm uppercase">
+<span class="material-symbols-outlined text-[14px]">psychology</span>
+<span>COUNTER PROTOCOL</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              High evasion. Pre-emptively spray wide spread vulcans when the lead drone telegraphs the descending dive path. Destroy leader to scatter cluster.
+            </p>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center justify-between">
+<div class="flex items-center gap-1">
+<span class="w-2.5 h-1.5 bg-primary-container rounded-xs"></span>
+<span class="w-2.5 h-1.5 bg-surface-container-highest rounded-xs"></span>
+<span class="w-2.5 h-1.5 bg-surface-container-highest rounded-xs"></span>
+<span class="w-2.5 h-1.5 bg-surface-container-highest rounded-xs"></span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">THREAT: 01/05</span>
+</div>
+</article>
+<!-- ENEMY 2: Assault Interceptor -->
+<article class="hostile-card flex flex-col justify-between bg-surface-container-low rounded-lg p-space-md hover:bg-surface-container transition-all group relative overflow-hidden shadow-md" data-category="scout">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm px-space-xs py-0.5 bg-surface-container-high text-primary-container rounded-DEFAULT">#02 // TIER-1 STANDARD</span>
+<div class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-fixed-dim"></span>
+<span class="font-label-sm text-label-sm text-primary-fixed-dim uppercase">SWEEP</span>
+</div>
+</div>
+<div class="w-full h-44 rounded-DEFAULT bg-surface-container-lowest relative flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 bg-[radial-gradient(#00dce6_1px,transparent_1px)] [background-size:16px_16px] opacity-15"></div>
+<svg class="w-28 h-28 text-primary group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_12px_rgba(227,253,255,0.4)]" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 100 100">
+<polygon fill="currentColor" fill-opacity="0.15" points="50,10 75,55 85,85 50,70 15,85 25,55"></polygon>
+<line stroke-width="3" x1="50" x2="50" y1="15" y2="70"></line>
+<circle cx="35" cy="65" fill="#ffb4ab" r="3"></circle>
+<circle cx="50" cy="65" fill="#ffb4ab" r="3"></circle>
+<circle cx="65" cy="65" fill="#ffb4ab" r="3"></circle>
+<path d="M28,60 L10,75 L15,82" stroke-linecap="round"></path>
+<path d="M72,60 L90,75 L85,82" stroke-linecap="round"></path>
+</svg>
+<div class="absolute bottom-2 left-2 flex items-center gap-1 font-label-sm text-label-sm text-on-surface-variant bg-surface-container-high/90 px-1.5 py-0.5 rounded-DEFAULT">
+<span class="material-symbols-outlined text-[12px] text-error">swipe</span>
+<span>HORIZONTAL SWEEP</span>
+</div>
+</div>
+<div class="flex flex-col gap-0.5">
+<h2 class="font-headline-sm text-headline-sm text-primary">高速強襲迎撃機</h2>
+<span class="font-label-md text-label-md text-on-surface-variant">Assault Interceptor</span>
+</div>
+<div class="grid grid-cols-2 gap-space-xs pt-space-xs font-label-sm text-label-sm">
+<div class="flex flex-col bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="text-on-surface-variant uppercase">MOVE PATTERN</span>
+<span class="text-on-surface font-semibold">Lateral Screen Sweep</span>
+</div>
+<div class="flex flex-col bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="text-on-surface-variant uppercase">ATTACK TYPE</span>
+<span class="text-error font-semibold">3-Way Crimson Pellets</span>
+</div>
+<div class="flex flex-col bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="text-on-surface-variant uppercase">ARMOR RATING</span>
+<span class="text-primary-container font-semibold">D-Class (340 HP)</span>
+</div>
+<div class="flex flex-col bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="text-on-surface-variant uppercase">BOUNTY VAL</span>
+<span class="text-tertiary-fixed font-semibold">3,500 PTS</span>
+</div>
+</div>
+<div class="flex flex-col gap-1 bg-surface-container-high p-space-xs rounded-DEFAULT mt-space-xs">
+<div class="flex items-center gap-1 text-primary-container font-label-sm text-label-sm uppercase">
+<span class="material-symbols-outlined text-[14px]">psychology</span>
+<span>COUNTER PROTOCOL</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Fires directly aimed at cockpit coordinates. Tap-dodge vertically to thread the gap between 3-way spread shells; avoid corner entrapment.
+            </p>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center justify-between">
+<div class="flex items-center gap-1">
+<span class="w-2.5 h-1.5 bg-primary-container rounded-xs"></span>
+<span class="w-2.5 h-1.5 bg-primary-container rounded-xs"></span>
+<span class="w-2.5 h-1.5 bg-surface-container-highest rounded-xs"></span>
+<span class="w-2.5 h-1.5 bg-surface-container-highest rounded-xs"></span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">THREAT: 02/05</span>
+</div>
+</article>
+<!-- ENEMY 3: Heavy Gunship -->
+<article class="hostile-card flex flex-col justify-between bg-surface-container-low rounded-lg p-space-md hover:bg-surface-container transition-all group relative overflow-hidden shadow-md" data-category="cruiser">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm px-space-xs py-0.5 bg-surface-container-high text-secondary rounded-DEFAULT">#03 // TIER-2 ELITE</span>
+<div class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm text-secondary uppercase">BULLET SPONGE</span>
+</div>
+</div>
+<div class="w-full h-44 rounded-DEFAULT bg-surface-container-lowest relative flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 bg-[radial-gradient(#ddb7ff_1px,transparent_1px)] [background-size:16px_16px] opacity-15"></div>
+<svg class="w-28 h-28 text-secondary group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_12px_rgba(221,183,255,0.4)]" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 100 100">
+<polygon fill="currentColor" fill-opacity="0.25" points="50,15 80,30 90,65 70,85 30,85 10,65 20,30"></polygon>
+<rect fill="#11131d" height="28" stroke="currentColor" width="16" x="42" y="35"></rect>
+<circle cx="28" cy="50" fill="currentColor" fill-opacity="0.3" r="8"></circle>
+<circle cx="72" cy="50" fill="currentColor" fill-opacity="0.3" r="8"></circle>
+<line stroke-width="3" x1="28" x2="28" y1="50" y2="70"></line>
+<line stroke-width="3" x1="72" x2="72" y1="50" y2="70"></line>
+</svg>
+<div class="absolute bottom-2 left-2 flex items-center gap-1 font-label-sm text-label-sm text-on-surface-variant bg-surface-container-high/90 px-1.5 py-0.5 rounded-DEFAULT">
+<span class="material-symbols-outlined text-[12px] text-secondary">slow_motion_video</span>
+<span>SLOW DRIFT</span>
+</div>
+</div>
+<div class="flex flex-col gap-0.5">
+<h2 class="font-headline-sm text-headline-sm text-primary">重装甲ガンシップ</h2>
+<span class="font-label-md text-label-md text-on-surface-variant">Heavy Gunship // Iron Titan</span>
+</div>
+<div class="grid grid-cols-2 gap-space-xs pt-space-xs font-label-sm text-label-sm">
+<div class="flex flex-col bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="text-on-surface-variant uppercase">MOVE PATTERN</span>
+<span class="text-on-surface font-semibold">Slow Forward Descent</span>
+</div>
+<div class="flex flex-col bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="text-on-surface-variant uppercase">ATTACK TYPE</span>
+<span class="text-secondary font-semibold">Twin Rotating Plasma</span>
+</div>
+<div class="flex flex-col bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="text-on-surface-variant uppercase">ARMOR RATING</span>
+<span class="text-error font-semibold">A-Class (2,400 HP)</span>
+</div>
+<div class="flex flex-col bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="text-on-surface-variant uppercase">BOUNTY VAL</span>
+<span class="text-tertiary-fixed font-semibold">12,000 PTS</span>
+</div>
+</div>
+<div class="flex flex-col gap-1 bg-surface-container-high p-space-xs rounded-DEFAULT mt-space-xs">
+<div class="flex items-center gap-1 text-primary-container font-label-sm text-label-sm uppercase">
+<span class="material-symbols-outlined text-[14px]">psychology</span>
+<span>COUNTER PROTOCOL</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Twin sponsons must be precision targeted first. Focus missile lock-ons to breach armor plates before plasma spirals overwhelm dodging screen area.
+            </p>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center justify-between">
+<div class="flex items-center gap-1">
+<span class="w-2.5 h-1.5 bg-secondary rounded-xs"></span>
+<span class="w-2.5 h-1.5 bg-secondary rounded-xs"></span>
+<span class="w-2.5 h-1.5 bg-secondary rounded-xs"></span>
+<span class="w-2.5 h-1.5 bg-surface-container-highest rounded-xs"></span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">THREAT: 03/05</span>
+</div>
+</article>
+<!-- ENEMY 4: Kamikaze Dart -->
+<article class="hostile-card flex flex-col justify-between bg-surface-container-low rounded-lg p-space-md hover:bg-surface-container transition-all group relative overflow-hidden shadow-md" data-category="scout">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm px-space-xs py-0.5 bg-surface-container-high text-error rounded-DEFAULT">#04 // HAZARD SUICIDE</span>
+<div class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-error animate-ping"></span>
+<span class="font-label-sm text-label-sm text-error uppercase">RAMMING</span>
+</div>
+</div>
+<div class="w-full h-44 rounded-DEFAULT bg-surface-container-lowest relative flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 bg-[radial-gradient(#ffb4ab_1px,transparent_1px)] [background-size:16px_16px] opacity-15"></div>
+<svg class="w-28 h-28 text-error group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_12px_rgba(255,180,171,0.4)]" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 100 100">
+<polygon fill="currentColor" fill-opacity="0.2" points="50,5 65,50 80,75 50,95 20,75 35,50"></polygon>
+<line stroke-width="3" x1="50" x2="50" y1="5" y2="85"></line>
+<path d="M40,75 L50,92 L60,75" fill="#ffd5a6"></path>
+<line stroke-width="2" x1="28" x2="15" y1="65" y2="80"></line>
+<line stroke-width="2" x1="72" x2="85" y1="65" y2="80"></line>
+<polygon fill="#ffb4ab" points="46,30 54,30 50,45"></polygon>
+</svg>
+<div class="absolute bottom-2 left-2 flex items-center gap-1 font-label-sm text-label-sm text-on-surface-variant bg-surface-container-high/90 px-1.5 py-0.5 rounded-DEFAULT">
+<span class="material-symbols-outlined text-[12px] text-error">speed</span>
+<span>TERMINAL VELOCITY</span>
+</div>
+</div>
+<div class="flex flex-col gap-0.5">
+<h2 class="font-headline-sm text-headline-sm text-primary">特攻無人機</h2>
+<span class="font-label-md text-label-md text-on-surface-variant">Kamikaze Dart // Core Burner</span>
+</div>
+<div class="grid grid-cols-2 gap-space-xs pt-space-xs font-label-sm text-label-sm">
+<div class="flex flex-col bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="text-on-surface-variant uppercase">MOVE PATTERN</span>
+<span class="text-on-surface font-semibold">Ballistic Line-of-Sight</span>
+</div>
+<div class="flex flex-col bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="text-on-surface-variant uppercase">ATTACK TYPE</span>
+<span class="text-error font-semibold">Kinetic Crash + Shrapnel</span>
+</div>
+<div class="flex flex-col bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="text-on-surface-variant uppercase">ARMOR RATING</span>
+<span class="text-primary-container font-semibold">E-Class (120 HP)</span>
+</div>
+<div class="flex flex-col bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="text-on-surface-variant uppercase">BOUNTY VAL</span>
+<span class="text-tertiary-fixed font-semibold">800 PTS</span>
+</div>
+</div>
+<div class="flex flex-col gap-1 bg-surface-container-high p-space-xs rounded-DEFAULT mt-space-xs">
+<div class="flex items-center gap-1 text-primary-container font-label-sm text-label-sm uppercase">
+<span class="material-symbols-outlined text-[14px]">psychology</span>
+<span>COUNTER PROTOCOL</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Accelerates instantly once locked. Do not attempt straight back-pedaling; make sharp 90-degree lateral evasions to force target into harmless off-screen burn.
+            </p>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center justify-between">
+<div class="flex items-center gap-1">
+<span class="w-2.5 h-1.5 bg-error rounded-xs"></span>
+<span class="w-2.5 h-1.5 bg-error rounded-xs"></span>
+<span class="w-2.5 h-1.5 bg-surface-container-highest rounded-xs"></span>
+<span class="w-2.5 h-1.5 bg-surface-container-highest rounded-xs"></span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">THREAT: 02/05</span>
+</div>
+</article>
+<!-- ENEMY 5: Stealth Raider -->
+<article class="hostile-card flex flex-col justify-between bg-surface-container-low rounded-lg p-space-md hover:bg-surface-container transition-all group relative overflow-hidden shadow-md" data-category="specialist">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm px-space-xs py-0.5 bg-surface-container-high text-primary-fixed-dim rounded-DEFAULT">#05 // TIER-2 CLOAK</span>
+<div class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-fixed-dim"></span>
+<span class="font-label-sm text-label-sm text-primary-fixed-dim uppercase">OPTIC STEALTH</span>
+</div>
+</div>
+<div class="w-full h-44 rounded-DEFAULT bg-surface-container-lowest relative flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 bg-[radial-gradient(#00dce6_1px,transparent_1px)] [background-size:16px_16px] opacity-10"></div>
+<svg class="w-28 h-28 text-primary-container opacity-40 group-hover:opacity-90 group-hover:scale-110 transition-all duration-300 drop-shadow-[0_0_12px_rgba(0,243,255,0.3)]" fill="none" stroke="currentColor" stroke-dasharray="4 2" stroke-width="2" viewbox="0 0 100 100">
+<polygon fill="currentColor" fill-opacity="0.08" points="50,20 70,45 80,75 50,60 20,75 30,45"></polygon>
+<line stroke-width="2" x1="50" x2="50" y1="20" y2="60"></line>
+<polygon fill="#00f3ff" points="45,45 55,45 50,55"></polygon>
+<circle cx="50" cy="50" r="30" stroke="currentColor" stroke-dasharray="2 4" stroke-width="0.8"></circle>
+</svg>
+<div class="absolute bottom-2 left-2 flex items-center gap-1 font-label-sm text-label-sm text-on-surface-variant bg-surface-container-high/90 px-1.5 py-0.5 rounded-DEFAULT">
+<span class="material-symbols-outlined text-[12px] text-primary-container">visibility_off</span>
+<span>PHASE IN/OUT</span>
+</div>
+</div>
+<div class="flex flex-col gap-0.5">
+<h2 class="font-headline-sm text-headline-sm text-primary">光学迷彩侵入機</h2>
+<span class="font-label-md text-label-md text-on-surface-variant">Stealth Raider // Shadow Wing</span>
+</div>
+<div class="grid grid-cols-2 gap-space-xs pt-space-xs font-label-sm text-label-sm">
+<div class="flex flex-col bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="text-on-surface-variant uppercase">MOVE PATTERN</span>
+<span class="text-on-surface font-semibold">Cloaked Ambush Drop</span>
+</div>
+<div class="flex flex-col bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="text-on-surface-variant uppercase">ATTACK TYPE</span>
+<span class="text-primary-container font-semibold">Sudden Laser Bursts</span>
+</div>
+<div class="flex flex-col bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="text-on-surface-variant uppercase">ARMOR RATING</span>
+<span class="text-primary-container font-semibold">C-Class (520 HP)</span>
+</div>
+<div class="flex flex-col bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="text-on-surface-variant uppercase">BOUNTY VAL</span>
+<span class="text-tertiary-fixed font-semibold">5,800 PTS</span>
+</div>
+</div>
+<div class="flex flex-col gap-1 bg-surface-container-high p-space-xs rounded-DEFAULT mt-space-xs">
+<div class="flex items-center gap-1 text-primary-container font-label-sm text-label-sm uppercase">
+<span class="material-symbols-outlined text-[14px]">psychology</span>
+<span>COUNTER PROTOCOL</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Watch for localized thermal heat distortions in void space. The craft is invulnerable to homing ordinance while cloaked, but fires instantly upon decloaking.
+            </p>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center justify-between">
+<div class="flex items-center gap-1">
+<span class="w-2.5 h-1.5 bg-primary-fixed-dim rounded-xs"></span>
+<span class="w-2.5 h-1.5 bg-primary-fixed-dim rounded-xs"></span>
+<span class="w-2.5 h-1.5 bg-primary-fixed-dim rounded-xs"></span>
+<span class="w-2.5 h-1.5 bg-surface-container-highest rounded-xs"></span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">THREAT: 03/05</span>
+</div>
+</article>
+<!-- ENEMY 6: Shield Barrier Drone -->
+<article class="hostile-card flex flex-col justify-between bg-surface-container-low rounded-lg p-space-md hover:bg-surface-container transition-all group relative overflow-hidden shadow-md" data-category="specialist">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm px-space-xs py-0.5 bg-surface-container-high text-primary-container rounded-DEFAULT">#06 // SUPPORT UTILITY</span>
+<div class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+<span class="font-label-sm text-label-sm text-primary-container uppercase">AEGIS LINK</span>
+</div>
+</div>
+<div class="w-full h-44 rounded-DEFAULT bg-surface-container-lowest relative flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 bg-[radial-gradient(#00f3ff_1px,transparent_1px)] [background-size:16px_16px] opacity-15"></div>
+<svg class="w-28 h-28 text-primary-container group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_12px_rgba(0,243,255,0.4)]" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 100 100">
+<polygon fill="currentColor" fill-opacity="0.1" points="50,15 78,32 78,68 50,85 22,68 22,32" stroke="currentColor" stroke-dasharray="3 3" stroke-width="2"></polygon>
+<polygon fill="currentColor" fill-opacity="0.3" points="50,28 68,39 68,61 50,72 32,61 32,39"></polygon>
+<circle cx="50" cy="50" fill="#00f3ff" r="6"></circle>
+<line stroke-width="2" x1="50" x2="50" y1="15" y2="28"></line>
+<line stroke-width="2" x1="50" x2="50" y1="72" y2="85"></line>
+<line stroke-width="2" x1="22" x2="32" y1="50" y2="50"></line>
+<line stroke-width="2" x1="68" x2="78" y1="50" y2="50"></line>
+</svg>
+<div class="absolute bottom-2 left-2 flex items-center gap-1 font-label-sm text-label-sm text-on-surface-variant bg-surface-container-high/90 px-1.5 py-0.5 rounded-DEFAULT">
+<span class="material-symbols-outlined text-[12px] text-primary-container">shield</span>
+<span>ORBITAL ANCHOR</span>
+</div>
+</div>
+<div class="flex flex-col gap-0.5">
+<h2 class="font-headline-sm text-headline-sm text-primary">防壁展開支援機</h2>
+<span class="font-label-md text-label-md text-on-surface-variant">Shield Barrier Drone // Aegis</span>
+</div>
+<div class="grid grid-cols-2 gap-space-xs pt-space-xs font-label-sm text-label-sm">
+<div class="flex flex-col bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="text-on-surface-variant uppercase">MOVE PATTERN</span>
+<span class="text-on-surface font-semibold">Tethered Escort Pivot</span>
+</div>
+<div class="flex flex-col bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="text-on-surface-variant uppercase">ATTACK TYPE</span>
+<span class="text-primary-container font-semibold">Hex Barrier Projection</span>
+</div>
+<div class="flex flex-col bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="text-on-surface-variant uppercase">ARMOR RATING</span>
+<span class="text-primary-container font-semibold">B-Class (890 HP)</span>
+</div>
+<div class="flex flex-col bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="text-on-surface-variant uppercase">BOUNTY VAL</span>
+<span class="text-tertiary-fixed font-semibold">4,200 PTS</span>
+</div>
+</div>
+<div class="flex flex-col gap-1 bg-surface-container-high p-space-xs rounded-DEFAULT mt-space-xs">
+<div class="flex items-center gap-1 text-primary-container font-label-sm text-label-sm uppercase">
+<span class="material-symbols-outlined text-[14px]">psychology</span>
+<span>COUNTER PROTOCOL</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Shield absorbs 100% frontal projectile damage intended for gunships. Neutralize this drone immediately from rear angles or deploy EMP blast bombs to collapse field.
+            </p>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center justify-between">
+<div class="flex items-center gap-1">
+<span class="w-2.5 h-1.5 bg-primary-container rounded-xs"></span>
+<span class="w-2.5 h-1.5 bg-primary-container rounded-xs"></span>
+<span class="w-2.5 h-1.5 bg-surface-container-highest rounded-xs"></span>
+<span class="w-2.5 h-1.5 bg-surface-container-highest rounded-xs"></span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">THREAT: 02/05</span>
+</div>
+</article>
+<!-- ENEMY 7: Mine Layer Cruislet -->
+<article class="hostile-card flex flex-col justify-between bg-surface-container-low rounded-lg p-space-md hover:bg-surface-container transition-all group relative overflow-hidden shadow-md" data-category="cruiser">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm px-space-xs py-0.5 bg-surface-container-high text-tertiary-fixed-dim rounded-DEFAULT">#07 // HAZARD LAYER</span>
+<div class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed-dim"></span>
+<span class="font-label-sm text-label-sm text-tertiary-fixed-dim uppercase">AREA DENIAL</span>
+</div>
+</div>
+<div class="w-full h-44 rounded-DEFAULT bg-surface-container-lowest relative flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 bg-[radial-gradient(#ffb95f_1px,transparent_1px)] [background-size:16px_16px] opacity-15"></div>
+<svg class="w-28 h-28 text-tertiary-fixed-dim group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_12px_rgba(255,185,95,0.4)]" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 100 100">
+<polygon fill="currentColor" fill-opacity="0.2" points="50,15 85,45 80,75 50,65 20,75 15,45"></polygon>
+<circle cx="50" cy="40" fill="#1d1f2a" r="12" stroke="currentColor"></circle>
+<circle cx="50" cy="78" fill="#ffb95f" r="5"></circle>
+<line stroke="#ffb95f" stroke-width="2" x1="50" x2="50" y1="78" y2="86"></line>
+<line stroke="#ffb95f" stroke-width="2" x1="42" x2="38" y1="78" y2="82"></line>
+<line stroke="#ffb95f" stroke-width="2" x1="58" x2="62" y1="78" y2="82"></line>
+<circle cx="50" cy="40" fill="#ffb95f" r="4"></circle>
+</svg>
+<div class="absolute bottom-2 left-2 flex items-center gap-1 font-label-sm text-label-sm text-on-surface-variant bg-surface-container-high/90 px-1.5 py-0.5 rounded-DEFAULT">
+<span class="material-symbols-outlined text-[12px] text-tertiary-fixed-dim">stream</span>
+<span>LANE CLOSURE</span>
+</div>
+</div>
+<div class="flex flex-col gap-0.5">
+<h2 class="font-headline-sm text-headline-sm text-primary">機雷敷設艇</h2>
+<span class="font-label-md text-label-md text-on-surface-variant">Mine Layer Cruislet</span>
+</div>
+<div class="grid grid-cols-2 gap-space-xs pt-space-xs font-label-sm text-label-sm">
+<div class="flex flex-col bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="text-on-surface-variant uppercase">MOVE PATTERN</span>
+<span class="text-on-surface font-semibold">Zig-Zag Screen Descent</span>
+</div>
+<div class="flex flex-col bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="text-on-surface-variant uppercase">ATTACK TYPE</span>
+<span class="text-tertiary-fixed-dim font-semibold">Drifting Plasma Mines</span>
+</div>
+<div class="flex flex-col bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="text-on-surface-variant uppercase">ARMOR RATING</span>
+<span class="text-primary-container font-semibold">B-Class (1,150 HP)</span>
+</div>
+<div class="flex flex-col bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="text-on-surface-variant uppercase">BOUNTY VAL</span>
+<span class="text-tertiary-fixed font-semibold">6,400 PTS</span>
+</div>
+</div>
+<div class="flex flex-col gap-1 bg-surface-container-high p-space-xs rounded-DEFAULT mt-space-xs">
+<div class="flex items-center gap-1 text-primary-container font-label-sm text-label-sm uppercase">
+<span class="material-symbols-outlined text-[14px]">psychology</span>
+<span>COUNTER PROTOCOL</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Floating mines cut dodge corridors in half. Detonate discarded mines from safe range to trigger chain explosions that damage adjacent enemy escort craft.
+            </p>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center justify-between">
+<div class="flex items-center gap-1">
+<span class="w-2.5 h-1.5 bg-tertiary-fixed-dim rounded-xs"></span>
+<span class="w-2.5 h-1.5 bg-tertiary-fixed-dim rounded-xs"></span>
+<span class="w-2.5 h-1.5 bg-tertiary-fixed-dim rounded-xs"></span>
+<span class="w-2.5 h-1.5 bg-surface-container-highest rounded-xs"></span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">THREAT: 03/05</span>
+</div>
+</article>
+<!-- ENEMY 8: Sniper Frigate -->
+<article class="hostile-card flex flex-col justify-between bg-surface-container-low rounded-lg p-space-md hover:bg-surface-container transition-all group relative overflow-hidden shadow-md" data-category="specialist">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm px-space-xs py-0.5 bg-surface-container-high text-error rounded-DEFAULT">#08 // TIER-3 SNIPER</span>
+<div class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-error animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-error uppercase">BEAM CANNON</span>
+</div>
+</div>
+<div class="w-full h-44 rounded-DEFAULT bg-surface-container-lowest relative flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 bg-[radial-gradient(#ffb4ab_1px,transparent_1px)] [background-size:16px_16px] opacity-15"></div>
+<svg class="w-28 h-28 text-error group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_12px_rgba(255,180,171,0.4)]" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 100 100">
+<polygon fill="currentColor" fill-opacity="0.2" points="50,5 58,40 85,55 58,70 50,95 42,70 15,55 42,40"></polygon>
+<line stroke-width="3" x1="50" x2="50" y1="5" y2="95"></line>
+<line stroke="#ffb4ab" stroke-dasharray="2 2" stroke-width="4" x1="50" x2="50" y1="95" y2="100"></line>
+<circle cx="50" cy="50" r="10" stroke="currentColor" stroke-width="1.5"></circle>
+<circle cx="50" cy="50" fill="#ffb4ab" r="4"></circle>
+</svg>
+<div class="absolute bottom-2 left-2 flex items-center gap-1 font-label-sm text-label-sm text-on-surface-variant bg-surface-container-high/90 px-1.5 py-0.5 rounded-DEFAULT">
+<span class="material-symbols-outlined text-[12px] text-error">priority_high</span>
+<span>TOP-EDGE RETICLE</span>
+</div>
+</div>
+<div class="flex flex-col gap-0.5">
+<h2 class="font-headline-sm text-headline-sm text-primary">超長距離狙撃艇</h2>
+<span class="font-label-md text-label-md text-on-surface-variant">Sniper Frigate // Needle Eye</span>
+</div>
+<div class="grid grid-cols-2 gap-space-xs pt-space-xs font-label-sm text-label-sm">
+<div class="flex flex-col bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="text-on-surface-variant uppercase">MOVE PATTERN</span>
+<span class="text-on-surface font-semibold">Stationary Apex Hold</span>
+</div>
+<div class="flex flex-col bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="text-on-surface-variant uppercase">ATTACK TYPE</span>
+<span class="text-error font-semibold">Telegraphed Beam Rail</span>
+</div>
+<div class="flex flex-col bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="text-on-surface-variant uppercase">ARMOR RATING</span>
+<span class="text-secondary font-semibold">B-Class (980 HP)</span>
+</div>
+<div class="flex flex-col bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="text-on-surface-variant uppercase">BOUNTY VAL</span>
+<span class="text-tertiary-fixed font-semibold">8,500 PTS</span>
+</div>
+</div>
+<div class="flex flex-col gap-1 bg-surface-container-high p-space-xs rounded-DEFAULT mt-space-xs">
+<div class="flex items-center gap-1 text-primary-container font-label-sm text-label-sm uppercase">
+<span class="material-symbols-outlined text-[14px]">psychology</span>
+<span>COUNTER PROTOCOL</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Notice the crimson guideline 1.2s before the shot. Never freeze in line with its barrel; keep constant diagonal speed until the beam discharges, then close distance.
+            </p>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center justify-between">
+<div class="flex items-center gap-1">
+<span class="w-2.5 h-1.5 bg-error rounded-xs"></span>
+<span class="w-2.5 h-1.5 bg-error rounded-xs"></span>
+<span class="w-2.5 h-1.5 bg-error rounded-xs"></span>
+<span class="w-2.5 h-1.5 bg-error rounded-xs"></span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">THREAT: 04/05</span>
+</div>
+</article>
+</div>
+<!-- TACTICAL ADVISORY DEBRIEF -->
+<div class="w-full bg-surface-container-low rounded-lg p-space-lg flex flex-col lg:flex-row gap-space-lg items-stretch shadow-md">
+<div class="flex-1 flex flex-col justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary-container text-[20px]">military_tech</span>
+<span class="font-label-md text-label-md text-primary-container uppercase">FLEET COMMAND DIRECTIVE // COMBAT ESCALATION</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary">優先撃墜順位と弾幕制御原則</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+            Standard enemy formations exploit player claustrophobia. Shield Barrier Drones protect Gunships while Sniper Frigates restrict movement axes. High-score chain multipliers depend upon wiping complete formations before any unit departs the lower screen edge.
+          </p>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-md font-label-sm text-label-sm">
+<div class="flex flex-col gap-1 p-space-sm bg-surface-container rounded-DEFAULT">
+<span class="text-error uppercase font-bold">PRIORITY 1</span>
+<span class="text-on-surface font-semibold">Sniper Frigate / 狙撃艇</span>
+<span class="text-on-surface-variant font-body-sm text-body-sm">Cuts horizontal evasion channels instantly.</span>
+</div>
+<div class="flex flex-col gap-1 p-space-sm bg-surface-container rounded-DEFAULT">
+<span class="text-primary-container uppercase font-bold">PRIORITY 2</span>
+<span class="text-on-surface font-semibold">Shield Barrier / 支援機</span>
+<span class="text-on-surface-variant font-body-sm text-body-sm">Strip armor wards off mid-tier heavy gunships.</span>
+</div>
+<div class="flex flex-col gap-1 p-space-sm bg-surface-container rounded-DEFAULT">
+<span class="text-secondary uppercase font-bold">PRIORITY 3</span>
+<span class="text-on-surface font-semibold">Mine Layer / 敷設艇</span>
+<span class="text-on-surface-variant font-body-sm text-body-sm">Eliminate hazard seeds before corridor saturation.</span>
+</div>
+</div>
+</div>
+<div class="w-full lg:w-96 flex flex-col justify-between bg-surface-container-lowest p-space-md rounded-DEFAULT gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">SIMULATED HITBOX DISPERSION</span>
+<div class="w-full h-36 relative flex items-center justify-center bg-surface-container rounded-DEFAULT overflow-hidden">
+<div class="absolute inset-0 bg-[linear-gradient(to_right,#323440_1px,transparent_1px),linear-gradient(to_bottom,#323440_1px,transparent_1px)] bg-[size:1rem_1rem] opacity-30"></div>
+<div class="w-24 h-24 border border-primary-container/40 rounded-full flex items-center justify-center animate-spin" style="animation-duration: 20s;">
+<div class="w-16 h-16 border border-dashed border-error/60 rounded-full flex items-center justify-center">
+<div class="w-2 h-2 bg-primary-container rounded-full animate-ping"></div>
+</div>
+</div>
+<span class="absolute bottom-2 right-2 font-label-sm text-label-sm text-primary-container">CORE HITBOX: 2x2px</span>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">AUTO-BOMB STATUS</span>
+<span class="font-label-md text-label-md text-primary">PRIMED (STOCK: 03)</span>
+</div>
+<button class="px-space-md py-space-xs bg-primary-container text-on-primary-container font-label-md text-label-md uppercase rounded-DEFAULT shadow-md hover:bg-primary transition-colors" type="button">
+            RUN COMBAT DRILL
+          </button>
+</div>
+</div>
+</div>
+</div>
+<script>
+    (function() {
+      const buttons = document.querySelectorAll('#roster-filters .filter-btn');
+      const cards = document.querySelectorAll('#hostiles-grid .hostile-card');
+      const countEl = document.getElementById('target-count');
+
+      buttons.forEach(button => {
+        button.addEventListener('click', () => {
+          const filter = button.getAttribute('data-filter');
+
+          // Active style toggle
+          buttons.forEach(btn => {
+            btn.classList.remove('bg-primary-container', 'text-on-primary-container');
+            btn.classList.add('bg-surface-container', 'text-on-surface-variant');
+          });
+          button.classList.add('bg-primary-container', 'text-on-primary-container');
+          button.classList.remove('bg-surface-container', 'text-on-surface-variant');
+
+          let visibleCount = 0;
+          cards.forEach(card => {
+            const cat = card.getAttribute('data-category');
+            if (filter === 'all' || cat === filter) {
+              card.style.display = 'flex';
+              visibleCount++;
+            } else {
+              card.style.display = 'none';
+            }
+          });
+
+          if (countEl) {
+            countEl.textContent = `0${visibleCount} UNITS`;
+          }
+        });
+      });
+    })();
+  </script>
+</div></main><footer class="w-full bg-surface-container-lowest py-space-lg"><div class="max-w-[1440px] mx-auto px-gutter flex flex-col md:flex-row items-center justify-between gap-space-md"><div class="flex items-center gap-space-md"><div class="w-2 h-2 rounded-full bg-primary-container"></div><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">PROJECT ASTRAEA COMBAT TELEMETRY // ORBITAL SECTOR 07-E</span></div><div class="font-label-sm text-label-sm text-on-surface-variant text-center uppercase tracking-widest">© 2024 UNITED EARTH DEFENSE FLEET. ALL ARCHIVAL RIGHTS RESERVED.</div><div class="flex items-center gap-space-lg"><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">FREQ: 142.85 MHZ</span><span class="font-label-sm text-label-sm text-primary uppercase">CORE READY</span></div></div></footer></body></html>

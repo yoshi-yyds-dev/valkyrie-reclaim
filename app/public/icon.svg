@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#0b132b"/>
+      <stop offset="100%" stop-color="#030408"/>
+    </radialGradient>
+    <linearGradient id="fighter" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="50%" stop-color="#e0f2fe"/>
+      <stop offset="100%" stop-color="#00f3ff"/>
+    </linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- 背景：宇宙空間 ＆ 面取り枠 -->
+  <rect width="512" height="512" rx="100" fill="url(#bg)"/>
+  <rect width="504" height="504" x="4" y="4" rx="96" fill="none" stroke="#00f3ff" stroke-width="6" stroke-opacity="0.5"/>
+
+  <!-- 光のリング -->
+  <circle cx="256" cy="270" r="160" fill="none" stroke="#00f3ff" stroke-width="2" stroke-opacity="0.3" stroke-dasharray="16 12"/>
+
+  <!-- スラスターの炎（ネオンシアン＆ホワイト） -->
+  <polygon points="256,420 236,340 276,340" fill="#00f3ff" opacity="0.8" filter="url(#glow)"/>
+  <polygon points="256,390 246,340 266,340" fill="#ffffff"/>
+
+  <!-- 自機 VF-01 VALKYRIE 本体 -->
+  <g filter="url(#glow)">
+    <!-- デルタ翼 -->
+    <polygon points="256,110 390,320 330,340 256,300 182,340 122,320" fill="url(#fighter)" stroke="#00f3ff" stroke-width="4"/>
+    <!-- キャノピー（コックピット窓） -->
+    <ellipse cx="256" cy="230" rx="16" ry="38" fill="#ff2a6d"/>
+    <ellipse cx="256" cy="226" rx="9" ry="24" fill="#ffffff" opacity="0.8"/>
+  </g>
+
+  <!-- タイトルロゴテキスト -->
+  <text x="256" y="468" text-anchor="middle" font-family="'Space Grotesk', 'JetBrains Mono', sans-serif" font-weight="900" font-size="34" letter-spacing="6" fill="#00f3ff">VOID VANGUARD</text>
+</svg>

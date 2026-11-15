@@ -1,0 +1,25 @@
+{
+  "name": "VALKYRIE RECLAIM - 宇宙迎撃シューティング",
+  "short_name": "VALKYRIE RECLAIM",
+  "description": "平和をつかみ取るため、最新鋭迎撃機で侵略者に立ち向かうハイスピード宇宙シューティングゲーム",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#030408",
+  "theme_color": "#030408",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}
