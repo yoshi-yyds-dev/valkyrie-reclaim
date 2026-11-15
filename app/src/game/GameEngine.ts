@@ -98,6 +98,11 @@ export class GameEngine {
   private shakeTimer: number = 0;
   private bombEffectTimer: number = 0;
   private respawnTimer: number = 0;
+  private respawnDelayTimer: number = 0;       // 撃墜爆発の余韻を見せてから再出撃させる待機タイマー
+  private playerDeathEffectTimer: number = 0;  // 自機大爆発（衝撃波・爆炎コア）の再生タイマー
+  private playerDeathX: number = LOGICAL_WIDTH / 2;
+  private playerDeathY: number = LOGICAL_HEIGHT / 2;
+  private playerGameOverDelayTimer: number = 0; // 全機喪失時、大爆発を見せてからGAMEOVERへ移る遅延タイマー
   private bombOriginX: number = LOGICAL_WIDTH / 2;
   private bombOriginY: number = LOGICAL_HEIGHT / 2;
 
@@ -196,6 +201,9 @@ export class GameEngine {
     this.shakeTimer = 0;
     this.bombEffectTimer = 0;
     this.respawnTimer = 0;
+    this.respawnDelayTimer = 0;
+    this.playerDeathEffectTimer = 0;
+    this.playerGameOverDelayTimer = 0;
 
     // 自機位置とステータスのリセット
     this.player.x = LOGICAL_WIDTH / 2;
@@ -272,6 +280,9 @@ export class GameEngine {
     this.shakeTimer = 0;
     this.bombEffectTimer = 0;
     this.respawnTimer = 0;
+    this.respawnDelayTimer = 0;
+    this.playerDeathEffectTimer = 0;
+    this.playerGameOverDelayTimer = 0;
 
     // ステップ3: 自機位置と指定された武器・レベルをセット
     this.player.x = LOGICAL_WIDTH / 2;
@@ -597,17 +608,34 @@ export class GameEngine {
     }
 
     if (this.status === "PLAYING") {
-      // カメラシェイク（画面揺れ）＆ ボム衝撃波タイマーの減算
+      // カメラシェイク（画面揺れ）＆ ボム衝撃波 ＆ 自機爆発演出タイマーの減算
       if (this.shakeTimer > 0) {
         this.shakeTimer = Math.max(0, this.shakeTimer - dt);
       }
       if (this.bombEffectTimer > 0) {
         this.bombEffectTimer = Math.max(0, this.bombEffectTimer - dt);
       }
+      if (this.playerDeathEffectTimer > 0) {
+        this.playerDeathEffectTimer = Math.max(0, this.playerDeathEffectTimer - dt);
+      }
       if (this.bannerTimer > 0) {
         this.bannerTimer = Math.max(0, this.bannerTimer - dt);
         if (this.bannerTimer === 0) {
           this.callbacks.onBannerChange(null);
+        }
+      }
+
+      // 全機喪失後の爆発余韻タイマー：0になった瞬間に正式な GAMEOVER 画面へ切り替える
+      // （即座に暗転させず「自機が大爆発して散った」ことを視覚的に伝えてから結果画面を出すため）
+      if (this.playerGameOverDelayTimer > 0) {
+        this.playerGameOverDelayTimer = Math.max(0, this.playerGameOverDelayTimer - dt);
+        if (this.playerGameOverDelayTimer === 0) {
+          this.sound.stopBgm();
+          this.sound.playGameOver();
+          this.status = "GAMEOVER";
+          this.input.isPointerDown = false;
+          this.callbacks.onStatusChange("GAMEOVER");
+          return;
         }
       }
 
@@ -627,9 +655,20 @@ export class GameEngine {
 
   /** 自機の移動制御・画面端クランプ・無敵時間・オートショット */
   private updatePlayer(dt: number): void {
-    // 0. 無敵時間のカウントダウン
+    // 0. 全機喪失して大爆発中の間は、操作・射撃を完全停止
+    if (this.playerGameOverDelayTimer > 0) {
+      return;
+    }
+
+    // 0.2 無敵時間のカウントダウン
     if (this.player.invincibleTimer > 0) {
       this.player.invincibleTimer = Math.max(0, this.player.invincibleTimer - dt);
+    }
+
+    // 0.4 撃墜直後の爆発余韻ウェイト（0.45秒間は画面外で待機し、爆発を見せる）
+    if (this.respawnDelayTimer > 0) {
+      this.respawnDelayTimer = Math.max(0, this.respawnDelayTimer - dt);
+      return;
     }
 
     // 0.5 撃墜後の下からのリスポーン登場演出
@@ -2099,7 +2138,8 @@ export class GameEngine {
    * 
    * 1. 無敵時間（invincibleTimer）を設定し、連続ダメージを防止
    * 2. カメラシェイク（shakeTimer）で「当たった衝撃」を視覚的にフィードバック
-   * 3. HP が 0 になったら残機を1つ減らし、残機 0 で GAMEOVER へ移行
+   * 3. HP が 0 になったら残機を1つ減らし、大爆発アニメーションを再生した後、
+   *    残機があれば下から再出撃、残機 0 なら爆発の余韻を見せてから GAMEOVER へ移行
    */
   private damagePlayer(amount: number): void {
     const scaledDamage = Math.round(amount * this.getDifficultyScale().damage);
@@ -2108,32 +2148,31 @@ export class GameEngine {
     this.spawnExplosion(this.player.x, this.player.y, "#ff0055");
 
     if (this.player.hp <= 0) {
-      // 撃墜された！残機を1機失う
+      // 撃墜された！残機を1機失い、自機専用の大爆発アニメーションを発生させる
       this.player.lives -= 1;
       this.callbacks.onLivesChange(this.player.lives);
+      this.spawnPlayerExplosion(this.player.x, this.player.y);
 
       if (this.player.lives <= 0) {
-        // 全機喪失 ➔ ゲームオーバー
+        // 全機喪失：すぐにGAMEOVER画面へ切り替えると爆発が見えないため、
+        // 0.95秒間の大爆発・散華の余韻を見せてから GAMEOVER へ遷移させる
         this.player.hp = 0;
+        this.player.invincibleTimer = 2.0; // 爆発中の二重判定を防止
         this.callbacks.onHpChange(0, this.player.maxHp);
-        this.sound.stopBgm();
-        this.sound.playGameOver();
-        this.status = "GAMEOVER";
+        this.playerGameOverDelayTimer = 0.95;
         this.input.isPointerDown = false;
-        this.callbacks.onStatusChange("GAMEOVER");
         return;
       }
 
-      // まだ残機がある ➔ 大爆発の後、画面下から次の機体が再出撃（2.4秒無敵）
-      this.spawnExplosion(this.player.x, this.player.y, "#00f3ff");
+      // まだ残機がある：0.45秒の爆発余韻（respawnDelayTimer）のあと、画面下から次の機体が再出撃（2.4秒無敵）
       this.player.hp = this.player.maxHp;
       this.player.x = LOGICAL_WIDTH / 2;
       this.player.y = LOGICAL_HEIGHT + 40;
       this.input.targetX = this.player.x;
       this.input.targetY = LOGICAL_HEIGHT - 120;
+      this.respawnDelayTimer = 0.45;
       this.respawnTimer = 0.7;
-      this.player.invincibleTimer = 2.4;
-      this.sound.playExplosion();
+      this.player.invincibleTimer = 2.85; // 待機0.45s + 登場0.7s + 復帰後約1.7sの安全確保
       this.showBanner(`UNIT LOST // REMAINING: ${this.player.lives}`, 1.8);
     } else {
       // まだHPが残っている ➔ 0.8秒の無敵時間（連続ヒット防止と緊張感の両立）
@@ -2142,6 +2181,39 @@ export class GameEngine {
     }
 
     this.callbacks.onHpChange(this.player.hp, this.player.maxHp);
+  }
+
+  /**
+   * 【自機撃墜専用・大爆発アニメーション生成】
+   * 通常のザコ敵爆発（12粒）とは異なり、プレイヤーが「破壊された」ことを一目で認識できるよう
+   * 48粒の多層パーティクル（火花＋装甲破片）、衝撃波リング、強いカメラシェイク、爆発音を同時に発動させます。
+   */
+  private spawnPlayerExplosion(x: number, y: number): void {
+    this.playerDeathX = x;
+    this.playerDeathY = y;
+    this.playerDeathEffectTimer = 0.75; // 0.75秒間のショックウェーブ＆爆炎演出
+    this.shakeTimer = 0.45;             // 強い画面揺れ
+    this.sound.playExplosion();
+
+    // 爆炎（白・黄・橙・赤）と自機装甲の破片（シアン）を混ぜたカラー配列
+    const colors = ["#ffffff", "#facc15", "#ff7b00", "#ff0055", "#00f3ff"];
+    for (let i = 0; i < 48; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      // 速く飛び散る火花と、ゆっくり漂う大きめの破片を混在させる
+      const isDebris = i % 4 === 0;
+      const speed = isDebris ? 40 + Math.random() * 110 : 90 + Math.random() * 210;
+      const maxLife = isDebris ? 0.85 : 0.6;
+      this.particles.push({
+        x,
+        y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        life: maxLife * (0.65 + Math.random() * 0.35),
+        maxLife,
+        size: isDebris ? 4.5 + Math.random() * 4.5 : 2 + Math.random() * 3,
+        color: colors[i % colors.length],
+      });
+    }
   }
 
   /** 爆発パーティクル（火花）の生成 */
@@ -2313,9 +2385,57 @@ export class GameEngine {
       }
       this.ctx.globalAlpha = 1;
 
-      // 自機の描画（ゲームオーバー時は非表示）
-      if (this.status !== "GAMEOVER") {
+      // 自機の描画（ゲームオーバー時・撃墜爆発中の待機時間中は非表示）
+      if (
+        this.status !== "GAMEOVER" &&
+        this.playerGameOverDelayTimer <= 0 &&
+        this.respawnDelayTimer <= 0
+      ) {
         this.drawPlayer();
+      }
+
+      // 【自機撃墜・大爆発ショックウェーブ＆爆炎コア演出】
+      // progress は 0.0（爆発の瞬間）〜 1.0（消滅）へ進む正規化された時間割合
+      if (this.playerDeathEffectTimer > 0) {
+        const progress = 1 - this.playerDeathEffectTimer / 0.75;
+        const alpha = Math.max(0, 1 - progress);
+
+        this.ctx.save();
+
+        // 1. 撃墜直後の画面フラッシュ（赤〜オレンジの危険閃光）
+        if (progress < 0.45) {
+          const flashAlpha = (1 - progress / 0.45) * 0.35;
+          this.ctx.fillStyle = `rgba(255, 30, 80, ${flashAlpha})`;
+          this.ctx.fillRect(0, 0, LOGICAL_WIDTH, LOGICAL_HEIGHT);
+        }
+
+        // 2. 爆発中心の火球コア（膨張しながら白熱 ➔ オレンジへフェード）
+        this.ctx.shadowColor = "#ff7b00";
+        this.ctx.shadowBlur = 24 * alpha;
+        this.ctx.fillStyle = `rgba(255, 160, 40, ${alpha * 0.75})`;
+        this.ctx.beginPath();
+        this.ctx.arc(this.playerDeathX, this.playerDeathY, 10 + progress * 46, 0, Math.PI * 2);
+        this.ctx.fill();
+
+        this.ctx.fillStyle = `rgba(255, 255, 255, ${alpha * 0.9})`;
+        this.ctx.beginPath();
+        this.ctx.arc(this.playerDeathX, this.playerDeathY, (1 - progress * 0.6) * 18, 0, Math.PI * 2);
+        this.ctx.fill();
+
+        // 3. 外側へ広がる二重の衝撃波リング（赤橙の外輪 ＋ 白シアンの内輪）
+        this.ctx.strokeStyle = `rgba(255, 50, 90, ${alpha})`;
+        this.ctx.lineWidth = 5 * alpha + 1;
+        this.ctx.beginPath();
+        this.ctx.arc(this.playerDeathX, this.playerDeathY, progress * 155, 0, Math.PI * 2);
+        this.ctx.stroke();
+
+        this.ctx.strokeStyle = `rgba(200, 250, 255, ${alpha * 0.9})`;
+        this.ctx.lineWidth = 3 * alpha + 0.5;
+        this.ctx.beginPath();
+        this.ctx.arc(this.playerDeathX, this.playerDeathY, progress * 95, 0, Math.PI * 2);
+        this.ctx.stroke();
+
+        this.ctx.restore();
       }
 
       // 【ボム衝撃波＆画面フラッシュ演出】
