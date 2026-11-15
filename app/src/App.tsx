@@ -49,6 +49,30 @@ export const App: React.FC = () => {
   const [weaponLevel, setWeaponLevel] = useState<number>(1);
   const [isMuted, setIsMuted] = useState<boolean>(false);
   const [showShortcuts, setShowShortcuts] = useState<boolean>(false);
+  const [installPrompt, setInstallPrompt] = useState<any>(null);
+
+  // PWA インストールプロンプト (beforeinstallprompt) の補足
+  useEffect(() => {
+    const handleBeforeInstall = (e: Event) => {
+      e.preventDefault();
+      setInstallPrompt(e);
+    };
+    window.addEventListener("beforeinstallprompt", handleBeforeInstall);
+    return () => window.removeEventListener("beforeinstallprompt", handleBeforeInstall);
+  }, []);
+
+  const handleInstallApp = async () => {
+    if (installPrompt) {
+      installPrompt.prompt();
+      const choice = await installPrompt.userChoice;
+      if (choice.outcome === "accepted") {
+        setInstallPrompt(null);
+      }
+    } else {
+      // iPhone Safari などの手動追加案内
+      alert("ブラウザのメニュー（共有ボタンまたは︙）から「ホーム画面に追加」を選択すると、全画面アプリとしてインストールできます。");
+    }
+  };
 
   /**
    * 【初期化エフェクト】
@@ -210,6 +234,7 @@ export const App: React.FC = () => {
             onLaunchDebug={handleLaunchDebug}
             onLaunchScene={handleLaunchDebugScene}
             onOpenShortcuts={() => setShowShortcuts(true)}
+            onInstallApp={handleInstallApp}
           />
         )}
 

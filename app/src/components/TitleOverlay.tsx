@@ -27,6 +27,7 @@ interface TitleOverlayProps {
   ) => void;
   onLaunchScene: (scene: "BRIEFING" | "EPILOGUE") => void;
   onOpenShortcuts: () => void;
+  onInstallApp: () => void;
 }
 
 const DIFFICULTY_INFO: Record<Difficulty, { label: string; desc: string; activeClass: string }> = {
@@ -54,6 +55,7 @@ export const TitleOverlay: React.FC<TitleOverlayProps> = ({
   onLaunchDebug,
   onLaunchScene,
   onOpenShortcuts,
+  onInstallApp,
 }) => {
   return (
     <div className="absolute inset-0 bg-void/85 backdrop-blur-md flex items-center justify-center p-5 z-20">
@@ -122,6 +124,15 @@ export const TitleOverlay: React.FC<TitleOverlayProps> = ({
           className="w-full py-3.5 font-mono text-xs font-bold tracking-widest text-void bg-cyber-cyan border border-cyber-cyan shadow-[0_0_16px_rgba(0,243,255,0.6)] hover:brightness-110 active:scale-95 transition-all clip-chamfer-sm"
         >
           TOUCH TO SORTIE // 出撃開始
+        </button>
+
+        {/* PWA アプリインストールボタン */}
+        <button
+          type="button"
+          onClick={onInstallApp}
+          className="w-full mt-2.5 py-2 font-mono text-[11px] font-bold tracking-wider text-emerald-300 bg-emerald-500/15 border border-emerald-400/50 hover:bg-emerald-500/25 active:scale-95 transition-all rounded-sm flex items-center justify-center gap-1.5 shadow-[0_0_12px_rgba(52,211,153,0.2)]"
+        >
+          <span>📲 アプリをインストール (全画面PWA)</span>
         </button>
 
         {/* 開発用検証モード（任意のステージ・ボス直行・ストーリー確認） */}
