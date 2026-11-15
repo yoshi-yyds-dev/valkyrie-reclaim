@@ -1166,17 +1166,18 @@ export class GameEngine {
   /** 現在のステージに対応したボス機体を生成し、ボス戦BGMとHUD表示を開始する */
   private spawnBoss(): void {
     // 1. ステージ1〜10のボス定義テーブル（名称・基礎HP・横移動速度・横幅・テーマカラー）
+    // ※後半は弾幕やギミック自体が難しくなるため、自機の最大火力に合わせてHPはなだらかに増加させています（ST.01=320 〜 ST.10=780 / 約2.44倍）
     const bossConfigs: Array<{ name: string; hp: number; vx: number; width: number; color: string }> = [
       { name: "GOLIATH", hp: 320, vx: 55, width: 180, color: "#ff0055" },
-      { name: "CRIMSON MANTA X-2", hp: 450, vx: 90, width: 184, color: "#ff6600" },
-      { name: "SUB-SPACE CENTIPEDE", hp: 600, vx: 72, width: 176, color: "#b829ff" },
-      { name: "IRON AEGIS", hp: 780, vx: 55, width: 184, color: "#00d4ff" },
-      { name: "SOLAR FLARE: HELIOS", hp: 980, vx: 52, width: 188, color: "#ffcc00" },
-      { name: "VOID LEVIATHAN: ABYSS", hp: 1200, vx: 60, width: 190, color: "#00ff88" },
-      { name: "OUROBOROS", hp: 1450, vx: 68, width: 180, color: "#00ffff" },
-      { name: "CRUCIBLE OMEGA", hp: 1750, vx: 42, width: 220, color: "#ff2a6d" },
-      { name: "SINGULARITY ZERO", hp: 2100, vx: 50, width: 186, color: "#8b5cf6" },
-      { name: "DEUS EX COSMOS", hp: 2600, vx: 64, width: 200, color: "#ffd700" },
+      { name: "CRIMSON MANTA X-2", hp: 360, vx: 90, width: 184, color: "#ff6600" },
+      { name: "SUB-SPACE CENTIPEDE", hp: 400, vx: 72, width: 176, color: "#b829ff" },
+      { name: "IRON AEGIS", hp: 450, vx: 55, width: 184, color: "#00d4ff" },
+      { name: "SOLAR FLARE: HELIOS", hp: 500, vx: 52, width: 188, color: "#ffcc00" },
+      { name: "VOID LEVIATHAN: ABYSS", hp: 550, vx: 60, width: 190, color: "#00ff88" },
+      { name: "OUROBOROS", hp: 600, vx: 68, width: 180, color: "#00ffff" },
+      { name: "CRUCIBLE OMEGA", hp: 660, vx: 42, width: 220, color: "#ff2a6d" },
+      { name: "SINGULARITY ZERO", hp: 720, vx: 50, width: 186, color: "#8b5cf6" },
+      { name: "DEUS EX COSMOS", hp: 780, vx: 64, width: 200, color: "#ffd700" },
     ];
 
     // 2. ステージ番号を配列インデックス(0〜9)へ丸め、難易度倍率を掛けた最大HPを算出
@@ -2609,39 +2610,9 @@ export class GameEngine {
     this.ctx.shadowColor = stroke;
     this.ctx.shadowBlur = isEnraged ? 14 : 8;
 
-    // 1. 巨大な主装甲・左右ウイング
-    const wingScale = boss.width / 180;
-    this.ctx.save();
-    this.ctx.scale(wingScale, 1);
-    this.ctx.beginPath();
-    this.ctx.moveTo(0, 44);
-    this.ctx.lineTo(34, 24);
-    this.ctx.lineTo(86, 8);
-    this.ctx.lineTo(80, -24);
-    this.ctx.lineTo(34, -40);
-    this.ctx.lineTo(-34, -40);
-    this.ctx.lineTo(-80, -24);
-    this.ctx.lineTo(-86, 8);
-    this.ctx.lineTo(-34, 24);
-    this.ctx.closePath();
-    this.ctx.fill();
-    this.ctx.stroke();
-    this.ctx.restore();
-
-    // 2. 左右の大型砲台ユニット
-    for (const side of [-52 * wingScale, 52 * wingScale]) {
-      this.ctx.beginPath();
-      this.ctx.rect(side - 10, 6, 20, 24);
-      this.ctx.fill();
-      this.ctx.stroke();
-    }
-
-    // 3. 中央のエネルギーコア（HP低下で激しく明滅）
-    this.ctx.fillStyle = isFlash ? "#ffffff" : isEnraged ? boss.color : "#ffb4ab";
-    this.ctx.beginPath();
-    this.ctx.arc(0, 4, 14, 0, Math.PI * 2);
-    this.ctx.fill();
-    this.ctx.stroke();
+    // 1〜3. ステージ番号（1〜10）に応じた Stitch 準拠の固有ボスシルエットを描画
+    // ※ ST.01〜ST.10 ごとに異なる形状・コア・可動ギミックを描き分ける専用ヘルパーを呼び出します
+    this.drawBossHullByStage(boss, isFlash, isEnraged, fill);
 
     // 4. ST.04 回転防御オーブ描画
     if (boss.stage === 4) {
@@ -2658,6 +2629,419 @@ export class GameEngine {
     }
 
     this.ctx.restore();
+  }
+
+  /**
+   * ステージ 1〜10（ST.01〜ST.10）のボス機体シルエットを Stitch デザインに忠実に描き分けるヘルパーメソッド。
+   *
+   * 【この処理の位置づけ】
+   * `drawBoss()` の中で `this.ctx.translate(boss.x, boss.y)` によってボスの中心を (0, 0) に移動した状態で呼ばれます。
+   * そのため、この関数内ではすべて「ボスの中心からの相対座標（例: 左はマイナス、上はマイナス）」で形を描きます。
+   *
+   * 【スケーリングの仕組み】
+   * 各ボスの基準デザインは横幅 180px × 高さ 96px 前後で設計しています。
+   * `ctx.scale(scaleX, scaleY)` をかけることで、ゲーム内の当たり判定サイズ（`boss.width` / `boss.height`）に
+   * ぴったりの大きさへ自動的に拡大・縮小して表示できます。
+   */
+  private drawBossHullByStage(
+    boss: Boss,
+    isFlash: boolean,
+    isEnraged: boolean,
+    fill: string
+  ): void {
+    const ctx = this.ctx;
+    // コアの色: 被弾フラッシュ時は白、HP半分以下の発狂時はボス固有色、通常時は高輝度コア色
+    const coreColor = isFlash ? "#ffffff" : isEnraged ? boss.color : "#ffb4ab";
+    // 基準サイズ（180x96）に対する拡大率を計算し、当たり判定サイズにフィットさせる
+    const scaleX = boss.width / 180;
+    const scaleY = boss.height / 96;
+
+    ctx.save();
+    ctx.scale(scaleX, scaleY);
+
+    switch (boss.stage) {
+      case 1: {
+        // ST.01: A-01 GOLIATH（軌道監視大型ドローン）
+        // 横長の中央装甲ブロック ＋ 左右に張り出した三角ウイングポッド ＋ 2連装バルカン砲身
+        ctx.beginPath();
+        ctx.roundRect(-80, -20, 160, 40, 4);
+        ctx.fill();
+        ctx.stroke();
+
+        // 左右の大型ウイングポッド（三角形の砲台ベース）
+        for (const dir of [-1, 1]) {
+          ctx.beginPath();
+          ctx.moveTo(dir * 52, 0);
+          ctx.lineTo(dir * 92, 26);
+          ctx.lineTo(dir * 28, 26);
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+
+          // 前面（下向き）のバルカン砲身
+          ctx.beginPath();
+          ctx.rect(dir * 46 - 3, 22, 6, 16);
+          ctx.fill();
+          ctx.stroke();
+        }
+
+        // 中央エネルギーコア
+        ctx.fillStyle = coreColor;
+        ctx.beginPath();
+        ctx.arc(0, 0, 14, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        break;
+      }
+
+      case 2: {
+        // ST.02: CRIMSON MANTA: X-2（高機動・双胴ステルス戦闘機）
+        // エイ（マンタ）のように大きく左右へ広がる前進翼シルエット
+        ctx.beginPath();
+        ctx.moveTo(0, -44);
+        ctx.lineTo(90, 22);
+        ctx.lineTo(58, 42);
+        ctx.lineTo(0, 14);
+        ctx.lineTo(-58, 42);
+        ctx.lineTo(-90, 22);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        // 左右ウイングのエンジンインテーク＆スリット線
+        ctx.beginPath();
+        ctx.moveTo(-42, -6);
+        ctx.lineTo(-68, 24);
+        ctx.moveTo(42, -6);
+        ctx.lineTo(68, 24);
+        ctx.stroke();
+
+        // 中央コア
+        ctx.fillStyle = coreColor;
+        ctx.beginPath();
+        ctx.arc(0, 0, 12, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        break;
+      }
+
+      case 3: {
+        // ST.03: SUB-SPACE CENTIPEDE（連結多節・地中掘削型重機）
+        // 5つの装甲節が時間経過（boss.age）に合わせてサイン波でくねくねと蛇行する
+        const segments = 5;
+        for (let i = segments - 1; i >= 0; i--) {
+          // 後ろの節ほど少し小さく、位相をずらして左右にうねらせる
+          const t = i / (segments - 1);
+          const sy = -36 + i * 16;
+          const sx = Math.sin(boss.age * 5 + i * 0.9) * (10 + i * 2);
+          const rx = 34 - t * 10;
+          const ry = 13;
+
+          ctx.fillStyle = fill;
+          ctx.beginPath();
+          ctx.ellipse(sx, sy, rx, ry, 0, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+
+          // 重機らしいハザードストライプ（警告斜線）ディテール
+          ctx.beginPath();
+          ctx.moveTo(sx - rx * 0.5, sy - 4);
+          ctx.lineTo(sx - rx * 0.25, sy + 4);
+          ctx.moveTo(sx + rx * 0.25, sy - 4);
+          ctx.lineTo(sx + rx * 0.5, sy + 4);
+          ctx.stroke();
+        }
+
+        // 先頭（一番下側・自機側）の採掘レーザー大顎（マンディブル）
+        const headX = Math.sin(boss.age * 5 + (segments - 1) * 0.9) * 18;
+        const headY = -36 + (segments - 1) * 16;
+        for (const dir of [-1, 1]) {
+          ctx.beginPath();
+          ctx.moveTo(headX + dir * 16, headY + 6);
+          ctx.lineTo(headX + dir * 28, headY + 26);
+          ctx.lineTo(headX + dir * 8, headY + 14);
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+        }
+
+        // 頭部の掘削レーザーコア
+        ctx.fillStyle = coreColor;
+        ctx.beginPath();
+        ctx.arc(headX, headY, 10, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        break;
+      }
+
+      case 4: {
+        // ST.04: IRON AEGIS（全方位防壁システム）
+        // 重厚な角丸スクエア要塞シャーシ ＋ 左右の太いスタビライザー ＋ 露出大型コア
+        // （※周囲を回る4つの防御オーブは呼び出し元の drawBoss() 側で描画されます）
+        ctx.beginPath();
+        ctx.roundRect(-38, -38, 76, 76, 8);
+        ctx.fill();
+        ctx.stroke();
+
+        // 左右に張り出した重装甲スタビライザーバー
+        for (const dir of [-1, 1]) {
+          ctx.beginPath();
+          ctx.rect(dir === -1 ? -80 : 38, -7, 42, 14);
+          ctx.fill();
+          ctx.stroke();
+        }
+
+        // 中央の大型エネルギーコア
+        ctx.fillStyle = coreColor;
+        ctx.beginPath();
+        ctx.arc(0, 0, 18, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        break;
+      }
+
+      case 5: {
+        // ST.05: SOLAR FLARE: HELIOS（恒星エネルギー集束体）
+        // 太陽リング外殻 ＋ 上下左右4方位へ鋭く突き出す放熱フィン
+        ctx.beginPath();
+        ctx.arc(0, 0, 34, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        // 上・下・左・右の4方位に伸びるスパイク状の放熱フィン
+        const spikes: Array<[number, number, number, number, number, number]> = [
+          [0, -64, -10, -34, 10, -34], // 上
+          [0, 64, -10, 34, 10, 34],   // 下
+          [-84, 0, -34, -10, -34, 10], // 左
+          [84, 0, 34, -10, 34, 10],    // 右
+        ];
+        for (const [tx, ty, bx1, by1, bx2, by2] of spikes) {
+          ctx.beginPath();
+          ctx.moveTo(tx, ty);
+          ctx.lineTo(bx1, by1);
+          ctx.lineTo(bx2, by2);
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+        }
+
+        // 中心の灼熱ソーラーコア（わずかに脈動）
+        const pulse = 15 + Math.sin(boss.age * 8) * 2;
+        ctx.fillStyle = coreColor;
+        ctx.beginPath();
+        ctx.arc(0, 0, pulse, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        break;
+      }
+
+      case 6: {
+        // ST.06: VOID LEVIATHAN: ABYSS（亜空間生体機械）
+        // 有機的なアーモンド／三日月型の生体甲殻 ＋ 左右から波打つ6本の生体触手
+        ctx.beginPath();
+        ctx.moveTo(-52, 12);
+        ctx.quadraticCurveTo(0, -54, 52, 12);
+        ctx.quadraticCurveTo(0, 44, -52, 12);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        // 左右各3本（合計6本）の生体触手ポッド（サイン波でゆらゆら動く）
+        for (const dir of [-1, 1]) {
+          for (let i = 0; i < 3; i++) {
+            const baseY = -12 + i * 14;
+            const wave = Math.sin(boss.age * 4 + i * 1.3) * 8;
+            ctx.beginPath();
+            ctx.moveTo(dir * 42, baseY);
+            ctx.quadraticCurveTo(dir * 68, baseY + wave * 0.5, dir * 88, baseY + 10 + wave);
+            ctx.stroke();
+
+            // 触手先端の発光ノード
+            ctx.fillStyle = isFlash ? "#ffffff" : "#00ff88";
+            ctx.beginPath();
+            ctx.arc(dir * 88, baseY + 10 + wave, 3, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+
+        // 中央の生体核（脈動）
+        ctx.fillStyle = coreColor;
+        ctx.beginPath();
+        ctx.arc(0, 2, 15 + Math.sin(boss.age * 6) * 2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        break;
+      }
+
+      case 7: {
+        // ST.07: CHRONO PHANTOM: OUROBOROS（時空干渉型・高速ワープ機）
+        // ホログラフィック残像（本体より少し左右にズラした半透明の破線シルエット）
+        const ghostShift = Math.sin(boss.age * 10) * 8;
+        ctx.save();
+        ctx.globalAlpha = 0.35;
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        ctx.moveTo(ghostShift, -46);
+        ctx.lineTo(ghostShift + 66, 0);
+        ctx.lineTo(ghostShift + 34, 46);
+        ctx.lineTo(ghostShift - 34, 46);
+        ctx.lineTo(ghostShift - 66, 0);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.restore();
+
+        // 本体: 鋭角ステルス五角形フレーム
+        ctx.beginPath();
+        ctx.moveTo(0, -46);
+        ctx.lineTo(66, 0);
+        ctx.lineTo(34, 46);
+        ctx.lineTo(-34, 46);
+        ctx.lineTo(-66, 0);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        // 中央の位相分割破線（縦のセンターライン）
+        ctx.save();
+        ctx.setLineDash([5, 4]);
+        ctx.beginPath();
+        ctx.moveTo(0, -46);
+        ctx.lineTo(0, 46);
+        ctx.stroke();
+        ctx.restore();
+
+        // 時空コア
+        ctx.fillStyle = coreColor;
+        ctx.beginPath();
+        ctx.arc(0, 4, 11, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        break;
+      }
+
+      case 8: {
+        // ST.08: DREADNOUGHT OMEGA: FORTRESS CRUCIBLE（超弩級・機動要塞）
+        // 多層構造の巨大矩形ドレッドノート主装甲 ＋ 極太の波動砲バレル
+        ctx.beginPath();
+        ctx.rect(-96, -34, 192, 58);
+        ctx.fill();
+        ctx.stroke();
+
+        // 内側の波動砲エネルギーチャンバー
+        ctx.beginPath();
+        ctx.rect(-60, -14, 120, 22);
+        ctx.fill();
+        ctx.stroke();
+
+        // 下向きに突き出す極太の波動砲メインバレル
+        ctx.beginPath();
+        ctx.rect(-11, -6, 22, 56);
+        ctx.fill();
+        ctx.stroke();
+
+        // 砲口先端の発光リング
+        ctx.beginPath();
+        ctx.rect(-16, 44, 32, 6);
+        ctx.fill();
+        ctx.stroke();
+
+        // 艦橋コア
+        ctx.fillStyle = coreColor;
+        ctx.beginPath();
+        ctx.arc(0, -3, 12, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        break;
+      }
+
+      case 9: {
+        // ST.09: SINGULARITY CORE: ZERO（人工ブラックホール発生装置）
+        // 傾いて回転する楕円形の磁気降着リング（奥側と手前側）
+        ctx.save();
+        ctx.rotate(0.22 + Math.sin(boss.age * 1.5) * 0.08);
+        ctx.beginPath();
+        ctx.ellipse(0, 0, 86, 22, 0, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+
+        // 逆向きに傾いた補助磁場リング（破線）
+        ctx.save();
+        ctx.rotate(-0.22);
+        ctx.setLineDash([6, 6]);
+        ctx.beginPath();
+        ctx.ellipse(0, 0, 74, 18, 0, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+
+        // 中心の漆黒ブラックホール球体（濃い宇宙色で塗りつぶし、外周を強く発光させる）
+        ctx.fillStyle = isFlash ? "rgba(255,255,255,0.8)" : "#0b0e18";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.arc(0, 0, 28, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        ctx.lineWidth = 2;
+
+        // 特異点の脈動コア
+        ctx.fillStyle = coreColor;
+        ctx.beginPath();
+        ctx.arc(0, 0, 8 + Math.sin(boss.age * 9) * 2, 0, Math.PI * 2);
+        ctx.fill();
+        break;
+      }
+
+      case 10:
+      default: {
+        // ST.10: DEUS EX COSMOS: APOCALYPSE EYE（最終決戦・中枢AIコア）
+        // 1) 外周をゆっくり回転する神聖幾何学ハロー（破線リング）
+        ctx.save();
+        ctx.rotate(boss.age * 0.6);
+        ctx.setLineDash([8, 5]);
+        ctx.beginPath();
+        ctx.arc(0, 0, 48, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+
+        // 2) 7頂点の超次元フラクタル翼ポリゴン
+        ctx.beginPath();
+        ctx.moveTo(0, -48);
+        ctx.lineTo(74, -14);
+        ctx.lineTo(88, 28);
+        ctx.lineTo(42, 44);
+        ctx.lineTo(-42, 44);
+        ctx.lineTo(-88, 28);
+        ctx.lineTo(-74, -14);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        // 3) 内側の虚無リング（深い紫）＋ 真紅に脈動する黙示録の瞳
+        ctx.fillStyle = isFlash ? "#ffffff" : "#6f00be";
+        ctx.beginPath();
+        ctx.arc(0, 0, 20, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = coreColor;
+        ctx.beginPath();
+        ctx.arc(0, 0, 8 + Math.sin(boss.age * 10) * 2, 0, Math.PI * 2);
+        ctx.fill();
+
+        // 4) 周囲を公転する6つの調和エネルギーノード
+        for (let k = 0; k < 6; k++) {
+          const ang = boss.age * 1.4 + (Math.PI * 2 * k) / 6;
+          const nx = Math.cos(ang) * 56;
+          const ny = Math.sin(ang) * 36;
+          ctx.fillStyle = isFlash ? "#ffffff" : "#00f3ff";
+          ctx.beginPath();
+          ctx.arc(nx, ny, 3.5, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        break;
+      }
+    }
+
+    ctx.restore();
   }
 
   /** 4タイプの通常敵（SCOUT / INTERCEPTOR / SPREADER / GUNSHIP）の描き分け */
