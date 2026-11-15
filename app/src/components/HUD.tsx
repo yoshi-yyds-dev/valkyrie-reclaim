@@ -3,11 +3,20 @@
  * VOID VANGUARD - 上部 HUD 表示コンポーネント (HUD.tsx)
  * ============================================================================
  * 
- * 【開発者向けナレッジ：HUD 設計のポイント】
- * 1. 画面の最上部（高さ 50px）に絶対配置（absolute）し、戦闘画面の手前にオーバーレイ表示。
- * 2. Stitch のアーケードHUDデザインに基づき、スコアは等幅フォント（font-mono）で桁揃え。
- * 3. シールド（HP）は1本のなめらかなバーではなく「5分割のセグメントブロック」にして、
- *    レトロフューチャーな航空機計器の雰囲気を演出。
+ * 【全体構成におけるこのコンポーネントの位置づけ】
+ * 戦闘中（PLAYING）およびポーズ中（PAUSED）に、Canvas 描画層の手前（z-10）に常時オーバーレイ表示される
+ * 計器パネル（Heads-Up Display）です。
+ * プレイヤーはここを見ることで、現在のスコア、残機（残り機体数）、武器種別・Lv、シールド残量（HP）を瞬時に把握できます。
+ * 
+ * 【プログラミング初心者がつまずきやすいポイントと工夫】
+ * 1. なぜ `padStart(7, "0")` を使うのか？
+ *    ➔ 数字が増減した際に文字の桁数が変わると、文字全体の横幅が変わり、周囲のレイアウトがガタガタと揺れてしまいます。
+ *       常に「0001200」のように7桁固定（ゼロ埋め）にし、さらに等幅フォント（font-mono）を適用することで、
+ *       激しくスコアが加算されてもレイアウトがピクリとも動かないプロ仕様のUIになります。
+ * 
+ * 2. なぜ画像ではなくインライン SVG で残機アイコンを描いているのか？
+ *    ➔ 画像ファイル（PNG等）の読み込み遅延や解像度ボケを防ぎ、CSS の Tailwind クラス（fill-cyber-cyan や drop-shadow）で
+ *       ネオン発光や生存/撃墜時のグレースケール切り替えをリアルタイムに制御できるためです。
  */
 
 import React from "react";
@@ -63,10 +72,24 @@ export const HUD: React.FC<HUDProps> = ({
         </span>
       </div>
 
-      {/* 残機数・武器レベル ＆ シールド（HP）セグメントバー */}
+      {/* 残機数（自機アイコン3機並び）・武器レベル ＆ シールド（HP）セグメントバー */}
       <div className="flex flex-col items-center">
         <div className="flex items-center gap-2 text-[9px] font-mono tracking-wider">
-          <span className="text-text-dim">SHIPS: {lives}</span>
+          <div className="flex items-center gap-1" title={`Remaining Ships: ${lives}`}>
+            {[0, 1, 2].map((idx) => (
+              <svg
+                key={idx}
+                viewBox="0 0 16 18"
+                className={`w-3 h-3.5 transition-all ${
+                  idx < lives
+                    ? "fill-cyber-cyan drop-shadow-[0_0_4px_rgba(0,243,255,0.8)]"
+                    : "fill-void-border opacity-35"
+                }`}
+              >
+                <polygon points="8,1 14,14 8,11 2,14" />
+              </svg>
+            ))}
+          </div>
           <span className={`font-bold ${weaponColorClass}`}>
             {weapon} LV.{weaponLevel}
           </span>

@@ -29,12 +29,16 @@ import { EpilogueOverlay } from "./components/EpilogueOverlay";
 import { ShortcutHelpModal } from "./components/ShortcutHelpModal";
 
 export const App: React.FC = () => {
-  // Canvas 要素への直接アクセス用参照（DOM再取得を避ける）
+  // 【初心者がつまずきやすいポイント：なぜ useState ではなく useRef なのか？】
+  // - canvasRef: React を介さず直接 Canvas DOM 要素を取得するための参照です。
+  // - engineRef: ゲームエンジンのインスタンス（GameEngine）を保持します。
+  //   ★ここが重要：もし `useState` でエンジンを持つと、エンジンの状態が変わるたびに React 全体が
+  //   再レンダリングされ、その結果コンポーネントが再評価されて新しいエンジンが再生成され、ゲームが初期化されてしまいます。
+  //   `useRef` は「再レンダリングを引き起こさずに値を保持し続ける」ため、ゲームエンジンの保持に最適です。
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  // ゲームエンジンインスタンスの保持用参照（再レンダリングされてもエンジンが再生成されないようにする）
   const engineRef = useRef<GameEngine | null>(null);
 
-  // --- React が管理するUI表示用ステート群 ---
+  // --- React が管理するUI表示用ステート群（ゲームエンジンから通知を受けて描画） ---
   const [status, setStatus] = useState<GameStatus>("TITLE");
   const [difficulty, setDifficulty] = useState<Difficulty>("NORMAL");
   const [score, setScore] = useState<number>(0);
@@ -51,32 +55,49 @@ export const App: React.FC = () => {
   const [showShortcuts, setShowShortcuts] = useState<boolean>(false);
   const [installPrompt, setInstallPrompt] = useState<any>(null);
 
-  // PWA インストールプロンプト (beforeinstallprompt) の補足
+  // 【ステップ1：URLパラメータによる開発モード制御】
+  // 一般プレイヤー向けURLでは検証パネルを隠し、?dev=1 または ?debug=1 が付いた時だけ有効化する
+  const isDevMode = new URLSearchParams(window.location.search).has("dev") ||
+                    new URLSearchParams(window.location.search).has("debug");
+
+  // 【ステップ2：PWA インストールプロンプトの捕捉】
+  // Android Chrome 等が発火する「beforeinstallprompt」イベントを保持し、任意のボタンから起動できるようにする
   useEffect(() => {
     const handleBeforeInstall = (e: Event) => {
-      e.preventDefault();
+      e.preventDefault(); // ブラウザ側の勝手なミニバー表示を抑え、自前ボタンで誘導する
       setInstallPrompt(e);
     };
     window.addEventListener("beforeinstallprompt", handleBeforeInstall);
     return () => window.removeEventListener("beforeinstallprompt", handleBeforeInstall);
   }, []);
 
+  /** アプリインストールボタン押下時の処理（Androidはネイティブダイアログ、iOS等は手順案内を表示） */
   const handleInstallApp = async () => {
     if (installPrompt) {
       installPrompt.prompt();
       const choice = await installPrompt.userChoice;
       if (choice.outcome === "accepted") {
-        setInstallPrompt(null);
+        setInstallPrompt(null); // インストール承諾後は再利用不可のため破棄
       }
     } else {
-      // iPhone Safari などの手動追加案内
+      // iPhone Safari など beforeinstallprompt 非対応ブラウザ向けの手動ガイド
       alert("ブラウザのメニュー（共有ボタンまたは︙）から「ホーム画面に追加」を選択すると、全画面アプリとしてインストールできます。");
     }
   };
 
   /**
-   * 【初期化エフェクト】
-   * 画面が最初にマウントされた時だけ1回実行され、GameEngine を生成します。
+   * 【初期化エフェクト：GameEngine のマウントとイベント購読】
+   * 
+   * 【初心者がつまずきやすいポイント】
+   * 1. なぜ第2引数の依存配列が `[]`（空配列）なのか？
+   *    ➔ コンポーネントがブラウザ画面に最初に表示された時（マウント時）の「1度だけ」実行させるためです。
+   * 2. なぜコールバック関数を渡すのか？
+   *    ➔ GameEngine は Canvas 上で自律して動いており、React の state を直接触ることはできません。
+   *       「スコアが上がった時」「HPが減った時」にエンジンがこの関数を呼ぶことで、
+   *       React 側の state が更新され、画面上部の HUD やオーバーレイが自動で再描画されます。
+   * 3. なぜクリーンアップ関数（return () => engine.destroy()）が必要なのか？
+   *    ➔ 画面が閉じられたり遷移した時に `requestAnimationFrame` や音声を止めないと、
+   *       見えない裏側で永久にループが回り続け、ブラウザが重くなる「メモリリーク」が発生するためです。
    */
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -211,7 +232,7 @@ export const App: React.FC = () => {
           【上部 HUD 層】
           戦闘中（PLAYING）およびポーズ中（PAUSED）に表示。タイトル・ブリーフィング時は非表示。
         */}
-        {status !== "TITLE" && status !== "BRIEFING" && status !== "EPILOGUE" && (
+        {status !== "TITLE" && status !== "BRIEFING" && status !== "EPILOGUE" && status !== "GAMEOVER" && (
           <HUD
             score={score}
             hp={hp}
@@ -231,6 +252,7 @@ export const App: React.FC = () => {
             difficulty={difficulty}
             onSelectDifficulty={handleSelectDifficulty}
             onStart={handleStart}
+            isDevMode={isDevMode}
             onLaunchDebug={handleLaunchDebug}
             onLaunchScene={handleLaunchDebugScene}
             onOpenShortcuts={() => setShowShortcuts(true)}
@@ -253,15 +275,21 @@ export const App: React.FC = () => {
             onRetry={handleRetry}
             onToggleMute={handleToggleMute}
             isMuted={isMuted}
+            isDevMode={isDevMode}
             onLaunchDebug={handleLaunchDebug}
             onLaunchScene={handleLaunchDebugScene}
             onOpenShortcuts={() => setShowShortcuts(true)}
           />
         )}
 
-        {/* 【ゲームオーバー画面オーバーレイ】全機喪失時に表示 */}
+        {/* 【ゲームオーバー画面オーバーレイ】全機喪失時に表示（コンティニュー不可） */}
         {status === "GAMEOVER" && (
-          <GameOverOverlay score={score} onRetry={handleRetry} />
+          <GameOverOverlay
+            score={score}
+            stage={stage}
+            onRetry={handleRetry}
+            onQuitToTitle={handleQuitToTitle}
+          />
         )}
 
         {/* 【最終エピローグオーバーレイ】全10ステージクリア時に表示 */}
@@ -327,7 +355,7 @@ export const App: React.FC = () => {
         )}
 
         {/* 【現在ステージ表示】画面左下に控えめに配置 */}
-        {status !== "TITLE" && status !== "BRIEFING" && status !== "EPILOGUE" && (
+        {status !== "TITLE" && status !== "BRIEFING" && status !== "EPILOGUE" && status !== "GAMEOVER" && (
           <div className="absolute bottom-3 left-3 z-10 pointer-events-none font-mono text-[10px] tracking-widest text-text-dim/80">
             STAGE {String(stage).padStart(2, "0")}
           </div>

@@ -19,6 +19,7 @@ interface TitleOverlayProps {
   difficulty: Difficulty;
   onSelectDifficulty: (diff: Difficulty) => void;
   onStart: () => void;
+  isDevMode?: boolean;
   onLaunchDebug: (
     stage: number,
     directBoss: boolean,
@@ -52,6 +53,7 @@ export const TitleOverlay: React.FC<TitleOverlayProps> = ({
   difficulty,
   onSelectDifficulty,
   onStart,
+  isDevMode = false,
   onLaunchDebug,
   onLaunchScene,
   onOpenShortcuts,
@@ -135,8 +137,10 @@ export const TitleOverlay: React.FC<TitleOverlayProps> = ({
           <span>📲 アプリをインストール (全画面PWA)</span>
         </button>
 
-        {/* 開発用検証モード（任意のステージ・ボス直行・ストーリー確認） */}
-        <DevTestPanel onLaunchDebug={onLaunchDebug} onLaunchScene={onLaunchScene} />
+        {/* 開発用検証モード（URL に ?dev=1 がある時だけ表示） */}
+        {isDevMode && (
+          <DevTestPanel onLaunchDebug={onLaunchDebug} onLaunchScene={onLaunchScene} />
+        )}
       </div>
     </div>
   );

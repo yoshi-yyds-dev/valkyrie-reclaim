@@ -3,14 +3,42 @@
  * VOID VANGUARD - 60fps ゲーム戦闘エンジン (GameEngine.ts)
  * ============================================================================
  * 
- * 【開発者向けナレッジ：このクラスの役割】
- * React の再レンダリングシステム（仮想DOM）を使わず、ブラウザ標準の Canvas 2D API 上で
- * 毎秒60フレーム（60fps）の超高速ループを直接回すゲーム専用エンジンです。
+ * 【全体構成におけるこのクラスの位置づけ】
+ * 本アプリケーションは「React（UI管理）」と「GameEngine（ゲームコア）」の2層アーキテクチャで構成されています。
+ * - React (App.tsx): タイトル画面、ポーズメニュー、ゲームオーバー画面、HUD（HPバーやスコア）などのDOMを描画・管理。
+ * - GameEngine (本ファイル): 毎秒60回（60fps）Canvas 2Dコンテキストを直接操作し、自機・敵機・弾幕・星空の物理計算、
+ *   当たり判定、AI行動制御、画面描画を担うゲームの「心臓部」。
  * 
- * ★設計のポイント：
- * 1. 座標計算や当たり判定はすべて純粋な TypeScript 変数で高速演算
- * 2. requestAnimationFrame を使った「画面のリフレッシュレートと完全同期するループ」
- * 3. スコア変化やHP減少など「画面UIの更新が必要な瞬間だけ」Reactへコールバック通知
+ * ----------------------------------------------------------------------------
+ * 【プログラミング初心者がつまずきやすいポイントと設計の理由】
+ * 
+ * Q1. なぜ React の useState を使わずに、Canvas 2D を直接操作しているのか？
+ * ➔ 理由：描画パフォーマンス（処理落ち・カクつき防止）のためです。
+ *    React の再レンダリング（仮想DOMの比較）は、毎秒数十〜数百回も座標が激変するゲームオブジェクト
+ *    （数千発の弾やパーティクル）を扱うには負荷が高すぎます。
+ *    そのため、激しく動く戦闘計算は純粋な TypeScript クラス（GameEngine）で高速に回し、
+ *    「スコアが変わった」「HPが減った」という UI更新が必要な瞬間だけ React にコールバック通知する
+ *    「ハイブリッド分離設計」を採用しています。
+ * 
+ * Q2. なぜ画面サイズを固定の「360 × 640（9:16）」としているのか？（論理座標系）
+ * ➔ 理由：プレイヤーの端末（PCモニター、iPad、スマートフォン）によって解像度はバラバラです。
+ *    もし実ピクセルで計算すると、大画面では弾速が遅く感じ、スマホでは自機が巨大化してしまいます。
+ *    ゲーム内部は常に「横360 × 縦640」の仮想空間として計算し、描画時に画面サイズに合わせて
+ *    自動で拡大・縮小（レスポンシブスケール）することで、どの端末でも全く同じ公平な難易度を実現しています。
+ * 
+ * Q3. デルタタイム（dt: Delta Time）とは何か？なぜ移動速度に dt を掛けるのか？
+ * ➔ 理由：モニターのリフレッシュレート（60Hz, 120Hz, 144Hz）や処理落ちの影響をなくすためです。
+ *    もし `x += speed` のように固定値で足すと、120Hzのゲーミングモニターでは2倍の速度でゲームが進んでしまいます。
+ *    「前フレームからの経過秒数（通常約0.016秒）」である dt を掛ける（`x += speed * dt`）ことで、
+ *    どんな動作環境でも「1秒間に speed ピクセル進む」という物理的な実時間移動を保証しています。
+ * 
+ * Q4. なぜ配列の削除ループは末尾からの逆順（`for (let i = arr.length - 1; i >= 0; i--)`）なのか？
+ * ➔ 理由：ループ中に要素を削除した際の「インデックスずれバグ（スキップ）」を防ぐためです。
+ *    先頭から普通にループして `splice(i, 1)` を実行すると、後ろの要素が1つ手前にズレるため、
+ *    「次の要素が判定されずにスキップされてしまう」という重大なバグが発生します。
+ *    末尾から逆順にループすれば、削除した要素より手前（まだ調べていない要素）のインデックスは
+ *    絶対に変化しないため、安全・確実に全要素を処理できます。
+ * ============================================================================
  */
 
 import {
@@ -69,6 +97,7 @@ export class GameEngine {
   private bannerTimer: number = 0;
   private shakeTimer: number = 0;
   private bombEffectTimer: number = 0;
+  private respawnTimer: number = 0;
   private bombOriginX: number = LOGICAL_WIDTH / 2;
   private bombOriginY: number = LOGICAL_HEIGHT / 2;
 
@@ -166,6 +195,7 @@ export class GameEngine {
     this.bannerTimer = 0;
     this.shakeTimer = 0;
     this.bombEffectTimer = 0;
+    this.respawnTimer = 0;
 
     // 自機位置とステータスのリセット
     this.player.x = LOGICAL_WIDTH / 2;
@@ -208,6 +238,10 @@ export class GameEngine {
   /**
    * 【開発用検証モード（DEV TEST MODE）】
    * 任意のステージ（1〜10）・フェーズ（道中 or ボス直行）・武器種別/レベルを指定して即出撃します。
+   * ステップ1: 引数を安全な範囲にクランプ（1〜10、Lv1〜5）
+   * ステップ2: フィールド上の弾・敵・タイマーをすべて初期化
+   * ステップ3: 自機を指定の武器・レベルへ強化し、React HUDへ通知
+   * ステップ4: directBoss が true なら即座にボスを召喚、false なら道中最初から開始
    */
   public startDebugStage(
     targetStage: number,
@@ -215,10 +249,12 @@ export class GameEngine {
     weapon: WeaponType = "VULCAN",
     weaponLevel: number = 3
   ): void {
+    // ステップ1: 音声アンロックとパラメータの境界チェック（安全範囲へ丸める）
     this.sound.unlock();
     const clampedStage = Math.max(1, Math.min(10, Math.floor(targetStage)));
     const clampedLevel = Math.max(1, Math.min(5, Math.floor(weaponLevel)));
 
+    // ステップ2: 前回の戦闘データ・タイマーをすべてリセット
     this.score = 0;
     this.bullets = [];
     this.enemyBullets = [];
@@ -228,14 +264,16 @@ export class GameEngine {
     this.powerUps = [];
     this.enemySpawnTimer = 0;
     this.stage = clampedStage;
-    this.stageScrollTime = directBoss ? this.getBossSpawnTime() : 0;
+    this.stageScrollTime = directBoss ? this.getBossSpawnTime() : 0; // ボス直行時はスクロール完了扱いにする
     this.gunshipSpawnsCount = 0;
     this.warningTimer = 0;
     this.stageClearTimer = 0;
     this.bannerTimer = 0;
     this.shakeTimer = 0;
     this.bombEffectTimer = 0;
+    this.respawnTimer = 0;
 
+    // ステップ3: 自機位置と指定された武器・レベルをセット
     this.player.x = LOGICAL_WIDTH / 2;
     this.player.y = LOGICAL_HEIGHT - 120;
     this.player.weapon = weapon;
@@ -246,10 +284,11 @@ export class GameEngine {
     this.player.lives = 3;
     this.player.hp = 100;
     this.player.shotCooldown = 0;
-    this.player.invincibleTimer = 1.2;
+    this.player.invincibleTimer = 1.2; // 開始直後の事故防止用無敵
     this.input.targetX = this.player.x;
     this.input.targetY = this.player.y;
 
+    // React 側の HUD（スコア・HP・残機・武器・ステージ）を最新状態に同期
     this.callbacks.onScoreChange(this.score);
     this.callbacks.onHpChange(this.player.hp, this.player.maxHp);
     this.callbacks.onLivesChange(this.player.lives);
@@ -258,6 +297,7 @@ export class GameEngine {
     this.callbacks.onStageChange(this.stage);
     this.callbacks.onBossChange(null);
 
+    // ステップ4: 指定フェーズ（ボス戦直行 or 通常道中）へ突入
     this.status = "PLAYING";
     this.sound.playStart();
     if (directBoss) {
@@ -275,13 +315,15 @@ export class GameEngine {
    * プロローグ（BRIEFING）または最終エピローグ（EPILOGUE）画面を即座に開きます。
    */
   public startDebugScene(scene: "BRIEFING" | "EPILOGUE"): void {
+    // 1. ブラウザの音声再生制限を解除
     this.sound.unlock();
     if (scene === "BRIEFING") {
+      // プロローグ検証は通常開始フロー（BRIEFING開始）をそのまま呼び出す
       this.startGame(false);
       return;
     }
 
-    // EPILOGUE 検証用：戦闘状態をクリアし、検証用ダミースコアでエンディングへ遷移
+    // 2. EPILOGUE 検証用：戦闘中のエンティティ・タイマー・入力状態をすべて初期化
     this.bullets = [];
     this.enemyBullets = [];
     this.enemies = [];
@@ -292,10 +334,13 @@ export class GameEngine {
     this.input.isPointerDown = false;
     this.sound.stopBgm();
 
+    // 3. スコアが 0 の場合はランク評価表示を確認しやすいようダミースコアを補完
     if (this.score <= 0) {
       this.score = 125000;
       this.callbacks.onScoreChange(this.score);
     }
+
+    // 4. HUDのボス情報・バナーを消し、EPILOGUE 状態へ遷移して React 側へ通知
     this.callbacks.onBossChange(null);
     this.callbacks.onBannerChange(null);
     this.status = "EPILOGUE";
@@ -365,10 +410,16 @@ export class GameEngine {
   // --------------------------------------------------------------------------
 
   /**
-   * 【座標変換アルゴリズム】
-   * ブラウザ上の実際のピクセル座標（clientX, clientY）を、
-   * ゲーム内の仮想座標（横 360 × 縦 640）に変換します。
-   * これにより、スマホ画面がどれだけ拡大・縮小されていても正確なタッチ位置が取れます。
+   * 【全体構成における位置づけ：入力層（Input Layer）】
+   * ブラウザから送られてくる生のマウス・タッチ座標を、ゲーム内の仮想論理空間（360×640）へ変換します。
+   * 
+   * 【初心者がつまずきやすいポイント：なぜ生の clientX / clientY をそのまま使えないのか？】
+   * 1. `e.clientX / Y` はブラウザの画面左上（0,0）を起点としたピクセル位置です。
+   * 2. 一方、ゲームの Canvas は CSS の中央寄せや縦横比キープ（9:16）によって、
+   *    画面内で拡大・縮小・余白配置されています。
+   * 3. `canvas.getBoundingClientRect()` を使うと「Canvasが画面のどこに何ピクセルの幅・高さで置かれているか」が分かります。
+   * 4. 実際の表示幅に対する割合 `(clientX - rect.left) / rect.width` を求め、
+   *    それにゲーム内部の幅 `LOGICAL_WIDTH (360)` を掛けることで、どんな端末でもミリ単位で正確な位置が取れます。
    */
   private getLogicalPos(clientX: number, clientY: number): { x: number; y: number } {
     const rect = this.canvas.getBoundingClientRect();
@@ -378,7 +429,18 @@ export class GameEngine {
     };
   }
 
-  /** タッチ・マウス・キーボード入力イベントの紐付け */
+  /**
+   * 【全体構成における位置づけ：イベントバインディング】
+   * プレイヤーからの物理入力を検知し、自機操作やショートカット機能へ振り分けます。
+   * 
+   * 【初心者がつまずきやすいポイント】
+   * - `e.preventDefault()`: スマホで指を素早く動かした時に、ブラウザが「ページ全体のスクロール」や
+   *   「ピンチズーム」と誤認して画面がガタガタ動くのを防ぐ必須のおまじないです。
+   * - `{ passive: false }`: 現代のブラウザはスクロール性能を高めるためデフォルトで `passive: true` になっており、
+   *   明示的に `false` を指定しないと `preventDefault()` が無視されてエラーになることがあります。
+   * - `TOUCH_OFFSET_Y (50px)`: スマホで自分の指の真下に自機を置くと、指で自機や敵の弾が見えなくなってしまいます。
+   *   指の接地点より少し上（50px上）に自機を追従させることで、視界をクリアに保つ親切設計です。
+   */
   private bindEvents(): void {
     // --- ① スマホのタッチ操作 ---
     this.canvas.addEventListener("touchstart", (e) => {
@@ -470,29 +532,36 @@ export class GameEngine {
   // --------------------------------------------------------------------------
 
   /**
-   * 【ゲームの心臓部】
+   * 【全体構成における位置づけ：メインループ（Game Loop）】
+   * ゲーム内の時間を進め、物理計算（Update）と画面描画（Render）を永久に繰り返す心臓部です。
    * 
-   * 仕組み：
-   * 1. requestAnimationFrame(loop) でブラウザの次フレーム（約16.6ms後）を予約
-   * 2. 前回のコマからの経過時間（dt: デルタタイム）を計算
-   * 3. update(dt) で移動や当たり判定を計算し、render() で Canvas に描画
-   * 4. 処理の最後で、再び requestAnimationFrame(loop) を呼んで永久ループを回す
+   * 【初心者がつまずきやすいポイントと理由】
+   * Q1. なぜ setInterval や setTimeout ではダメなのか？
+   * ➔ `setInterval` は画面の描画タイミング（垂直同期）を無視して動くため、画面のチラつき（ティアリング）が発生します。
+   *    また、ブラウザの別タブを開いていても裏で動き続けて無駄なバッテリーを消費してしまいます。
+   *    `requestAnimationFrame` はブラウザが画面を描き換える直前に呼ばれるため、最も滑らかで電池に優しいです。
+   * 
+   * Q2. なぜ `dt = Math.min(..., 0.05)` で頭打ち（キャップ）にするのか？
+   * ➔ タブを切り替えて長時間放置した後にゲームへ戻ると、前回からの経過時間 `timestamp - this.lastTime` が
+   *    数秒〜数十秒という巨大な値になります。
+   *    もしそのまま計算すると、自機や敵が一瞬で画面外へワープしたり、壁をすり抜けたりする「トンネリング現象」が発生します。
+   *    最大でも「0.05秒（20fps相当）」で上限を切ることで、ゲームが壊れるのを防いでいます。
    */
   private startLoop(): void {
     const loop = (timestamp: number) => {
-      // 初回フレームのタイムスタンプ記録
+      // 初回フレームのタイムスタンプ記録（起動直後の巨大な dt 発生を防止）
       if (!this.lastTime) this.lastTime = timestamp;
 
-      // 前回のフレームからの経過時間（秒単位）。最大でも 0.05秒(20fps)で頭打ちにし、
-      // タブ復帰時などに自機が一瞬でワープしてしまうバグを防ぐ
+      // 前回のフレームからの経過時間（秒単位）。最大でも 0.05秒(20fps)で頭打ち
       const dt = Math.min((timestamp - this.lastTime) / 1000, 0.05);
       this.lastTime = timestamp;
 
-      // 毎フレームの更新と描画
+      // 1. 物理演算・状態更新
       this.update(dt);
+      // 2. Canvas への描画
       this.render();
 
-      // 次のフレームをブラウザに予約（再帰呼び出し）
+      // 次の描画フレームをブラウザに予約（再帰呼び出しによって永久にループが回り続ける）
       this.animationId = requestAnimationFrame(loop);
     };
 
@@ -500,7 +569,11 @@ export class GameEngine {
     this.animationId = requestAnimationFrame(loop);
   }
 
-  /** コンポーネント破棄時にループとBGMを安全に停止（メモリリーク防止） */
+  /**
+   * 【全体構成における位置づけ：終了クリーンアップ】
+   * React のコンポーネントが画面からアンマウント（破棄）された際に呼ばれます。
+   * ループアニメーションとWeb Audioの音声を完全に停止し、メモリリーク（裏で動き続けるバグ）を防ぎます。
+   */
   public destroy(): void {
     cancelAnimationFrame(this.animationId);
     this.sound.stopBgm();
@@ -557,6 +630,17 @@ export class GameEngine {
     // 0. 無敵時間のカウントダウン
     if (this.player.invincibleTimer > 0) {
       this.player.invincibleTimer = Math.max(0, this.player.invincibleTimer - dt);
+    }
+
+    // 0.5 撃墜後の下からのリスポーン登場演出
+    if (this.respawnTimer > 0) {
+      this.respawnTimer = Math.max(0, this.respawnTimer - dt);
+      const targetY = LOGICAL_HEIGHT - 120;
+      this.player.y = Math.max(targetY, this.player.y - 260 * dt);
+      if (this.player.y <= targetY) {
+        this.respawnTimer = 0;
+      }
+      return;
     }
 
     // 1. キーボード移動入力の合成
@@ -689,7 +773,22 @@ export class GameEngine {
     }
   }
 
-  /** 弾丸・敵機・当たり判定・パーティクルの更新 */
+  /**
+   * 【全体構成における位置づけ：戦闘物理演算フェーズ（Combat Physics Update）】
+   * 毎フレームの update() から呼ばれ、戦闘に関わる全オブジェクト（自機弾、敵機、敵弾、アイテム、爆発）の
+   * 移動処理、画面外判定、衝突判定（当たり判定）、およびダメージ・撃破・ステージ進行を計算します。
+   * 
+   * 【初心者がつまずきやすいポイントと数学の解説】
+   * 1. ホーミング弾の誘導計算（なぜ Math.atan2 と角度正規化を使うのか？）：
+   *    - 最も近い敵の座標（targetX, targetY）と弾の座標の差から、`Math.atan2(dy, dx)` で「敵がいる方角」を算出します。
+   *    - 現在の弾の進行角度と敵の方角の差（diff）を求めますが、角度は +180度（+PI）と -180度（-PI）がつながっているため、
+   *      そのまま引き算すると「左回りした方が近いのに右へ大回りしてしまう」問題が起きます。
+   *    - 差分を `-Math.PI 〜 +Math.PI` の範囲に丸める（正規化する）ことで、常に最短経路で滑らかに敵へ旋回します。
+   * 
+   * 2. なぜ `this.bullets.splice(i, 1)` は逆順ループ（length - 1 から 0 へ）で行うのか？：
+   *    - 前述の通り、先頭から普通に回すと、要素を削除した瞬間に後ろの要素がインデックスごと手前へズレてしまい、
+   *      「次の弾が判定されずにすり抜ける」バグになります。末尾から処理することで未走査のインデックスを保護します。
+   */
   private updateCombat(dt: number): void {
     // 1. 自機弾の移動（HOMING は最も近い敵を追尾、画面外に出たら削除）
     for (let i = this.bullets.length - 1; i >= 0; i--) {
@@ -701,6 +800,7 @@ export class GameEngine {
         let targetY: number | null = null;
         let minDist = Infinity;
 
+        // 全ザコ敵の中で最も直線距離（Math.hypot: 三平方の定理）が近いものを探す
         for (const e of this.enemies) {
           const d = Math.hypot(e.x - b.x, e.y - b.y);
           if (d < minDist) {
@@ -709,6 +809,7 @@ export class GameEngine {
             targetY = e.y;
           }
         }
+        // ボスが出現している場合はボスも追尾対象に含める
         if (this.boss && this.boss.y >= this.boss.targetY) {
           const dBoss = Math.hypot(this.boss.x - b.x, this.boss.y - b.y);
           if (dBoss < minDist) {
@@ -717,23 +818,26 @@ export class GameEngine {
           }
         }
 
+        // 標的が見つかった場合、弾の進行角度を徐々に標的の方角へ向ける（急旋回せず自然に曲がる）
         if (targetX !== null && targetY !== null) {
           const speed = Math.hypot(b.vx, b.vy);
           const targetAngle = Math.atan2(targetY - b.y, targetX - b.x);
           const currentAngle = Math.atan2(b.vy, b.vx);
-          // 角度差を -PI 〜 +PI に正規化して滑らかに旋回させる
+          // 角度差を -PI 〜 +PI に正規化して最短方向へ滑らかに旋回させる
           let diff = targetAngle - currentAngle;
           while (diff > Math.PI) diff -= Math.PI * 2;
           while (diff < -Math.PI) diff += Math.PI * 2;
-          const turnRate = 8.5 * dt;
+          const turnRate = 8.5 * dt; // 1秒あたりの最大旋回速度（ラジアン）
           const nextAngle = currentAngle + Math.max(-turnRate, Math.min(turnRate, diff));
           b.vx = Math.cos(nextAngle) * speed;
           b.vy = Math.sin(nextAngle) * speed;
         }
       }
 
+      // 移動計算：速度(px/秒) × 経過時間(dt)
       b.x += b.vx * dt;
       b.y += b.vy * dt;
+      // 画面の上下左右から少しはみ出た（マージン20px）時点で弾丸配列から安全に破棄
       if (
         b.y < HUD_HEIGHT - 20 ||
         b.y > LOGICAL_HEIGHT + 20 ||
@@ -828,15 +932,20 @@ export class GameEngine {
         this.damagePlayer(35);
       }
 
-      // 自機弾との当たり判定（円と点の距離計算：三平方の定理 Math.hypot）
+      // 【初心者がつまずきやすいポイント：当たり判定（コリジョン）の数学】
+      // Q. なぜ「円判定（三平方の定理 Math.hypot）」を使うのか？
+      // ➔ 四角形同士の判定（AABB）だと、斜めに傾いた弾や敵の角で「見た目では当たっていないのに当たった」という
+      //    理不尽な被弾が起きやすくなります。
+      //    中心点からの距離 `d = Math.hypot(dx, dy)` を計算し、それが「敵の半径 + 弾の当たり判定半径」以下なら接触とみなす
+      //    円判定は、回転しても判定がブレず、最も自然で納得感のある当たり判定になります。
       for (let j = this.bullets.length - 1; j >= 0; j--) {
         const b = this.bullets[j];
         if (Math.hypot(b.x - e.x, b.y - e.y) < e.radius + 6) {
-          this.bullets.splice(j, 1); // 当たった弾を消す
+          this.bullets.splice(j, 1); // 命中した弾丸を配列から削除（貫通弾以外）
           e.hp -= b.damage;
           this.spawnExplosion(b.x, b.y, b.kind === "MISSILE" ? "#ff7b00" : "#ffffff");
 
-          // ミサイル着弾時の爆風（周囲の敵にも範囲ダメージを与える）
+          // ミサイル着弾時の爆風（範囲攻撃）：周囲の敵の座標も調べて一定範囲内にいれば巻き込みダメージ
           if (b.splashRadius) {
             this.spawnExplosion(b.x, b.y, "#ffae42");
             for (const other of this.enemies) {
@@ -845,6 +954,7 @@ export class GameEngine {
               }
             }
           }
+          // 敵のHPがゼロになったら、これ以上この敵への弾丸判定を行う必要がないので内側ループを抜ける
           if (e.hp <= 0) break;
         }
       }
@@ -862,8 +972,9 @@ export class GameEngine {
       const eb = this.enemyBullets[i];
       eb.age = (eb.age ?? 0) + dt;
 
-      // 特殊弾の挙動処理
+      // 特殊弾の挙動処理（ボス固有弾幕の軌道・分裂制御）
       if (eb.behavior === "CLUSTER" && eb.splitAfter !== undefined && eb.age >= eb.splitAfter) {
+        // 【CLUSTER（分裂弾）】一定時間飛行後に親弾を消滅させ、放射状に子弾を生成する
         const count = eb.splitCount ?? 4;
         const baseSpd = Math.hypot(eb.vx, eb.vy) * 0.85;
         for (let k = 0; k < count; k++) {
@@ -883,16 +994,19 @@ export class GameEngine {
       }
 
       if (eb.behavior === "WAVE") {
+        // 【WAVE（蛇行弾）】経過時間に応じたサイン/コサイン波で左右に揺れながら落下する
         const amp = eb.waveAmp ?? 70;
         const freq = eb.waveFreq ?? 6;
         eb.x += Math.cos(eb.age * freq) * amp * dt;
       } else if (eb.behavior === "TIME_TRAP") {
+        // 【TIME_TRAP（時空トラップ弾）】発射直後は通常速度 → 一度スロー(0.16倍) → 急に高速化(1.65倍)
         const bvx = eb.baseVx ?? eb.vx;
         const bvy = eb.baseVy ?? eb.vy;
         const scale = eb.age < 0.45 ? 1.0 : eb.age < 0.95 ? 0.16 : 1.65;
         eb.vx = bvx * scale;
         eb.vy = bvy * scale;
       } else if (eb.behavior === "CURVE" && eb.curveRate) {
+        // 【CURVE（重力カーブ弾）】毎フレーム進行角度を回転させて弧を描く軌道を作る
         const angle = Math.atan2(eb.vy, eb.vx) + eb.curveRate * dt;
         const spd = Math.hypot(eb.vx, eb.vy);
         eb.vx = Math.cos(angle) * spd;
@@ -1008,7 +1122,9 @@ export class GameEngine {
   }
 
   /** ステージごとのボス出現処理（ST.01〜ST.10 固有パラメータ定義） */
+  /** 現在のステージに対応したボス機体を生成し、ボス戦BGMとHUD表示を開始する */
   private spawnBoss(): void {
+    // 1. ステージ1〜10のボス定義テーブル（名称・基礎HP・横移動速度・横幅・テーマカラー）
     const bossConfigs: Array<{ name: string; hp: number; vx: number; width: number; color: string }> = [
       { name: "GOLIATH", hp: 320, vx: 55, width: 180, color: "#ff0055" },
       { name: "CRIMSON MANTA X-2", hp: 450, vx: 90, width: 184, color: "#ff6600" },
@@ -1022,11 +1138,15 @@ export class GameEngine {
       { name: "DEUS EX COSMOS", hp: 2600, vx: 64, width: 200, color: "#ffd700" },
     ];
 
+    // 2. ステージ番号を配列インデックス(0〜9)へ丸め、難易度倍率を掛けた最大HPを算出
     const stageIdx = Math.max(0, Math.min(9, this.stage - 1));
     const cfg = bossConfigs[stageIdx];
     const maxHp = Math.round(cfg.hp * this.getDifficultyScale().bossHp);
+
+    // 3. ボス戦専用BGMへ切り替え
     this.sound.playBgm("BOSS");
 
+    // 4. 画面上端外(y=-70)から定位置(targetY=130)へ降下してくるボス実体を生成
     this.boss = {
       stage: this.stage,
       name: `ST.${String(this.stage).padStart(2, "0")} ${cfg.name}`,
@@ -1051,6 +1171,7 @@ export class GameEngine {
       shieldAngle: 0,
     };
 
+    // 5. React側のHUDにボス名・HPバーを表示させる
     this.callbacks.onBossChange({
       name: this.boss.name,
       hp: this.boss.hp,
@@ -1080,13 +1201,14 @@ export class GameEngine {
     const baseSpeed = (150 + (boss.stage - 1) * 8) * bulletScale;
 
     // 2. ステージ別の移動・固有ギミック更新
-    // ST.03: HP低下に応じてスピードアップ＆うねり飛行
+    // ST.03: HP低下に応じてスピードアップ＆上下にうねり飛行
     const speedBoost = boss.stage === 3 ? 1 + (1 - hpRatio) * 0.7 : 1;
     boss.x += boss.vx * speedBoost * dt;
     if (boss.stage === 3) {
       boss.y = boss.targetY + Math.sin(boss.age * 2.4) * 18;
     }
 
+    // 画面左右端の折り返し判定（はみ出さないよう方向を反転）
     const halfW = boss.width / 2 + 10;
     if (boss.x < halfW) {
       boss.x = halfW;
@@ -1096,12 +1218,12 @@ export class GameEngine {
       boss.vx = -Math.abs(boss.vx);
     }
 
-    // ST.04: 回転シールドオーブ
+    // ST.04: 回転シールドオーブの角度を更新（HP半分以下で高速回転）
     if (boss.stage === 4) {
       boss.shieldAngle = (boss.shieldAngle ?? 0) + (isEnraged ? 2.8 : 1.9) * dt;
     }
 
-    // ST.06: HP 40%以下で1度だけ自己再生＋触手全方位弾
+    // ST.06: HP 40%以下になった際、1度だけ最大HPの15%を自己再生し全方位弾を放つ
     if (boss.stage === 6 && !boss.regenerated && hpRatio <= 0.4) {
       boss.regenerated = true;
       boss.hp = Math.min(boss.maxHp, boss.hp + Math.round(boss.maxHp * 0.15));
@@ -1120,12 +1242,12 @@ export class GameEngine {
       }
     }
 
-    // ST.07: ワープ予告＆瞬間移動ギミック
+    // ST.07: ワープ予告枠の表示（0.7秒）→ 瞬間移動ギミック
     if (boss.stage === 7 && boss.warpTimer !== undefined) {
       if ((boss.warpWarningTimer ?? 0) > 0) {
+        // 予告タイマー消化後にワープを実行（発狂時はワープ元の残像から8方向弾）
         boss.warpWarningTimer! -= dt;
         if (boss.warpWarningTimer! <= 0 && boss.warpTargetX !== undefined) {
-          // 残像位置から追撃弾
           if (isEnraged) {
             for (let k = 0; k < 8; k++) {
               const ang = (Math.PI * 2 * k) / 8;
@@ -1145,6 +1267,7 @@ export class GameEngine {
           boss.warpTimer = isEnraged ? 2.8 : 4.0;
         }
       } else {
+        // 次回ワープまでのクールダウンを計測し、0になったらランダムX座標へ予告枠を出す
         boss.warpTimer -= dt;
         if (boss.warpTimer <= 0) {
           boss.warpTargetX = halfW + Math.random() * (LOGICAL_WIDTH - halfW * 2);
@@ -1153,9 +1276,10 @@ export class GameEngine {
       }
     }
 
-    // ST.05 / ST.08: プラズマ熱波 / 極太主砲ビームギミック
+    // ST.05 / ST.08: 縦レーンプラズマ熱波 / 極太主砲ビーム（予告線 → 照射ダメージ判定）
     if (boss.stage === 5 || boss.stage === 8) {
       if ((boss.beamActiveTimer ?? 0) > 0) {
+        // 照射中：ビームの横幅内に自機がいればダメージを与える
         boss.beamActiveTimer! -= dt;
         const bx = boss.beamX ?? boss.x;
         const bw = boss.beamWidth ?? 36;
@@ -1167,6 +1291,7 @@ export class GameEngine {
           this.damagePlayer(boss.stage === 8 ? 35 : 25);
         }
       } else if ((boss.beamWarningTimer ?? 0) > 0) {
+        // 予告中：カウントダウンが 0 になった瞬間にビーム照射へ移行
         boss.beamWarningTimer! -= dt;
         if (boss.beamWarningTimer! <= 0) {
           boss.beamActiveTimer = boss.stage === 8 ? 0.8 : 0.55;
@@ -1175,7 +1300,7 @@ export class GameEngine {
       }
     }
 
-    // ST.09: ブラックホール重力場（自機を中央方向へ緩やかに引き寄せる）
+    // ST.09: ブラックホール重力場（自機を画面中央上部へ緩やかに引き寄せる）
     if (boss.stage === 9) {
       const pullStrength = isEnraged ? 46 : 30;
       const dx = LOGICAL_WIDTH / 2 - this.player.x;
@@ -1660,10 +1785,10 @@ export class GameEngine {
         kind,
         x,
         y: HUD_HEIGHT - 30,
-        vx: 40 + stageBonus * 5,
-        vy: 60,
+        vx: 38 + stageBonus * 4,
+        vy: 55,
         radius: 24,
-        hp: 75 + stageBonus * 20, // 高い連射火力に耐え、しっかり撃ち込んで倒せる中ボス耐久力
+        hp: 24 + stageBonus * 6, // テンポよく爽快に破壊できるよう適正化（約2〜3秒の集中射撃で撃破可能）
         shootCooldown: 1.2,
         age: 0,
         charged: false,
@@ -1999,10 +2124,17 @@ export class GameEngine {
         return;
       }
 
-      // まだ残機がある ➔ シールド全快で復帰（復帰直後は 1.8秒無敵）
+      // まだ残機がある ➔ 大爆発の後、画面下から次の機体が再出撃（2.4秒無敵）
+      this.spawnExplosion(this.player.x, this.player.y, "#00f3ff");
       this.player.hp = this.player.maxHp;
-      this.player.invincibleTimer = 1.8;
+      this.player.x = LOGICAL_WIDTH / 2;
+      this.player.y = LOGICAL_HEIGHT + 40;
+      this.input.targetX = this.player.x;
+      this.input.targetY = LOGICAL_HEIGHT - 120;
+      this.respawnTimer = 0.7;
+      this.player.invincibleTimer = 2.4;
       this.sound.playExplosion();
+      this.showBanner(`UNIT LOST // REMAINING: ${this.player.lives}`, 1.8);
     } else {
       // まだHPが残っている ➔ 0.8秒の無敵時間（連続ヒット防止と緊張感の両立）
       this.player.invincibleTimer = 0.8;
@@ -2034,6 +2166,20 @@ export class GameEngine {
   // 5. 描画フェーズ（Render）
   // --------------------------------------------------------------------------
 
+  /**
+   * 【全体構成における位置づけ：画面描画フェーズ（Screen Render Phase）】
+   * update() によるすべての物理計算が終わった後、Canvas 2D API を使って画面を1枚の絵として描き上げます。
+   * 
+   * 【初心者がつまずきやすいポイント：なぜ至る所で ctx.save() と ctx.restore() を呼ぶのか？】
+   * ➔ 理由：Canvas の「コンテキスト（描画状態の副作用）」を安全にカプセル化（隔離）するためです。
+   *    Canvas は「色（fillStyle）」「線の太さ（lineWidth）」「影（shadowBlur）」「原点の位置（translate）」「回転（rotate）」
+   *    といった設定がグローバルな1つの状態として保持されます。
+   *    もし `ctx.translate()` や `ctx.rotate()` をした後にそのまま次のオブジェクトを描画すると、
+   *    後から描く星やボス、HPバーまで傾いて描画されてしまいます。
+   *    - `ctx.save()`: 現在のすべての描画設定（原点位置や回転角、色など）を一時保存スタックに push する。
+   *    - `ctx.restore()`: 直前の `ctx.save()` 時点の状態に pop して完全に戻す。
+   *    このペアを必ず使うことで、各オブジェクト（弾や自機）の回転や発光が他の描画に悪影響を与えないようにしています。
+   */
   private render(): void {
     this.ctx.save();
 
@@ -2274,9 +2420,11 @@ export class GameEngine {
   }
 
   /** 大型戦艦ボス（ST.01〜ST.10）のベクターアート ＆ ギミック描画 */
+  /** ボス機体とステージ固有ギミック（ビーム予告・照射、ワープ先枠、重力リング、回転オーブ）を描画する */
   private drawBoss(boss: Boss): void {
-    // 0. 画面空間でのギミック予告・ビーム・重力リング描画（ボス本体の背面）
+    // 0. 画面空間でのギミック予告・ビーム・重力リング描画（ボス本体の背面レイヤー）
     if ((boss.beamWarningTimer ?? 0) > 0 && boss.beamX !== undefined) {
+      // ビーム照射前の警告レーン（半透明の赤帯＋左右の破線ガイド）
       const bw = boss.beamWidth ?? 36;
       this.ctx.save();
       this.ctx.fillStyle = "rgba(255, 42, 109, 0.16)";
@@ -2291,6 +2439,7 @@ export class GameEngine {
       this.ctx.stroke();
       this.ctx.restore();
     } else if ((boss.beamActiveTimer ?? 0) > 0 && boss.beamX !== undefined) {
+      // ビーム照射中（外周の発光体＋中心の高輝度ホワイトコア）
       const bw = boss.beamWidth ?? 36;
       this.ctx.save();
       this.ctx.shadowColor = boss.color;
@@ -2303,6 +2452,7 @@ export class GameEngine {
     }
 
     if ((boss.warpWarningTimer ?? 0) > 0 && boss.warpTargetX !== undefined) {
+      // ST.07 ワープ先の出現予告ボックス
       this.ctx.save();
       this.ctx.strokeStyle = "#00ffff";
       this.ctx.setLineDash([4, 4]);
@@ -2312,6 +2462,7 @@ export class GameEngine {
     }
 
     if (boss.stage === 9) {
+      // ST.09 ブラックホール重力場を示す収縮/拡散リングエフェクト
       this.ctx.save();
       this.ctx.strokeStyle = "rgba(139, 92, 246, 0.35)";
       this.ctx.lineWidth = 1.5;

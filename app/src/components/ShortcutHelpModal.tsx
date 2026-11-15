@@ -2,7 +2,19 @@
  * ============================================================================
  * VOID VANGUARD - ショートカットヘルプモーダル (ShortcutHelpModal.tsx)
  * ============================================================================
- * タイトル画面・ポーズ画面のボタン、またはキーボード [H] / [?] でいつでも開閉できます。
+ * 
+ * 【全体構成におけるこのコンポーネントの位置づけ】
+ * タイトル画面やポーズ画面の「?」ボタン、または戦闘中いつでもキーボードの [H] や [?] を押すことで、
+ * ゲーム画面の最前面（z-40）にポップアップ表示される操作ガイドです。
+ * 戦闘中に開いた場合は、プレイヤーが被弾しないよう自動的にポーズ（一時停止）がかかる設計になっています。
+ * 
+ * 【初心者がつまずきやすいポイント：なぜ e.stopPropagation() が必要なのか？】
+ * ➔ モーダルの「黒い半透明の背景（バックドロップ）」をクリックした時にモーダルを閉じたい場合、
+ *    背景要素に `onClick={onClose}` を付けます。
+ *    しかし、JavaScript のイベントは「子の要素をクリックしても、親要素へと上向きに伝播する（イベントバブリング）」
+ *    という性質があるため、モーダル内の文字やカードをクリックした時まで背景の `onClose` が発火して勝手に閉じてしまいます。
+ *    内側のコンテナに `onClick={(e) => e.stopPropagation()}` を書くことで、
+ *    「モーダル内部のクリックイベントは親の背景へ伝えない」という遮断壁を作り、誤閉じを防いでいます。
  */
 
 import React from "react";
@@ -12,6 +24,7 @@ interface ShortcutHelpModalProps {
   onClose: () => void;
 }
 
+// 1. モーダル内に一覧表示するキーボードショートカット定義テーブル
 const SHORTCUTS: Array<{ keys: string; desc: string }> = [
   { keys: "↑ ↓ ← → / WASD", desc: "自機の移動（PC）" },
   { keys: "Space / B / X", desc: "緊急回避ボム発動" },
@@ -25,10 +38,12 @@ const SHORTCUTS: Array<{ keys: string; desc: string }> = [
 
 export const ShortcutHelpModal: React.FC<ShortcutHelpModalProps> = ({ onClose }) => {
   return (
+    /* 2. 背景オーバーレイ（クリックでモーダルを閉じる） */
     <div
       onClick={onClose}
       className="absolute inset-0 z-40 bg-[#03050c]/85 backdrop-blur-md flex items-center justify-center p-5"
     >
+      {/* 3. モーダル本体（内部クリックのバブリングを止めて誤閉じを防止） */}
       <div
         onClick={(e) => e.stopPropagation()}
         className="w-full max-w-[310px] bg-void-panel border border-cyber-cyan p-5 shadow-[0_0_24px_rgba(0,243,255,0.28)] clip-chamfer"

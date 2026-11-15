@@ -20,6 +20,7 @@ interface PauseOverlayProps {
   onRetry: () => void;
   onToggleMute: () => void;
   isMuted: boolean;
+  isDevMode?: boolean;
   onLaunchDebug: (
     stage: number,
     directBoss: boolean,
@@ -35,6 +36,7 @@ export const PauseOverlay: React.FC<PauseOverlayProps> = ({
   onRetry,
   onToggleMute,
   isMuted,
+  isDevMode = false,
   onLaunchDebug,
   onLaunchScene,
   onOpenShortcuts,
@@ -84,7 +86,10 @@ export const PauseOverlay: React.FC<PauseOverlayProps> = ({
           </button>
         </div>
 
-        <DevTestPanel onLaunchDebug={onLaunchDebug} onLaunchScene={onLaunchScene} />
+        {/* 開発用検証モード（URL に ?dev=1 がある時だけ表示） */}
+        {isDevMode && (
+          <DevTestPanel onLaunchDebug={onLaunchDebug} onLaunchScene={onLaunchScene} />
+        )}
       </div>
     </div>
   );

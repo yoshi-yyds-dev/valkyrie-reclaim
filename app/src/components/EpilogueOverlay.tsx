@@ -1,9 +1,17 @@
 /**
  * ============================================================================
- * VOID VANGUARD - 最終エピローグ（フルスクリーン・エンディング画面）
+ * VOID VANGUARD - 最終エピローグ（フルスクリーン・エンディング画面）(EpilogueOverlay.tsx)
  * ============================================================================
- * 全10ステージ走破後に、画面全体の世界観イラスト（epilogue_bg.jpg）とともに
- * 凱旋ストーリーを一気にフェードインで表示し、最終戦績・クリアランクを提示します。
+ * 
+ * 【全体構成におけるこのコンポーネントの位置づけ】
+ * 全10ステージを走破し最終中枢ボス『DEUS EX COSMOS』を撃破したプレイヤーにのみ提示される凱旋画面です。
+ * 画面全体の世界観イラスト（epilogue_bg.jpg）とともに、ストーリー、最終スコア、クリアランク（SSS / S / A / B）を表示します。
+ * 
+ * 【初心者がつまずきやすいポイント：スコアロールアップのアニメーション数学】
+ * ➔ スコアを単に数字で置くのではなく、「0 から 120,000 まで数字がパラパラパラ…と勢いよくカウントアップ」する演出を行っています。
+ *    ここで使われている計算式 `eased = 1 - Math.pow(1 - progress, 3)` は「Cubic Ease-Out（3次減速）」と呼ばれるもので、
+ *    「最初は一瞬で高速回転し、目標スコアに近づくにつれてゆっくりピタッと止まる」という
+ *    ゲーム業界やUIデザインで最も気持ち良いとされる定番の物理イージング曲線です。
  */
 
 import React, { useEffect, useState } from "react";
@@ -26,6 +34,7 @@ const EPILOGUE_TEXT =
   "たった一機の戦闘機で人類の危機を救った英雄の翼は、\n" +
   "朝日を浴びて輝く入植惑星へと、静かに帰還していく――。";
 
+/** 難易度と残機数に応じて最終クリアランク（SSS / S / A / B）と表示色を判定する */
 function computeClearRank(lives: number, difficulty: Difficulty): { rank: string; colorClass: string } {
   if (difficulty === "HARD" && lives >= 2) {
     return { rank: "SSS", colorClass: "text-amber-300 border-amber-300 shadow-[0_0_20px_rgba(252,211,77,0.6)]" };
@@ -46,17 +55,18 @@ export const EpilogueOverlay: React.FC<EpilogueOverlayProps> = ({
   onRetry,
   onQuitToTitle,
 }) => {
+  // 1. 画面全体のフェードイン状態と、ロールアップ演出用の表示スコア
   const [visible, setVisible] = useState<boolean>(false);
   const [displayScore, setDisplayScore] = useState<number>(0);
   const { rank, colorClass } = computeClearRank(lives, difficulty);
 
-  // マウント直後にフェードインを開始
+  // 2. マウント直後の次フレームでフェードインを開始
   useEffect(() => {
     const id = requestAnimationFrame(() => setVisible(true));
     return () => cancelAnimationFrame(id);
   }, []);
 
-  // スコアの高速ロールアップ演出（約1.2秒で目標スコアへ）
+  // 3. スコアの高速ロールアップ演出（3次イージングで約1.2秒かけて0から最終スコアへ到達）
   useEffect(() => {
     let frameId = 0;
     const start = performance.now();

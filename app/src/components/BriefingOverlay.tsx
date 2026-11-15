@@ -1,9 +1,19 @@
 /**
  * ============================================================================
- * VOID VANGUARD - プロローグ（フルスクリーン・ストーリー画面）コンポーネント
+ * VOID VANGUARD - プロローグ（フルスクリーン・ストーリー画面）コンポーネント (BriefingOverlay.tsx)
  * ============================================================================
- * 画面全体を使った世界観イラスト（prologue_bg.jpg）を背景に表示し、
- * バックグラウンドシナリオをフェードインで提示した上で「START MISSION // 出撃する」ボタンで戦闘を開始します。
+ * 
+ * 【全体構成におけるこのコンポーネントの位置づけ】
+ * タイトル画面で「TOUCH TO SORTIE」または Space/Enter キーを押した直後、status = "BRIEFING" に遷移し、
+ * 戦闘開始前の世界観プロローグをプレイヤーに提示する演出レイヤー（z-20）です。
+ * 背景には AI 生成した宇宙防衛線の世界観イラスト（prologue_bg.jpg）を敷き、
+ * 「START MISSION // 出撃する」ボタンまたは Space / Enter キーで即座に戦闘フェーズ（PLAYING）へ進みます。
+ * 
+ * 【初心者がつまずきやすいポイント：なぜ window.addEventListener のクリーンアップが必須なのか？】
+ * ➔ `useEffect` 内で `window.addEventListener("keydown", ...)` を登録した場合、
+ *    コンポーネントが破棄（アンマウント）された時に `removeEventListener` で解除しないと、
+ *    戦闘フェーズやタイトル画面に戻った後もリスナーが残り続け、キーを押すたびに二重・三重に
+ *    関数が実行されてしまう重大なバグ（イベントリスナーのリーク）が発生します。
  */
 
 import React, { useEffect, useState } from "react";
@@ -27,15 +37,16 @@ const PROLOGUE_TEXT =
 export const BriefingOverlay: React.FC<BriefingOverlayProps> = ({
   onComplete,
 }) => {
+  // 1. フェードインアニメーションのトリガー状態
   const [visible, setVisible] = useState<boolean>(false);
 
-  // マウント直後にフェードインを開始
+  // 2. マウント直後の次フレームで visible=true に切り替え、背景・テキストを滑らかにフェードイン
   useEffect(() => {
     const id = requestAnimationFrame(() => setVisible(true));
     return () => cancelAnimationFrame(id);
   }, []);
 
-  // Space / Enter キーで即座に出撃開始
+  // 3. Space / Enter キー押下でも出撃ボタンと同様に戦闘フェーズへ進めるようリスナー登録
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.code === "Space" || e.code === "Enter") {

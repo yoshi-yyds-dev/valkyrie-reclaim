@@ -2,7 +2,16 @@
  * ============================================================================
  * VOID VANGUARD - 開発用検証モードパネル (DevTestPanel.tsx)
  * ============================================================================
- * 任意のステージ（ST.01〜ST.10）・ボス直行・武器種別/レベルを指定して即座に検証開始できます。
+ * 
+ * 【全体構成におけるこのコンポーネントの位置づけ】
+ * タイトル画面の最下部に配置される開発・QA検証用ツールです。
+ * 開発者やテスターが、全10ステージのボス戦、特定武器Lvの挙動、ストーリー演出（プロローグ/エピローグ）を
+ * 1タップで即座に動作確認できるように設計されています。
+ * 
+ * 【初心者がつまずきやすいポイント：なぜ URL パラメータ（?dev=1）で隠しているのか？】
+ * ➔ 一般のユーザーにテストメニューが見えてしまうと、ゲームの没入感や難易度バランスが台無しになってしまいます。
+ *    そのため、本番コード内にデバッグ機能を残しつつも、通常アクセス時は非表示にし、
+ *    URL に `?dev=1` または `?debug=1` を付与した時だけ表示される「セーフティ制御」を行っています。
  */
 
 import React, { useState } from "react";
@@ -22,6 +31,7 @@ export const DevTestPanel: React.FC<DevTestPanelProps> = ({
   onLaunchDebug,
   onLaunchScene,
 }) => {
+  // 1. 検証パネルの開閉状態と、テスト出撃用パラメータ（ステージ・ボス直行・武器種・レベル）
   const [isOpen, setIsOpen] = useState(false);
   const [selectedStage, setSelectedStage] = useState<number>(1);
   const [directBoss, setDirectBoss] = useState<boolean>(true);
@@ -30,6 +40,7 @@ export const DevTestPanel: React.FC<DevTestPanelProps> = ({
 
   return (
     <div className="mt-3 text-left">
+      {/* 2. アコーディオン開閉トグルボタン（?dev=1 / ?debug=1 時のみタイトル画面に表示） */}
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
@@ -41,7 +52,7 @@ export const DevTestPanel: React.FC<DevTestPanelProps> = ({
 
       {isOpen && (
         <div className="mt-2 p-2.5 bg-void-surface/90 border border-amber-400/40 rounded-sm space-y-2.5 text-[10px] font-mono">
-          {/* ステージ選択 (1〜10) */}
+          {/* 3. ステージ選択ブロック (ST.01〜ST.10) */}
           <div>
             <div className="text-text-dim mb-1">STAGE SELECT (ST.01 - ST.10)</div>
             <div className="grid grid-cols-5 gap-1">
@@ -62,7 +73,7 @@ export const DevTestPanel: React.FC<DevTestPanelProps> = ({
             </div>
           </div>
 
-          {/* 開始位置（道中 / ボス直行） */}
+          {/* 4. 開始地点の選択ブロック（道中ウェーブから / ボス戦直行） */}
           <div>
             <div className="text-text-dim mb-1">START POINT</div>
             <div className="grid grid-cols-2 gap-1.5">

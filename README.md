@@ -50,7 +50,8 @@
 │   │   └── 03_native-app.md           # パターン3：通常アプリ（App Store / Google Play ストア配信型）
 │   ├── 04_screen-and-character-sizing.md # スマホ画面・キャラクターサイズ＆操作性設計ガイド
 │   ├── 05_cutscene-and-story-presentation.md # プロローグ・エピローグ演出（HUDブリーフィング）ガイド
-│   └── 06_sound-and-audio-design.md   # サウンド・BGM音響設計ガイド（Web Audio SE ＆ 4Track BGM）
+│   ├── 06_sound-and-audio-design.md   # サウンド・BGM音響設計ガイド（Web Audio SE ＆ 4Track BGM）
+│   └── 07_technical-architecture-and-flow.md # ★技術仕様書・システム構造・技術スタック・全体データフロー解説書
 ├── game-design.md                     # ★企画方針書（随時更新・生きた設計図）
 ├── app/                               # 🚀【正式版開発環境】Vite + React + TS + Tailwind CSS
 │   ├── package.json                   # 依存関係（React, TS, Tailwind, Lucide）
@@ -105,6 +106,9 @@
   - **全10ボスの固有弾幕・難易度カーブ ＆ 開発用検証モード実装**: ST.01〜ST.10 すべてのボスに固有弾幕・ギミック・弾カラー・HPカーブを実装し、タイトル画面およびポーズ画面から任意のステージ・ボス戦へ即出撃できる検証モード（[`DevTestPanel.tsx`](./app/src/components/DevTestPanel.tsx)）を追加。
   - **プロローグ・エピローグ演出実装**: [`my_memo.md`](./my_memo.md) のバックグラウンドシナリオに基づき、[`BriefingOverlay.tsx`](./app/src/components/BriefingOverlay.tsx) の指令テキスト刷新および ST.10 撃破後の最終エピローグ画面（[`EpilogueOverlay.tsx`](./app/src/components/EpilogueOverlay.tsx)）を実装。
   - **PWA対応 ＆ GitHub Pages 公開準備完了**: `manifest.json`、`icon.svg`、`sw.js`（Service Worker）、および `vite.config.ts` の相対パス設定を組み込み、全画面・オフライン対応の PWA 化を完了。あわせて公開手順書（[`docs/HOW_TO_DEPLOY_GITHUB_PAGES.md`](./docs/HOW_TO_DEPLOY_GITHUB_PAGES.md)）を作成。
+  - **中ボス強度調整 ＆ 3機残機制・再出撃演出の実装**: 中型エリート敵 `GUNSHIP` の HP を 75 ➔ 24 へ下方修正して破壊しやすく調整。自機はシールドHPに加えて **3機残機制** とし、被弾撃墜後は画面下端から次の機体がせり上がって再出撃（2.4秒無敵）する演出を実装。
+  - **ゲームオーバー専用画面（コンティニュー不可）の実装**: 全3機を失った際に表示されるフルスクリーン画面（[`GameOverOverlay.tsx`](./app/src/components/GameOverOverlay.tsx)）を新設。コンティニューを排し「最初からやり直す（STAGE 01）」または「タイトルへ戻る」のみの緊張感ある仕様へ。
+  - **初学者向け教材型コードコメントの全域適用**: プログラミング初学者や経験の浅い開発者がコードを読むだけで裏側の仕組みを体系的に学べるよう、全体のアーキテクチャ（React UI層とCanvasゲームコア層の分離）、各処理の位置づけ、つまずきやすいポイントの理由（デルタタイム・逆順ループ・三平方の定理・Web Audio合成・イベントバブリング等）をソースコード全域に詳細に追記。
 
 ---
 
