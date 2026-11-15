@@ -46,3 +46,42 @@
     0 calc(100% - 8px)
   );
 }
+
+/* ============================================================================
+ * プロローグ / エピローグ用：下から上へゆっくり流れるストーリークロール演出
+ * ============================================================================
+ * ・top/margin ではなく transform: translateY() を使うことで、GPU による
+ *   滑らかな 60fps スクロールを実現しています。
+ * ・終了位置を calc(-100% + 140px) にすることで、最後の段落が画面内に
+ *   余韻として残った状態で停止します（forwards）。
+ */
+@keyframes story-crawl {
+  0% {
+    transform: translateY(220px);
+  }
+  100% {
+    transform: translateY(calc(-100% + 140px));
+  }
+}
+
+.animate-story-crawl {
+  animation: story-crawl 28s linear forwards;
+}
+
+/* スクロール表示枠の上下端を滑らかに透明へフェードさせるマスク */
+.story-scroll-mask {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 14%,
+    black 86%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 14%,
+    black 86%,
+    transparent 100%
+  );
+}

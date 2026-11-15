@@ -27,12 +27,18 @@ interface BriefingOverlayProps {
 
 const PROLOGUE_TEXT =
   "時は近未来――西暦2184年。\n" +
-  "多くの人類が地球外の入植惑星へ移住し、新たな生活圏を築いていた。\n" +
-  "しかしある日、謎の地球外生命体機甲師団が突然侵入を開始する。\n" +
-  "防衛線は次々と突破され、人類はかつてない存亡の危機に瀕した。\n\n" +
-  "研究者たちは科学の粋を結集し、最新鋭迎撃機『VF-01 VALKYRIE』を開発。\n" +
-  "だがその超機動は、誰にでも操れるものではなかった。\n" +
-  "一人の戦士が立ち上がり、機体へと乗り込む――今、反撃の翼が飛び立つ。";
+  "人類は太陽系を超え、数多の地球外入植惑星へと生活圏を広げていた。\n" +
+  "蒼い空と豊かな資源に恵まれた新天地で、新たな文明が静かに花開いていたのだ。\n\n" +
+  "しかし、その平穏は突如として打ち砕かれる。\n" +
+  "外宇宙の深淵より現れた正体不明の地球外生命体機甲師団が、全宙域へ侵攻を開始した。\n" +
+  "軌道防衛艦隊は圧倒的な物量と未知のエネルギー兵器の前に次々と沈黙し、\n" +
+  "衛星防衛網はわずか数日で崩壊。人類はかつてない存亡の危機に直面する。\n\n" +
+  "絶望が迫る中、統合科学局は封印されていた極秘計画を解放する。\n" +
+  "科学技術のすべてを結集して生み出された、超機動迎撃機『VF-01 VALKYRIE』。\n" +
+  "だが、次元跳躍にも似たその極限の機動性と出力は、常人の身体では到底耐えられないものだった。\n\n" +
+  "それでも、守るべき星と人々の未来のために――一人の戦士がコックピットへと乗り込む。\n" +
+  "エンジンが蒼い光を放ち、発進カタパルトが静かにロックを解除した。\n" +
+  "人類最後の希望を乗せ、今、反撃の翼が大空へと飛び立つ――。";
 
 export const BriefingOverlay: React.FC<BriefingOverlayProps> = ({
   onComplete,
@@ -86,19 +92,22 @@ export const BriefingOverlay: React.FC<BriefingOverlayProps> = ({
         </div>
       </div>
 
-      {/* 下部：物語テキスト（一気にフェードイン） ＋ 出撃開始ボタン */}
+      {/* 下部：物語テキスト（下から上へゆっくりスクロール） ＋ 出撃開始ボタン */}
       <div
         className={`relative z-10 p-5 flex flex-col gap-4 transition-all duration-1000 ease-out ${
           visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
         }`}
       >
-        <div className="border-l-2 border-cyber-cyan pl-3">
-          <div className="font-mono text-[10px] tracking-widest text-rose-400 mb-1.5">
+        <div className="border-l-2 border-cyber-cyan pl-3.5">
+          <div className="font-mono text-[11px] font-bold tracking-widest text-rose-400 mb-2">
             EMERGENCY INTERCEPT // VF-01 VALKYRIE
           </div>
-          <p className="text-[12px] leading-[1.65] font-sans text-slate-100 whitespace-pre-line drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]">
-            {PROLOGUE_TEXT}
-          </p>
+          {/* スクロール表示ウィンドウ（上下端をフェードマスクし、中の文章を下から上へ流す） */}
+          <div className="h-[235px] overflow-hidden story-scroll-mask relative">
+            <p className="animate-story-crawl text-[15px] leading-[1.85] font-medium font-sans text-slate-100 whitespace-pre-line drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+              {PROLOGUE_TEXT}
+            </p>
+          </div>
         </div>
 
         <button

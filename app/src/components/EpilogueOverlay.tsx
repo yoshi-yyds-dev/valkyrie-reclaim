@@ -29,10 +29,17 @@ interface EpilogueOverlayProps {
 }
 
 const EPILOGUE_TEXT =
-  "敵中枢コア『DEUS EX COSMOS』の完全沈黙を確認。\n" +
-  "地球外生命体機甲師団は全宙域より撤退し、宇宙に静寂が戻った。\n\n" +
-  "たった一機の戦闘機で人類の危機を救った英雄の翼は、\n" +
-  "朝日を浴びて輝く入植惑星へと、静かに帰還していく――。";
+  "最終中枢コア『DEUS EX COSMOS』の完全沈黙を確認――。\n" +
+  "眩い閃光とともに中枢システムが崩壊した瞬間、\n" +
+  "全宙域を覆っていた地球外生命体機甲師団の制御信号が一斉に途絶えた。\n\n" +
+  "統制を失った敵艦隊は暗黒宇宙の彼方へと次々に撤退し、\n" +
+  "長きにわたった人類存亡の戦いに、ついに終止符が打たれた。\n\n" +
+  "幾多の弾幕をかいくぐり、傷つきながらも戦い抜いた『VF-01 VALKYRIE』。\n" +
+  "たった一機の翼が、絶望に閉ざされていた星々に再び蒼い空を取り戻したのだ。\n\n" +
+  "夜明けの光を浴びて黄金色に輝く入植惑星の大地では、\n" +
+  "人々が空を見上げ、英雄の帰還を温かな歓声で迎えている。\n" +
+  "蒼き翼は今、穏やかな朝焼けの中へと静かに降り立っていく――。\n\n" +
+  "―― THANK YOU FOR PLAYING ――";
 
 /** 難易度と残機数に応じて最終クリアランク（SSS / S / A / B）と表示色を判定する */
 function computeClearRank(lives: number, difficulty: Difficulty): { rank: string; colorClass: string } {
@@ -118,13 +125,16 @@ export const EpilogueOverlay: React.FC<EpilogueOverlayProps> = ({
           visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
         }`}
       >
-        <div className="border-l-2 border-amber-300 pl-3">
-          <div className="font-mono text-[10px] tracking-widest text-amber-300 mb-1">
+        <div className="border-l-2 border-amber-300 pl-3.5">
+          <div className="font-mono text-[11px] font-bold tracking-widest text-amber-300 mb-2">
             MISSION COMPLETE // THANK YOU FOR PLAYING
           </div>
-          <p className="text-[12px] leading-[1.6] text-slate-100 whitespace-pre-line drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]">
-            {EPILOGUE_TEXT}
-          </p>
+          {/* スクロール表示ウィンドウ（上下端をフェードマスクし、中の文章を下から上へ流す） */}
+          <div className="h-[205px] overflow-hidden story-scroll-mask relative">
+            <p className="animate-story-crawl text-[15px] leading-[1.85] font-medium text-slate-100 whitespace-pre-line drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+              {EPILOGUE_TEXT}
+            </p>
+          </div>
         </div>
 
         {/* 最終戦績 ＆ クリアランク */}

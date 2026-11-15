@@ -1230,8 +1230,11 @@ export class GameEngine {
       boss.hitFlashTimer = Math.max(0, boss.hitFlashTimer - dt);
     }
 
-    // 1. 登場降下（定位置に着くまでは降下のみ）
-    if (boss.y < boss.targetY) {
+    // 1. 登場降下（定位置に着くまでは降下のみ・無敵）
+    // ※ boss.age === 0 を条件に入れている理由:
+    //   ST.03 のように戦闘開始後に上下へうねり移動（y < targetY になる）するボスが、
+    //   戦闘中に再び「登場降下中」と誤判定されて固まるのを防ぐためです。
+    if (boss.age === 0 && boss.y < boss.targetY) {
       boss.y = Math.min(boss.targetY, boss.y + 75 * dt);
       return;
     }
@@ -1420,28 +1423,42 @@ export class GameEngine {
         }
 
         case 3: {
-          // ST.03 SUB-SPACE CENTIPEDE: 全方位リング + 蛇行波弾
+          // ST.03 SUB-SPACE CENTIPEDE: 全方位リング + 5列蛇行ウェーブ弾 + 採掘レーザー自機狙い
           if (boss.attackPhase === 0) {
+            // 1) 全方位リング弾幕
             const count = isEnraged ? 16 : 12;
             for (let k = 0; k < count; k++) {
               const ang = (Math.PI * 2 * k) / count + boss.age;
               this.enemyBullets.push({
                 x: boss.x, y: boss.y + 10,
-                vx: Math.cos(ang) * baseSpeed * 0.9, vy: Math.sin(ang) * baseSpeed * 0.9,
+                vx: Math.cos(ang) * baseSpeed * 0.92, vy: Math.sin(ang) * baseSpeed * 0.92,
                 radius: 4.3, color: boss.color,
               });
             }
-          } else {
-            for (const ox of [-60, -30, 0, 30, 60]) {
+          } else if (boss.attackPhase === 1) {
+            // 2) 横5列の蛇行ウェーブ弾（左右にうねりながら落下）
+            for (const ox of [-64, -32, 0, 32, 64]) {
               this.enemyBullets.push({
                 x: boss.x + ox, y: boss.y + 24,
-                vx: 0, vy: baseSpeed * 0.95,
+                vx: 0, vy: baseSpeed * 0.98,
                 radius: 4.5, color: boss.color,
                 behavior: "WAVE", waveAmp: 85, waveFreq: 6.5,
               });
             }
+          } else {
+            // 3) 頭部の採掘レーザー大顎から自機狙い 3-way（発狂時は 5-way）高速レーザー弾
+            const offsets = isEnraged ? [-0.28, -0.14, 0, 0.14, 0.28] : [-0.16, 0, 0.16];
+            for (const off of offsets) {
+              this.enemyBullets.push({
+                x: boss.x, y: boss.y + 28,
+                vx: Math.cos(aimAngle + off) * baseSpeed * 1.28,
+                vy: Math.sin(aimAngle + off) * baseSpeed * 1.28,
+                radius: 4.4, color: "#ffb95f",
+              });
+            }
           }
-          boss.attackCooldown = (isEnraged ? 0.78 : 1.1) / speedBoost;
+          // HP低下（speedBoost）に応じて攻撃間隔も短くなり、終盤は怒涛の連射に
+          boss.attackCooldown = (isEnraged ? 0.72 : 1.0) / speedBoost;
           break;
         }
 
@@ -2196,7 +2213,7 @@ export class GameEngine {
     this.playerDeathY = y;
     this.playerDeathEffectTimer = 0.75; // 0.75秒間のショックウェーブ＆爆炎演出
     this.shakeTimer = 0.45;             // 強い画面揺れ
-    this.sound.playExplosion();
+    this.sound.playPlayerExplosion();   // 自機撃墜専用の3層大爆発＆システムダウン音
 
     // 爆炎（白・黄・橙・赤）と自機装甲の破片（シアン）を混ぜたカラー配列
     const colors = ["#ffffff", "#facc15", "#ff7b00", "#ff0055", "#00f3ff"];

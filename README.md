@@ -112,6 +112,9 @@
   - **初学者向け教材型コードコメントの全域適用**: プログラミング初学者や経験の浅い開発者がコードを読むだけで裏側の仕組みを体系的に学べるよう、全体のアーキテクチャ（React UI層とCanvasゲームコア層の分離）、各処理の位置づけ、つまずきやすいポイントの理由（デルタタイム・逆順ループ・三平方の定理・Web Audio合成・イベントバブリング等）をソースコード全域に詳細に追記。
   - **全10ボスの固有シルエット・Stitch デザイン忠実再現**: [GameEngine.ts](./app/src/game/GameEngine.ts) の `drawBoss()` / `drawBossHullByStage()` を刷新し、Stitch 参考資料（`images/stitch/stage_1_10/`）に基づき ST.01〜ST.10 すべてのボス（`A-01 GOLIATH`、`CRIMSON MANTA: X-2`、`SUB-SPACE CENTIPEDE`、`IRON AEGIS`、`SOLAR FLARE: HELIOS`、`VOID LEVIATHAN: ABYSS`、`CHRONO PHANTOM: OUROBOROS`、`DREADNOUGHT OMEGA`、`SINGULARITY CORE: ZERO`、`DEUS EX COSMOS: APOCALYPSE EYE`）を固有のベクター造形・アニメーション付きで描き分け。
   - **ボス体力カーブのなだらかな再調整**: 後半ボスの過剰な硬さを解消するため、ST.01 は `320` を据え置きつつ ST.01〜ST.10 の基礎HPを `320〜2,600`（8.13倍）から `320〜780`（2.44倍・1ステージあたり +40〜+60 の緩やかな増加）へ調整。
+  - **ST.03 ボスのフリーズ不具合修正 ＆ 攻撃パターン強化**: 上下うねり移動で `boss.y < boss.targetY` になった際に登場降下中と誤判定されて固まる不具合を `boss.age === 0` 条件追加で解消し、あわせて全方位リング・5列蛇行ウェーブ弾・頭部採掘レーザー自機狙い 3-way（発狂時 5-way）の 3 段階攻撃へ見直し。
+  - **プロローグ・エピローグのストーリー拡充 ＆ 縦スクロール演出実装**: [BriefingOverlay.tsx](./app/src/components/BriefingOverlay.tsx)・[EpilogueOverlay.tsx](./app/src/components/EpilogueOverlay.tsx) の物語文を長編化・文字サイズ拡大（`12px` ➔ `15px`）し、[index.css](./app/src/index.css) の `story-crawl`（28秒かけて下から上へ流れるシネマティック・ロール演出）と上下フェードマスクを適用。
+  - **自機撃墜専用の重厚爆発効果音を追加**: [SoundEngine.ts](./app/src/game/SoundEngine.ts) に `playPlayerExplosion()`（0.75秒ディープノイズ爆風＋サブベース衝撃波＋システムダウン下降音の3層合成）を新設し、[GameEngine.ts](./app/src/game/GameEngine.ts) の `spawnPlayerExplosion()` から再生。
 
 ---
 

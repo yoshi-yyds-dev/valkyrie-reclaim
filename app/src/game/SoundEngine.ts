@@ -155,6 +155,76 @@ export class SoundEngine {
   }
 
   /**
+   * 【自機撃墜専用・大爆発＆システムダウン効果音】
+   *
+   * 通常のザコ敵爆発（playExplosion: 0.22秒）とは明確に区別できるよう、
+   * 以下の 3 つのレイヤーを同時に重ねて「自機が破壊された」重厚なインパクトを演出します：
+   * 1. 重低音サブベース（140Hz ➔ 28Hz へ急降下するリアクター爆散音）
+   * 2. 長時間ディープノイズ爆風（0.75秒間かけて余韻を残す轟音）
+   * 3. 緊急システムダウン電子音（920Hz ➔ 280Hz へ落ちる電子遮断音）
+   */
+  public playPlayerExplosion(): void {
+    if (this.muted || !this.ctx) return;
+    const now = this.ctx.currentTime;
+    const duration = 0.75;
+
+    // 1. 長時間のホワイトノイズ爆風（ローパスフィルターで重く響かせる）
+    const bufferSize = Math.floor(this.ctx.sampleRate * duration);
+    const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      data[i] = Math.random() * 2 - 1;
+    }
+
+    const noise = this.ctx.createBufferSource();
+    noise.buffer = buffer;
+
+    const filter = this.ctx.createBiquadFilter();
+    filter.type = "lowpass";
+    filter.frequency.setValueAtTime(1400, now);
+    filter.frequency.exponentialRampToValueAtTime(65, now + duration);
+
+    const noiseGain = this.ctx.createGain();
+    noiseGain.gain.setValueAtTime(0.32, now);
+    noiseGain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+    noise.connect(filter);
+    filter.connect(noiseGain);
+    noiseGain.connect(this.ctx.destination);
+    noise.start(now);
+
+    // 2. 重低音サブベース・インパクト（ズドォォォン！という衝撃波）
+    const subOsc = this.ctx.createOscillator();
+    const subGain = this.ctx.createGain();
+    subOsc.type = "sawtooth";
+    subOsc.frequency.setValueAtTime(140, now);
+    subOsc.frequency.exponentialRampToValueAtTime(28, now + 0.55);
+
+    subGain.gain.setValueAtTime(0.24, now);
+    subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.55);
+
+    subOsc.connect(subGain);
+    subGain.connect(this.ctx.destination);
+    subOsc.start(now);
+    subOsc.stop(now + 0.56);
+
+    // 3. 機体機能停止（システムダウン）を知らせる下降電子音
+    const downOsc = this.ctx.createOscillator();
+    const downGain = this.ctx.createGain();
+    downOsc.type = "square";
+    downOsc.frequency.setValueAtTime(920, now);
+    downOsc.frequency.exponentialRampToValueAtTime(240, now + 0.28);
+
+    downGain.gain.setValueAtTime(0.08, now);
+    downGain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+
+    downOsc.connect(downGain);
+    downGain.connect(this.ctx.destination);
+    downOsc.start(now);
+    downOsc.stop(now + 0.3);
+  }
+
+  /**
    * 【出撃開始・起動音】
    * 
    * 三角波（triangle）を低い音から高い音へ上昇させることで、
